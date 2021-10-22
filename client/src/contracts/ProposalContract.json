@@ -1,0 +1,1646 @@
+{
+  "contractName": "ProposalContract",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "ProposalID",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "proposal_title",
+          "type": "string"
+        }
+      ],
+      "name": "ProposalCreated",
+      "type": "event"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "ProposalID",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "proposals",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "proposal_text",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "proposal_title",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "proposal_text",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "proposal_title",
+          "type": "string"
+        }
+      ],
+      "name": "addProposal",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getProposals",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"ProposalID\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"proposal_title\",\"type\":\"string\"}],\"name\":\"ProposalCreated\",\"type\":\"event\"},{\"constant\":true,\"inputs\":[],\"name\":\"ProposalID\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"string\",\"name\":\"proposal_text\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"proposal_title\",\"type\":\"string\"}],\"name\":\"addProposal\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getProposals\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"proposals\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"proposal_text\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"proposal_title\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"project:/contracts/ProposalContract.sol\":\"ProposalContract\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/ProposalContract.sol\":{\"keccak256\":\"0xd52cac4d07e7103a3ea7485b7a4d23f552ad35fe979b1d82a04e62943bbe44c5\",\"urls\":[\"bzz-raw://8d585e438ce1ee82b03fb202aaadbf0d32c1e0b3e5107708e31cf03516cae15d\",\"dweb:/ipfs/QmPkSV181RG5v8eSfxFG3Kxxd6eGTzCzFA7KV6QNJFbw5K\"]}},\"version\":1}",
+  "bytecode": "0x60806040526000805534801561001457600080fd5b5061072b806100246000396000f3fe608060405234801561001057600080fd5b506004361061004c5760003560e01c8063013cf08b146100515780631f6e7c0f1461008257806323d1c95e146100a057806362564c48146100bc575b600080fd5b61006b600480360361006691908101906104a6565b6100da565b604051610079929190610572565b60405180910390f35b61008a61022e565b60405161009791906105a9565b60405180910390f35b6100ba60048036036100b5919081019061043a565b610234565b005b6100c46102ea565b6040516100d19190610550565b60405180910390f35b6001602052806000526040600020600091509050806000018054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156101865780601f1061015b57610100808354040283529160200191610186565b820191906000526020600020905b81548152906001019060200180831161016957829003601f168201915b505050505090806001018054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156102245780601f106101f957610100808354040283529160200191610224565b820191906000526020600020905b81548152906001019060200180831161020757829003601f168201915b5050505050905082565b60005481565b6040518060400160405280838152602001828152506001600080548152602001908152602001600020600082015181600001908051906020019061027992919061032c565b50602082015181600101908051906020019061029692919061032c565b5090505060008081548092919060010191905055507f9c770c289ab5bf7e57cb1d23c8ceae993aea46eb64847072fd3d78ca60d3e432600054826040516102de9291906105c4565b60405180910390a15050565b6060806040518060400160405280601681526020017f52455455524e494e47205354524f4e494e47524547440000000000000000000081525090508091505090565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061036d57805160ff191683800117855561039b565b8280016001018555821561039b579182015b8281111561039a57825182559160200191906001019061037f565b5b5090506103a891906103ac565b5090565b6103ce91905b808211156103ca5760008160009055506001016103b2565b5090565b90565b600082601f8301126103e257600080fd5b81356103f56103f082610621565b6105f4565b9150808252602083016020830185838301111561041157600080fd5b61041c83828461067e565b50505092915050565b600081359050610434816106d1565b92915050565b6000806040838503121561044d57600080fd5b600083013567ffffffffffffffff81111561046757600080fd5b610473858286016103d1565b925050602083013567ffffffffffffffff81111561049057600080fd5b61049c858286016103d1565b9150509250929050565b6000602082840312156104b857600080fd5b60006104c684828501610425565b91505092915050565b60006104da82610658565b6104e48185610663565b93506104f481856020860161068d565b6104fd816106c0565b840191505092915050565b60006105138261064d565b61051d8185610663565b935061052d81856020860161068d565b610536816106c0565b840191505092915050565b61054a81610674565b82525050565b6000602082019050818103600083015261056a81846104cf565b905092915050565b6000604082019050818103600083015261058c8185610508565b905081810360208301526105a08184610508565b90509392505050565b60006020820190506105be6000830184610541565b92915050565b60006040820190506105d96000830185610541565b81810360208301526105eb81846104cf565b90509392505050565b6000604051905081810181811067ffffffffffffffff8211171561061757600080fd5b8060405250919050565b600067ffffffffffffffff82111561063857600080fd5b601f19601f8301169050602081019050919050565b600081519050919050565b600081519050919050565b600082825260208201905092915050565b6000819050919050565b82818337600083830152505050565b60005b838110156106ab578082015181840152602081019050610690565b838111156106ba576000848401525b50505050565b6000601f19601f8301169050919050565b6106da81610674565b81146106e557600080fd5b5056fea365627a7a72315820def6c91071a66dfa9130f3d4d0ccb697d0cf08d105991564059c402f3799251f6c6578706572696d656e74616cf564736f6c63430005100040",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061004c5760003560e01c8063013cf08b146100515780631f6e7c0f1461008257806323d1c95e146100a057806362564c48146100bc575b600080fd5b61006b600480360361006691908101906104a6565b6100da565b604051610079929190610572565b60405180910390f35b61008a61022e565b60405161009791906105a9565b60405180910390f35b6100ba60048036036100b5919081019061043a565b610234565b005b6100c46102ea565b6040516100d19190610550565b60405180910390f35b6001602052806000526040600020600091509050806000018054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156101865780601f1061015b57610100808354040283529160200191610186565b820191906000526020600020905b81548152906001019060200180831161016957829003601f168201915b505050505090806001018054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156102245780601f106101f957610100808354040283529160200191610224565b820191906000526020600020905b81548152906001019060200180831161020757829003601f168201915b5050505050905082565b60005481565b6040518060400160405280838152602001828152506001600080548152602001908152602001600020600082015181600001908051906020019061027992919061032c565b50602082015181600101908051906020019061029692919061032c565b5090505060008081548092919060010191905055507f9c770c289ab5bf7e57cb1d23c8ceae993aea46eb64847072fd3d78ca60d3e432600054826040516102de9291906105c4565b60405180910390a15050565b6060806040518060400160405280601681526020017f52455455524e494e47205354524f4e494e47524547440000000000000000000081525090508091505090565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061036d57805160ff191683800117855561039b565b8280016001018555821561039b579182015b8281111561039a57825182559160200191906001019061037f565b5b5090506103a891906103ac565b5090565b6103ce91905b808211156103ca5760008160009055506001016103b2565b5090565b90565b600082601f8301126103e257600080fd5b81356103f56103f082610621565b6105f4565b9150808252602083016020830185838301111561041157600080fd5b61041c83828461067e565b50505092915050565b600081359050610434816106d1565b92915050565b6000806040838503121561044d57600080fd5b600083013567ffffffffffffffff81111561046757600080fd5b610473858286016103d1565b925050602083013567ffffffffffffffff81111561049057600080fd5b61049c858286016103d1565b9150509250929050565b6000602082840312156104b857600080fd5b60006104c684828501610425565b91505092915050565b60006104da82610658565b6104e48185610663565b93506104f481856020860161068d565b6104fd816106c0565b840191505092915050565b60006105138261064d565b61051d8185610663565b935061052d81856020860161068d565b610536816106c0565b840191505092915050565b61054a81610674565b82525050565b6000602082019050818103600083015261056a81846104cf565b905092915050565b6000604082019050818103600083015261058c8185610508565b905081810360208301526105a08184610508565b90509392505050565b60006020820190506105be6000830184610541565b92915050565b60006040820190506105d96000830185610541565b81810360208301526105eb81846104cf565b90509392505050565b6000604051905081810181811067ffffffffffffffff8211171561061757600080fd5b8060405250919050565b600067ffffffffffffffff82111561063857600080fd5b601f19601f8301169050602081019050919050565b600081519050919050565b600081519050919050565b600082825260208201905092915050565b6000819050919050565b82818337600083830152505050565b60005b838110156106ab578082015181840152602081019050610690565b838111156106ba576000848401525b50505050565b6000601f19601f8301169050919050565b6106da81610674565b81146106e557600080fd5b5056fea365627a7a72315820def6c91071a66dfa9130f3d4d0ccb697d0cf08d105991564059c402f3799251f6c6578706572696d656e74616cf564736f6c63430005100040",
+  "sourceMap": "68:930:0:-;;;125:1;100:26;;68:930;8:9:-1;5:2;;;30:1;27;20:12;5:2;68:930:0;;;;;;;",
+  "deployedSourceMap": "68:930:0:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;68:930:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;223:42;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;100:26;;;:::i;:::-;;;;;;;;;;;;;;;;435:247;;;;;;;;;;;;;;;;:::i;:::-;;688:308;;;:::i;:::-;;;;;;;;;;;;;;;;223:42;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o;100:26::-;;;;:::o;435:247::-;556:39;;;;;;;;565:13;556:39;;;;580:14;556:39;;;532:9;:21;542:10;;532:21;;;;;;;;;;;:63;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;605:10;;:12;;;;;;;;;;;;;632:43;648:10;;660:14;632:43;;;;;;;;;;;;;;;;435:247;;:::o;688:308::-;733:13;923:18;:45;;;;;;;;;;;;;;;;;;;985:4;978:11;;;688:308;:::o;68:930::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o;6:442:-1:-;;108:3;101:4;93:6;89:17;85:27;75:2;;126:1;123;116:12;75:2;163:6;150:20;185:65;200:49;242:6;200:49;;;185:65;;;176:74;;270:6;263:5;256:21;306:4;298:6;294:17;339:4;332:5;328:16;374:3;365:6;360:3;356:16;353:25;350:2;;;391:1;388;381:12;350:2;401:41;435:6;430:3;425;401:41;;;68:380;;;;;;;;456:130;;536:6;523:20;514:29;;548:33;575:5;548:33;;;508:78;;;;;593:578;;;734:2;722:9;713:7;709:23;705:32;702:2;;;750:1;747;740:12;702:2;813:1;802:9;798:17;785:31;836:18;828:6;825:30;822:2;;;868:1;865;858:12;822:2;888:63;943:7;934:6;923:9;919:22;888:63;;;878:73;;764:193;1016:2;1005:9;1001:18;988:32;1040:18;1032:6;1029:30;1026:2;;;1072:1;1069;1062:12;1026:2;1092:63;1147:7;1138:6;1127:9;1123:22;1092:63;;;1082:73;;967:194;696:475;;;;;;1178:241;;1282:2;1270:9;1261:7;1257:23;1253:32;1250:2;;;1298:1;1295;1288:12;1250:2;1333:1;1350:53;1395:7;1386:6;1375:9;1371:22;1350:53;;;1340:63;;1312:97;1244:175;;;;;1426:347;;1538:39;1571:5;1538:39;;;1589:71;1653:6;1648:3;1589:71;;;1582:78;;1665:52;1710:6;1705:3;1698:4;1691:5;1687:16;1665:52;;;1738:29;1760:6;1738:29;;;1733:3;1729:39;1722:46;;1518:255;;;;;;1780:339;;1888:35;1917:5;1888:35;;;1935:71;1999:6;1994:3;1935:71;;;1928:78;;2011:52;2056:6;2051:3;2044:4;2037:5;2033:16;2011:52;;;2084:29;2106:6;2084:29;;;2079:3;2075:39;2068:46;;1868:251;;;;;;2126:113;2209:24;2227:5;2209:24;;;2204:3;2197:37;2191:48;;;2246:301;;2384:2;2373:9;2369:18;2361:26;;2434:9;2428:4;2424:20;2420:1;2409:9;2405:17;2398:47;2459:78;2532:4;2523:6;2459:78;;;2451:86;;2355:192;;;;;2554:484;;2732:2;2721:9;2717:18;2709:26;;2782:9;2776:4;2772:20;2768:1;2757:9;2753:17;2746:47;2807:74;2876:4;2867:6;2807:74;;;2799:82;;2929:9;2923:4;2919:20;2914:2;2903:9;2899:18;2892:48;2954:74;3023:4;3014:6;2954:74;;;2946:82;;2703:335;;;;;;3045:213;;3163:2;3152:9;3148:18;3140:26;;3177:71;3245:1;3234:9;3230:17;3221:6;3177:71;;;3134:124;;;;;3265:412;;3431:2;3420:9;3416:18;3408:26;;3445:71;3513:1;3502:9;3498:17;3489:6;3445:71;;;3564:9;3558:4;3554:20;3549:2;3538:9;3534:18;3527:48;3589:78;3662:4;3653:6;3589:78;;;3581:86;;3402:275;;;;;;3684:256;;3746:2;3740:9;3730:19;;3784:4;3776:6;3772:17;3883:6;3871:10;3868:22;3847:18;3835:10;3832:34;3829:62;3826:2;;;3904:1;3901;3894:12;3826:2;3924:10;3920:2;3913:22;3724:216;;;;;3947:322;;4091:18;4083:6;4080:30;4077:2;;;4123:1;4120;4113:12;4077:2;4190:4;4186:9;4179:4;4171:6;4167:17;4163:33;4155:41;;4254:4;4248;4244:15;4236:23;;4014:255;;;;4276:118;;4366:5;4360:12;4350:22;;4331:63;;;;4401:122;;4495:5;4489:12;4479:22;;4460:63;;;;4531:163;;4646:6;4641:3;4634:19;4683:4;4678:3;4674:14;4659:29;;4627:67;;;;;4702:72;;4764:5;4753:16;;4747:27;;;;4782:145;4863:6;4858:3;4853;4840:30;4919:1;4910:6;4905:3;4901:16;4894:27;4833:94;;;;4936:268;5001:1;5008:101;5022:6;5019:1;5016:13;5008:101;;;5098:1;5093:3;5089:11;5083:18;5079:1;5074:3;5070:11;5063:39;5044:2;5041:1;5037:10;5032:15;;5008:101;;;5124:6;5121:1;5118:13;5115:2;;;5189:1;5180:6;5175:3;5171:16;5164:27;5115:2;4985:219;;;;;5212:97;;5300:2;5296:7;5291:2;5284:5;5280:14;5276:28;5266:38;;5260:49;;;;5317:117;5386:24;5404:5;5386:24;;;5379:5;5376:35;5366:2;;5425:1;5422;5415:12;5366:2;5360:74;",
+  "source": "pragma solidity >=0.4.21 <0.7.0;\npragma experimental ABIEncoderV2;\n\ncontract ProposalContract {\n    uint public ProposalID = 0;\n\n    struct Proposal {\n        string proposal_text;\n        string proposal_title;\n    }\n\n    mapping(uint => Proposal) public proposals;\n\n    // modifier onlyOwner() {\n    //     require(msg.sender == owner);\n    //     _;\n    // }\n\n    event ProposalCreated(uint ProposalID, string proposal_title);\n\n    function addProposal(string memory proposal_text, string memory proposal_title) public {\n        proposals[ProposalID] = Proposal(proposal_text, proposal_title);\n        ProposalID++;\n        emit ProposalCreated(ProposalID, proposal_title);\n    }\n\n    function getProposals() public view returns (string memory) {\n        // Proposal[] memory ret = new Proposal[](ProposalID);\n        // for (uint i = 0; i < ProposalID; i++) {\n        //     ret[i] = proposals[i];\n        // }\n        string memory temp = \"RETURNING STRONINGREGD\";\n        return temp;\n    }\n}",
+  "sourcePath": "/Users/shashwat.arya/Desktop/BlockChain Project (Pied Piper)/BlockChain-Project--Pied-Piper-/contracts/ProposalContract.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/ProposalContract.sol",
+    "exportedSymbols": {
+      "ProposalContract": [
+        58
+      ]
+    },
+    "id": 59,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.4",
+          ".21",
+          "<",
+          "0.7",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:32:0"
+      },
+      {
+        "id": 2,
+        "literals": [
+          "experimental",
+          "ABIEncoderV2"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:33:0"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 58,
+        "linearizedBaseContracts": [
+          58
+        ],
+        "name": "ProposalContract",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 5,
+            "name": "ProposalID",
+            "nodeType": "VariableDeclaration",
+            "scope": 58,
+            "src": "100:26:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 3,
+              "name": "uint",
+              "nodeType": "ElementaryTypeName",
+              "src": "100:4:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "hexValue": "30",
+              "id": 4,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "number",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "125:1:0",
+              "subdenomination": null,
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_0_by_1",
+                "typeString": "int_const 0"
+              },
+              "value": "0"
+            },
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "ProposalContract.Proposal",
+            "id": 10,
+            "members": [
+              {
+                "constant": false,
+                "id": 7,
+                "name": "proposal_text",
+                "nodeType": "VariableDeclaration",
+                "scope": 10,
+                "src": "159:20:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 6,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "159:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 9,
+                "name": "proposal_title",
+                "nodeType": "VariableDeclaration",
+                "scope": 10,
+                "src": "189:21:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 8,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "189:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Proposal",
+            "nodeType": "StructDefinition",
+            "scope": 58,
+            "src": "133:84:0",
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 14,
+            "name": "proposals",
+            "nodeType": "VariableDeclaration",
+            "scope": 58,
+            "src": "223:42:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Proposal_$10_storage_$",
+              "typeString": "mapping(uint256 => struct ProposalContract.Proposal)"
+            },
+            "typeName": {
+              "id": 13,
+              "keyType": {
+                "id": 11,
+                "name": "uint",
+                "nodeType": "ElementaryTypeName",
+                "src": "231:4:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "223:25:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Proposal_$10_storage_$",
+                "typeString": "mapping(uint256 => struct ProposalContract.Proposal)"
+              },
+              "valueType": {
+                "contractScope": null,
+                "id": 12,
+                "name": "Proposal",
+                "nodeType": "UserDefinedTypeName",
+                "referencedDeclaration": 10,
+                "src": "239:8:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_Proposal_$10_storage_ptr",
+                  "typeString": "struct ProposalContract.Proposal"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 20,
+            "name": "ProposalCreated",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 19,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 16,
+                  "indexed": false,
+                  "name": "ProposalID",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20,
+                  "src": "389:15:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 15,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "389:4:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 18,
+                  "indexed": false,
+                  "name": "proposal_title",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20,
+                  "src": "406:21:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 17,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "406:6:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "388:40:0"
+            },
+            "src": "367:62:0"
+          },
+          {
+            "body": {
+              "id": 44,
+              "nodeType": "Block",
+              "src": "522:160:0",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 34,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "baseExpression": {
+                        "argumentTypes": null,
+                        "id": 27,
+                        "name": "proposals",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 14,
+                        "src": "532:9:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Proposal_$10_storage_$",
+                          "typeString": "mapping(uint256 => struct ProposalContract.Proposal storage ref)"
+                        }
+                      },
+                      "id": 29,
+                      "indexExpression": {
+                        "argumentTypes": null,
+                        "id": 28,
+                        "name": "ProposalID",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 5,
+                        "src": "542:10:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "IndexAccess",
+                      "src": "532:21:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Proposal_$10_storage",
+                        "typeString": "struct ProposalContract.Proposal storage ref"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "arguments": [
+                        {
+                          "argumentTypes": null,
+                          "id": 31,
+                          "name": "proposal_text",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 22,
+                          "src": "565:13:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_string_memory_ptr",
+                            "typeString": "string memory"
+                          }
+                        },
+                        {
+                          "argumentTypes": null,
+                          "id": 32,
+                          "name": "proposal_title",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 24,
+                          "src": "580:14:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_string_memory_ptr",
+                            "typeString": "string memory"
+                          }
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_string_memory_ptr",
+                            "typeString": "string memory"
+                          },
+                          {
+                            "typeIdentifier": "t_string_memory_ptr",
+                            "typeString": "string memory"
+                          }
+                        ],
+                        "id": 30,
+                        "name": "Proposal",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 10,
+                        "src": "556:8:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_struct$_Proposal_$10_storage_ptr_$",
+                          "typeString": "type(struct ProposalContract.Proposal storage pointer)"
+                        }
+                      },
+                      "id": 33,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "structConstructorCall",
+                      "lValueRequested": false,
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "556:39:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Proposal_$10_memory",
+                        "typeString": "struct ProposalContract.Proposal memory"
+                      }
+                    },
+                    "src": "532:63:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Proposal_$10_storage",
+                      "typeString": "struct ProposalContract.Proposal storage ref"
+                    }
+                  },
+                  "id": 35,
+                  "nodeType": "ExpressionStatement",
+                  "src": "532:63:0"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 37,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "UnaryOperation",
+                    "operator": "++",
+                    "prefix": false,
+                    "src": "605:12:0",
+                    "subExpression": {
+                      "argumentTypes": null,
+                      "id": 36,
+                      "name": "ProposalID",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 5,
+                      "src": "605:10:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 38,
+                  "nodeType": "ExpressionStatement",
+                  "src": "605:12:0"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 40,
+                        "name": "ProposalID",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 5,
+                        "src": "648:10:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 41,
+                        "name": "proposal_title",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 24,
+                        "src": "660:14:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      ],
+                      "id": 39,
+                      "name": "ProposalCreated",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 20,
+                      "src": "632:15:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_uint256_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (uint256,string memory)"
+                      }
+                    },
+                    "id": 42,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "632:43:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 43,
+                  "nodeType": "EmitStatement",
+                  "src": "627:48:0"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 45,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "addProposal",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 22,
+                  "name": "proposal_text",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 45,
+                  "src": "456:27:0",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 21,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "456:6:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 24,
+                  "name": "proposal_title",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 45,
+                  "src": "485:28:0",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 23,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "485:6:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "455:59:0"
+            },
+            "returnParameters": {
+              "id": 26,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "522:0:0"
+            },
+            "scope": 58,
+            "src": "435:247:0",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 56,
+              "nodeType": "Block",
+              "src": "748:248:0",
+              "statements": [
+                {
+                  "assignments": [
+                    51
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 51,
+                      "name": "temp",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 56,
+                      "src": "923:18:0",
+                      "stateVariable": false,
+                      "storageLocation": "memory",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_string_memory_ptr",
+                        "typeString": "string"
+                      },
+                      "typeName": {
+                        "id": 50,
+                        "name": "string",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "923:6:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_storage_ptr",
+                          "typeString": "string"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 53,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "hexValue": "52455455524e494e47205354524f4e494e4752454744",
+                    "id": 52,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "string",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "944:24:0",
+                    "subdenomination": null,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_stringliteral_ea8d14c0a9f6edba06daf5936175334462028abac2ae4f066fc0d06c167bbcfe",
+                      "typeString": "literal_string \"RETURNING STRONINGREGD\""
+                    },
+                    "value": "RETURNING STRONINGREGD"
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "923:45:0"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 54,
+                    "name": "temp",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 51,
+                    "src": "985:4:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_memory_ptr",
+                      "typeString": "string memory"
+                    }
+                  },
+                  "functionReturnParameters": 49,
+                  "id": 55,
+                  "nodeType": "Return",
+                  "src": "978:11:0"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 57,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getProposals",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 46,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "709:2:0"
+            },
+            "returnParameters": {
+              "id": 49,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 48,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 57,
+                  "src": "733:13:0",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 47,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "733:6:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "732:15:0"
+            },
+            "scope": 58,
+            "src": "688:308:0",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 59,
+        "src": "68:930:0"
+      }
+    ],
+    "src": "0:998:0"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "project:/contracts/ProposalContract.sol",
+      "exportedSymbols": {
+        "ProposalContract": [
+          58
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            ">=",
+            "0.4",
+            ".21",
+            "<",
+            "0.7",
+            ".0"
+          ]
+        },
+        "id": 1,
+        "name": "PragmaDirective",
+        "src": "0:32:0"
+      },
+      {
+        "attributes": {
+          "literals": [
+            "experimental",
+            "ABIEncoderV2"
+          ]
+        },
+        "id": 2,
+        "name": "PragmaDirective",
+        "src": "33:33:0"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            58
+          ],
+          "name": "ProposalContract",
+          "scope": 59
+        },
+        "children": [
+          {
+            "attributes": {
+              "constant": false,
+              "name": "ProposalID",
+              "scope": 58,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256",
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "uint",
+                  "type": "uint256"
+                },
+                "id": 3,
+                "name": "ElementaryTypeName",
+                "src": "100:4:0"
+              },
+              {
+                "attributes": {
+                  "argumentTypes": null,
+                  "hexvalue": "30",
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "lValueRequested": false,
+                  "subdenomination": null,
+                  "token": "number",
+                  "type": "int_const 0",
+                  "value": "0"
+                },
+                "id": 4,
+                "name": "Literal",
+                "src": "125:1:0"
+              }
+            ],
+            "id": 5,
+            "name": "VariableDeclaration",
+            "src": "100:26:0"
+          },
+          {
+            "attributes": {
+              "canonicalName": "ProposalContract.Proposal",
+              "name": "Proposal",
+              "scope": 58,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "proposal_text",
+                  "scope": 10,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "string",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "string",
+                      "type": "string"
+                    },
+                    "id": 6,
+                    "name": "ElementaryTypeName",
+                    "src": "159:6:0"
+                  }
+                ],
+                "id": 7,
+                "name": "VariableDeclaration",
+                "src": "159:20:0"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "proposal_title",
+                  "scope": 10,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "string",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "string",
+                      "type": "string"
+                    },
+                    "id": 8,
+                    "name": "ElementaryTypeName",
+                    "src": "189:6:0"
+                  }
+                ],
+                "id": 9,
+                "name": "VariableDeclaration",
+                "src": "189:21:0"
+              }
+            ],
+            "id": 10,
+            "name": "StructDefinition",
+            "src": "133:84:0"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "proposals",
+              "scope": 58,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "mapping(uint256 => struct ProposalContract.Proposal)",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "type": "mapping(uint256 => struct ProposalContract.Proposal)"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint",
+                      "type": "uint256"
+                    },
+                    "id": 11,
+                    "name": "ElementaryTypeName",
+                    "src": "231:4:0"
+                  },
+                  {
+                    "attributes": {
+                      "contractScope": null,
+                      "name": "Proposal",
+                      "referencedDeclaration": 10,
+                      "type": "struct ProposalContract.Proposal"
+                    },
+                    "id": 12,
+                    "name": "UserDefinedTypeName",
+                    "src": "239:8:0"
+                  }
+                ],
+                "id": 13,
+                "name": "Mapping",
+                "src": "223:25:0"
+              }
+            ],
+            "id": 14,
+            "name": "VariableDeclaration",
+            "src": "223:42:0"
+          },
+          {
+            "attributes": {
+              "anonymous": false,
+              "documentation": null,
+              "name": "ProposalCreated"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": false,
+                      "name": "ProposalID",
+                      "scope": 20,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 15,
+                        "name": "ElementaryTypeName",
+                        "src": "389:4:0"
+                      }
+                    ],
+                    "id": 16,
+                    "name": "VariableDeclaration",
+                    "src": "389:15:0"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": false,
+                      "name": "proposal_title",
+                      "scope": 20,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "string",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "string",
+                          "type": "string"
+                        },
+                        "id": 17,
+                        "name": "ElementaryTypeName",
+                        "src": "406:6:0"
+                      }
+                    ],
+                    "id": 18,
+                    "name": "VariableDeclaration",
+                    "src": "406:21:0"
+                  }
+                ],
+                "id": 19,
+                "name": "ParameterList",
+                "src": "388:40:0"
+              }
+            ],
+            "id": 20,
+            "name": "EventDefinition",
+            "src": "367:62:0"
+          },
+          {
+            "attributes": {
+              "documentation": null,
+              "implemented": true,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "addProposal",
+              "scope": 58,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "proposal_text",
+                      "scope": 45,
+                      "stateVariable": false,
+                      "storageLocation": "memory",
+                      "type": "string",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "string",
+                          "type": "string"
+                        },
+                        "id": 21,
+                        "name": "ElementaryTypeName",
+                        "src": "456:6:0"
+                      }
+                    ],
+                    "id": 22,
+                    "name": "VariableDeclaration",
+                    "src": "456:27:0"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "proposal_title",
+                      "scope": 45,
+                      "stateVariable": false,
+                      "storageLocation": "memory",
+                      "type": "string",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "string",
+                          "type": "string"
+                        },
+                        "id": 23,
+                        "name": "ElementaryTypeName",
+                        "src": "485:6:0"
+                      }
+                    ],
+                    "id": 24,
+                    "name": "VariableDeclaration",
+                    "src": "485:28:0"
+                  }
+                ],
+                "id": 25,
+                "name": "ParameterList",
+                "src": "455:59:0"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 26,
+                "name": "ParameterList",
+                "src": "522:0:0"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "struct ProposalContract.Proposal storage ref"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": true,
+                              "type": "struct ProposalContract.Proposal storage ref"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 14,
+                                  "type": "mapping(uint256 => struct ProposalContract.Proposal storage ref)",
+                                  "value": "proposals"
+                                },
+                                "id": 27,
+                                "name": "Identifier",
+                                "src": "532:9:0"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 5,
+                                  "type": "uint256",
+                                  "value": "ProposalID"
+                                },
+                                "id": 28,
+                                "name": "Identifier",
+                                "src": "542:10:0"
+                              }
+                            ],
+                            "id": 29,
+                            "name": "IndexAccess",
+                            "src": "532:21:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "isStructConstructorCall": true,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "type": "struct ProposalContract.Proposal memory",
+                              "type_conversion": false
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_string_memory_ptr",
+                                      "typeString": "string memory"
+                                    },
+                                    {
+                                      "typeIdentifier": "t_string_memory_ptr",
+                                      "typeString": "string memory"
+                                    }
+                                  ],
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 10,
+                                  "type": "type(struct ProposalContract.Proposal storage pointer)",
+                                  "value": "Proposal"
+                                },
+                                "id": 30,
+                                "name": "Identifier",
+                                "src": "556:8:0"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 22,
+                                  "type": "string memory",
+                                  "value": "proposal_text"
+                                },
+                                "id": 31,
+                                "name": "Identifier",
+                                "src": "565:13:0"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 24,
+                                  "type": "string memory",
+                                  "value": "proposal_title"
+                                },
+                                "id": 32,
+                                "name": "Identifier",
+                                "src": "580:14:0"
+                              }
+                            ],
+                            "id": 33,
+                            "name": "FunctionCall",
+                            "src": "556:39:0"
+                          }
+                        ],
+                        "id": 34,
+                        "name": "Assignment",
+                        "src": "532:63:0"
+                      }
+                    ],
+                    "id": 35,
+                    "name": "ExpressionStatement",
+                    "src": "532:63:0"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "++",
+                          "prefix": false,
+                          "type": "uint256"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 5,
+                              "type": "uint256",
+                              "value": "ProposalID"
+                            },
+                            "id": 36,
+                            "name": "Identifier",
+                            "src": "605:10:0"
+                          }
+                        ],
+                        "id": 37,
+                        "name": "UnaryOperation",
+                        "src": "605:12:0"
+                      }
+                    ],
+                    "id": 38,
+                    "name": "ExpressionStatement",
+                    "src": "605:12:0"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                },
+                                {
+                                  "typeIdentifier": "t_string_memory_ptr",
+                                  "typeString": "string memory"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 20,
+                              "type": "function (uint256,string memory)",
+                              "value": "ProposalCreated"
+                            },
+                            "id": 39,
+                            "name": "Identifier",
+                            "src": "632:15:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 5,
+                              "type": "uint256",
+                              "value": "ProposalID"
+                            },
+                            "id": 40,
+                            "name": "Identifier",
+                            "src": "648:10:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 24,
+                              "type": "string memory",
+                              "value": "proposal_title"
+                            },
+                            "id": 41,
+                            "name": "Identifier",
+                            "src": "660:14:0"
+                          }
+                        ],
+                        "id": 42,
+                        "name": "FunctionCall",
+                        "src": "632:43:0"
+                      }
+                    ],
+                    "id": 43,
+                    "name": "EmitStatement",
+                    "src": "627:48:0"
+                  }
+                ],
+                "id": 44,
+                "name": "Block",
+                "src": "522:160:0"
+              }
+            ],
+            "id": 45,
+            "name": "FunctionDefinition",
+            "src": "435:247:0"
+          },
+          {
+            "attributes": {
+              "documentation": null,
+              "implemented": true,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "getProposals",
+              "scope": 58,
+              "stateMutability": "view",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 46,
+                "name": "ParameterList",
+                "src": "709:2:0"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 57,
+                      "stateVariable": false,
+                      "storageLocation": "memory",
+                      "type": "string",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "string",
+                          "type": "string"
+                        },
+                        "id": 47,
+                        "name": "ElementaryTypeName",
+                        "src": "733:6:0"
+                      }
+                    ],
+                    "id": 48,
+                    "name": "VariableDeclaration",
+                    "src": "733:13:0"
+                  }
+                ],
+                "id": 49,
+                "name": "ParameterList",
+                "src": "732:15:0"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "assignments": [
+                        51
+                      ]
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "constant": false,
+                          "name": "temp",
+                          "scope": 56,
+                          "stateVariable": false,
+                          "storageLocation": "memory",
+                          "type": "string",
+                          "value": null,
+                          "visibility": "internal"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "name": "string",
+                              "type": "string"
+                            },
+                            "id": 50,
+                            "name": "ElementaryTypeName",
+                            "src": "923:6:0"
+                          }
+                        ],
+                        "id": 51,
+                        "name": "VariableDeclaration",
+                        "src": "923:18:0"
+                      },
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "hexvalue": "52455455524e494e47205354524f4e494e4752454744",
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "lValueRequested": false,
+                          "subdenomination": null,
+                          "token": "string",
+                          "type": "literal_string \"RETURNING STRONINGREGD\"",
+                          "value": "RETURNING STRONINGREGD"
+                        },
+                        "id": 52,
+                        "name": "Literal",
+                        "src": "944:24:0"
+                      }
+                    ],
+                    "id": 53,
+                    "name": "VariableDeclarationStatement",
+                    "src": "923:45:0"
+                  },
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 49
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "overloadedDeclarations": [
+                            null
+                          ],
+                          "referencedDeclaration": 51,
+                          "type": "string memory",
+                          "value": "temp"
+                        },
+                        "id": 54,
+                        "name": "Identifier",
+                        "src": "985:4:0"
+                      }
+                    ],
+                    "id": 55,
+                    "name": "Return",
+                    "src": "978:11:0"
+                  }
+                ],
+                "id": 56,
+                "name": "Block",
+                "src": "748:248:0"
+              }
+            ],
+            "id": 57,
+            "name": "FunctionDefinition",
+            "src": "688:308:0"
+          }
+        ],
+        "id": 58,
+        "name": "ContractDefinition",
+        "src": "68:930:0"
+      }
+    ],
+    "id": 59,
+    "name": "SourceUnit",
+    "src": "0:998:0"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.16+commit.9c3226ce.Emscripten.clang"
+  },
+  "networks": {
+    "5777": {
+      "events": {},
+      "links": {},
+      "address": "0x3D416Cfa03D21155529Dc2aa7f877137B719ca74",
+      "transactionHash": "0xbeb4bf6d90971afbf3e84c3ccaf3196a1a281af6704f9b892cdd9e01c5bf0231"
+    }
+  },
+  "schemaVersion": "3.4.3",
+  "updatedAt": "2021-10-22T10:48:28.291Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}
