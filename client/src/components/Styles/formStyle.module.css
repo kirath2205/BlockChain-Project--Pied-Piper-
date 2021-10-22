@@ -1,0 +1,7 @@
+.formBody {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: auto;
+    padding-top: 20px;
+}
