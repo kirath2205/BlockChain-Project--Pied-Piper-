@@ -11,17 +11,14 @@ contract ProposalContract {
 
     mapping(uint => Proposal) public proposals;
 
-    // modifier onlyOwner() {
-    //     require(msg.sender == owner);
-    //     _;
-    // }
-
     event ProposalCreated(uint ProposalID, string proposal_title);
 
-    function addProposal(string memory proposal_text, string memory proposal_title) public {
+    function addProposal(string memory proposal_text, string memory proposal_title) public returns (uint){
         proposals[ProposalID] = Proposal(proposal_text, proposal_title);
-        ProposalID++;
         emit ProposalCreated(ProposalID, proposal_title);
+        ProposalID++;
+        return ProposalID;
+        
     }
 
     function getProposals() public view returns (string memory) {
