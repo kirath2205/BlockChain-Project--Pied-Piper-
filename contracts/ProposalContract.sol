@@ -18,15 +18,14 @@ contract ProposalContract {
         emit ProposalCreated(ProposalID, proposal_title);
         ProposalID++;
         return ProposalID;
-        
     }
 
-    function getProposals() public view returns (string memory) {
-        // Proposal[] memory ret = new Proposal[](ProposalID);
-        // for (uint i = 0; i < ProposalID; i++) {
-        //     ret[i] = proposals[i];
-        // }
-        string memory temp = "RETURNING STRONINGREGD";
-        return temp;
+    function getProposalCount() public view returns (uint){
+      return ProposalID;
+    }
+
+
+    function getProposalById(uint id) public view returns (string proposal_text , string proposal_title){
+      return (proposals[id].proposal_text,proposals[id].proposal_title);
     }
 }
