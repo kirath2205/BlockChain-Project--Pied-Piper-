@@ -120,12 +120,12 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"tokens\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"address\",\"name\":\"tokenOwner\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"balance\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"totalSupply\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokens\",\"type\":\"uint256\"}],\"name\":\"transfer\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"success\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokens\",\"type\":\"uint256\"}],\"name\":\"transferFrom\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"success\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"project:/contracts/GovToken.sol\":\"ERC20Interface\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/GovToken.sol\":{\"keccak256\":\"0xd5644c93ec8010d57a5a571b719d6fb842f704589a2d6e6ef632f86eea74efcc\",\"urls\":[\"bzz-raw://b7884d891a154da099ab87534b1df78c2a2465575a2b391998ed13ac3642295c\",\"dweb:/ipfs/Qmd3dAFxixLm1hJPiWGLcFNDVc6nSbpQZhwNTk8vx9DWXB\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"tokens\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"address\",\"name\":\"tokenOwner\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"balance\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"totalSupply\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokens\",\"type\":\"uint256\"}],\"name\":\"transfer\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"success\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokens\",\"type\":\"uint256\"}],\"name\":\"transferFrom\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"success\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"project:/contracts/GovToken.sol\":\"ERC20Interface\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/GovToken.sol\":{\"keccak256\":\"0xa733e13865a05f0f228a3430abfe61d34c9b837166ad2aa60dcedaf955634a91\",\"urls\":[\"bzz-raw://5c0477e1f108f80ae2ec93ccd8f143d944671c928f11dfe2320ce1e19440a746\",\"dweb:/ipfs/QmWBoJAhMQyCMoBNRY6jtPzKkh9ZaEKTg8gneJwU1NPLhe\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "sourceMap": "",
   "deployedSourceMap": "",
-  "source": "pragma solidity >=0.4.21 <0.7.0;\n \ncontract SafeMath {\n \n    function safeAdd(uint a, uint b) public pure returns (uint c) {\n        c = a + b;\n        require(c >= a);\n    }\n \n    function safeSub(uint a, uint b) public pure returns (uint c) {\n        require(b <= a);\n        c = a - b;\n    }\n \n    function safeMul(uint a, uint b) public pure returns (uint c) {\n        c = a * b;\n        require(a == 0 || c / a == b);\n    }\n \n    function safeDiv(uint a, uint b) public pure returns (uint c) {\n        require(b > 0);\n        c = a / b;\n    }\n}\n \n \n//ERC Token Standard #20 Interface\n \ncontract ERC20Interface {\n    function totalSupply() public view returns (uint);\n    function balanceOf(address tokenOwner) public view returns (uint balance);\n    function transfer(address to, uint tokens) public returns (bool success);\n    function transferFrom(address from, address to, uint tokens) public returns (bool success);\n \n    event Transfer(address indexed from, address indexed to, uint tokens);\n    \n}\n \n \n//Contract function to receive approval and execute function in one call\n \n\n \n//Actual token contract\n \ncontract GovToken is ERC20Interface, SafeMath {\n    string public symbol;\n    string public  name;\n    uint public _totalSupply;\n \n    mapping(address => uint) balances;\n    mapping(address => mapping(address => uint)) allowed;\n \n    constructor(string memory _name , string memory _symbol , uint _supply) public {\n        symbol = _symbol;\n        name = _name;\n        _totalSupply = _supply;\n        balances[msg.sender] = _supply;\n\n        emit Transfer(address(0), msg.sender, _supply);\n    }\n \n    function totalSupply() public view returns (uint) {\n        return _totalSupply  - balances[address(0)];\n    }\n \n    function balanceOf(address tokenOwner) public view returns (uint balance) {\n        return balances[tokenOwner];\n    }\n \n    function transfer(address to, uint tokens) public returns (bool success) {\n        balances[msg.sender] = safeSub(balances[msg.sender], tokens);\n        balances[to] = safeAdd(balances[to], tokens);\n        emit Transfer(msg.sender, to, tokens);\n        return true;\n    }\n \n\n    function transferFrom(address from, address to, uint tokens) public returns (bool success) {\n        balances[from] = safeSub(balances[from], tokens);\n        allowed[from][msg.sender] = safeSub(allowed[from][msg.sender], tokens);\n        balances[to] = safeAdd(balances[to], tokens);\n        emit Transfer(from, to, tokens);\n        return true;\n    }\n \n    function ()  external payable {\n        revert();\n    }\n}",
+  "source": "pragma solidity >=0.4.21 <0.7.0;\n \ncontract SafeMath {\n \n    function safeAdd(uint a, uint b) public pure returns (uint c) {\n        c = a + b;\n        require(c >= a);\n    }\n \n    function safeSub(uint a, uint b) public pure returns (uint c) {\n        require(b <= a);\n        c = a - b;\n    }\n \n    function safeMul(uint a, uint b) public pure returns (uint c) {\n        c = a * b;\n        require(a == 0 || c / a == b);\n    }\n \n    function safeDiv(uint a, uint b) public pure returns (uint c) {\n        require(b > 0);\n        c = a / b;\n    }\n}\n \n \n//ERC Token Standard #20 Interface\n \ncontract ERC20Interface {\n    function totalSupply() public view returns (uint);\n    function balanceOf(address tokenOwner) public view returns (uint balance);\n    function transfer(address to, uint tokens) public returns (bool success);\n    function transferFrom(address from, address to, uint tokens) public returns (bool success);\n \n    event Transfer(address indexed from, address indexed to, uint tokens);\n    \n}\n \n \n//Contract function to receive approval and execute function in one call\n \n\n \n//Actual token contract\n \ncontract GovToken is ERC20Interface, SafeMath {\n    string public symbol;\n    string public  name;\n    uint public _totalSupply;\n \n    mapping(address => uint) balances;\n    mapping(address => mapping(address => uint)) allowed;\n \n    constructor(string memory _name , string memory _symbol , uint _supply) public {\n        symbol = _symbol;\n        name = _name;\n        _totalSupply = _supply;\n        balances[msg.sender] = _supply;\n\n        emit Transfer(address(0), msg.sender, _supply);\n    }\n \n    function totalSupply() public view returns (uint) {\n        return _totalSupply  - balances[address(0)];\n    }\n \n    function balanceOf(address tokenOwner) public view returns (uint balance) {\n        return balances[tokenOwner];\n    }\n \n    function transfer(address to, uint tokens) public returns (bool success) {\n        balances[msg.sender] = safeSub(balances[msg.sender], tokens);\n        balances[to] = safeAdd(balances[to], tokens);\n        emit Transfer(msg.sender, to, tokens);\n        return true;\n    }\n \n\n    function transferFrom(address from, address to, uint tokens) public returns (bool success) {\n        balances[from] = safeSub(balances[from], tokens);\n        allowed[from][msg.sender] = safeSub(allowed[from][msg.sender], tokens);\n        balances[to] = safeAdd(balances[to], tokens);\n        emit Transfer(from, to, tokens);\n        return true;\n    }\n \n\n}",
   "sourcePath": "/Users/kirath/Desktop/BlockChain-Project--Pied-Piper-/contracts/GovToken.sol",
   "ast": {
     "absolutePath": "project:/contracts/GovToken.sol",
@@ -134,13 +134,13 @@
         137
       ],
       "GovToken": [
-        331
+        324
       ],
       "SafeMath": [
         96
       ]
     },
-    "id": 332,
+    "id": 325,
     "nodeType": "SourceUnit",
     "nodes": [
       {
@@ -315,10 +315,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        349,
-                        350
+                        395,
+                        396
                       ],
-                      "referencedDeclaration": 349,
+                      "referencedDeclaration": 395,
                       "src": "152:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -517,10 +517,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        349,
-                        350
+                        395,
+                        396
                       ],
-                      "referencedDeclaration": 349,
+                      "referencedDeclaration": 395,
                       "src": "253:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -976,10 +976,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        349,
-                        350
+                        395,
+                        396
                       ],
-                      "referencedDeclaration": 349,
+                      "referencedDeclaration": 395,
                       "src": "392:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -1183,10 +1183,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        349,
-                        350
+                        395,
+                        396
                       ],
-                      "referencedDeclaration": 349,
+                      "referencedDeclaration": 395,
                       "src": "507:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -1397,7 +1397,7 @@
             "visibility": "public"
           }
         ],
-        "scope": 332,
+        "scope": 325,
         "src": "35:514:0"
       },
       {
@@ -1891,7 +1891,7 @@
             "src": "931:70:0"
           }
         ],
-        "scope": 332,
+        "scope": 325,
         "src": "591:417:0"
       },
       {
@@ -1940,9 +1940,9 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 331,
+        "id": 324,
         "linearizedBaseContracts": [
-          331,
+          324,
           96,
           137
         ],
@@ -1954,7 +1954,7 @@
             "id": 143,
             "name": "symbol",
             "nodeType": "VariableDeclaration",
-            "scope": 331,
+            "scope": 324,
             "src": "1169:20:0",
             "stateVariable": true,
             "storageLocation": "default",
@@ -1980,7 +1980,7 @@
             "id": 145,
             "name": "name",
             "nodeType": "VariableDeclaration",
-            "scope": 331,
+            "scope": 324,
             "src": "1195:19:0",
             "stateVariable": true,
             "storageLocation": "default",
@@ -2006,7 +2006,7 @@
             "id": 147,
             "name": "_totalSupply",
             "nodeType": "VariableDeclaration",
-            "scope": 331,
+            "scope": 324,
             "src": "1220:24:0",
             "stateVariable": true,
             "storageLocation": "default",
@@ -2032,7 +2032,7 @@
             "id": 151,
             "name": "balances",
             "nodeType": "VariableDeclaration",
-            "scope": 331,
+            "scope": 324,
             "src": "1252:33:0",
             "stateVariable": true,
             "storageLocation": "default",
@@ -2077,7 +2077,7 @@
             "id": 157,
             "name": "allowed",
             "nodeType": "VariableDeclaration",
-            "scope": 331,
+            "scope": 324,
             "src": "1291:52:0",
             "stateVariable": true,
             "storageLocation": "default",
@@ -2312,7 +2312,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 346,
+                          "referencedDeclaration": 392,
                           "src": "1529:3:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -2437,7 +2437,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 346,
+                          "referencedDeclaration": 392,
                           "src": "1587:3:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -2616,7 +2616,7 @@
               "parameters": [],
               "src": "1430:0:0"
             },
-            "scope": 331,
+            "scope": 324,
             "src": "1351:263:0",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -2797,7 +2797,7 @@
               ],
               "src": "1664:6:0"
             },
-            "scope": 331,
+            "scope": 324,
             "src": "1621:110:0",
             "stateMutability": "view",
             "superFunction": 101,
@@ -2931,7 +2931,7 @@
               ],
               "src": "1797:14:0"
             },
-            "scope": 331,
+            "scope": 324,
             "src": "1738:118:0",
             "stateMutability": "view",
             "superFunction": 108,
@@ -2975,7 +2975,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 346,
+                          "referencedDeclaration": 392,
                           "src": "1955:3:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -3036,7 +3036,7 @@
                               "name": "msg",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 346,
+                              "referencedDeclaration": 392,
                               "src": "1986:3:0",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_magic_message",
@@ -3293,7 +3293,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 346,
+                          "referencedDeclaration": 392,
                           "src": "2084:3:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -3511,7 +3511,7 @@
               ],
               "src": "1921:14:0"
             },
-            "scope": 331,
+            "scope": 324,
             "src": "1863:272:0",
             "stateMutability": "nonpayable",
             "superFunction": 117,
@@ -3735,7 +3735,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 346,
+                          "referencedDeclaration": 392,
                           "src": "2316:3:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -3823,7 +3823,7 @@
                               "name": "msg",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 346,
+                              "referencedDeclaration": 392,
                               "src": "2352:3:0",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_magic_message",
@@ -4309,89 +4309,18 @@
               ],
               "src": "2219:14:0"
             },
-            "scope": 331,
+            "scope": 324,
             "src": "2143:352:0",
             "stateMutability": "nonpayable",
             "superFunction": 128,
             "visibility": "public"
-          },
-          {
-            "body": {
-              "id": 329,
-              "nodeType": "Block",
-              "src": "2532:25:0",
-              "statements": [
-                {
-                  "expression": {
-                    "argumentTypes": null,
-                    "arguments": [],
-                    "expression": {
-                      "argumentTypes": [],
-                      "id": 326,
-                      "name": "revert",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        351,
-                        352
-                      ],
-                      "referencedDeclaration": 351,
-                      "src": "2542:6:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_function_revert_pure$__$returns$__$",
-                        "typeString": "function () pure"
-                      }
-                    },
-                    "id": 327,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
-                    "kind": "functionCall",
-                    "lValueRequested": false,
-                    "names": [],
-                    "nodeType": "FunctionCall",
-                    "src": "2542:8:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_tuple$__$",
-                      "typeString": "tuple()"
-                    }
-                  },
-                  "id": 328,
-                  "nodeType": "ExpressionStatement",
-                  "src": "2542:8:0"
-                }
-              ]
-            },
-            "documentation": null,
-            "id": 330,
-            "implemented": true,
-            "kind": "fallback",
-            "modifiers": [],
-            "name": "",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 324,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "2511:2:0"
-            },
-            "returnParameters": {
-              "id": 325,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "2532:0:0"
-            },
-            "scope": 331,
-            "src": "2502:55:0",
-            "stateMutability": "payable",
-            "superFunction": null,
-            "visibility": "external"
           }
         ],
-        "scope": 332,
-        "src": "1117:1442:0"
+        "scope": 325,
+        "src": "1117:1383:0"
       }
     ],
-    "src": "0:2559:0"
+    "src": "0:2500:0"
   },
   "legacyAST": {
     "attributes": {
@@ -4401,7 +4330,7 @@
           137
         ],
         "GovToken": [
-          331
+          324
         ],
         "SafeMath": [
           96
@@ -4440,7 +4369,7 @@
             96
           ],
           "name": "SafeMath",
-          "scope": 332
+          "scope": 325
         },
         "children": [
           {
@@ -4664,10 +4593,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                349,
-                                350
+                                395,
+                                396
                               ],
-                              "referencedDeclaration": 349,
+                              "referencedDeclaration": 395,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -4879,10 +4808,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                349,
-                                350
+                                395,
+                                396
                               ],
-                              "referencedDeclaration": 349,
+                              "referencedDeclaration": 395,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -5264,10 +5193,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                349,
-                                350
+                                395,
+                                396
                               ],
-                              "referencedDeclaration": 349,
+                              "referencedDeclaration": 395,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -5584,10 +5513,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                349,
-                                350
+                                395,
+                                396
                               ],
-                              "referencedDeclaration": 349,
+                              "referencedDeclaration": 395,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -5771,7 +5700,7 @@
             137
           ],
           "name": "ERC20Interface",
-          "scope": 332
+          "scope": 325
         },
         "children": [
           {
@@ -6303,12 +6232,12 @@
           "documentation": null,
           "fullyImplemented": true,
           "linearizedBaseContracts": [
-            331,
+            324,
             96,
             137
           ],
           "name": "GovToken",
-          "scope": 332
+          "scope": 325
         },
         "children": [
           {
@@ -6357,7 +6286,7 @@
             "attributes": {
               "constant": false,
               "name": "symbol",
-              "scope": 331,
+              "scope": 324,
               "stateVariable": true,
               "storageLocation": "default",
               "type": "string",
@@ -6383,7 +6312,7 @@
             "attributes": {
               "constant": false,
               "name": "name",
-              "scope": 331,
+              "scope": 324,
               "stateVariable": true,
               "storageLocation": "default",
               "type": "string",
@@ -6409,7 +6338,7 @@
             "attributes": {
               "constant": false,
               "name": "_totalSupply",
-              "scope": 331,
+              "scope": 324,
               "stateVariable": true,
               "storageLocation": "default",
               "type": "uint256",
@@ -6435,7 +6364,7 @@
             "attributes": {
               "constant": false,
               "name": "balances",
-              "scope": 331,
+              "scope": 324,
               "stateVariable": true,
               "storageLocation": "default",
               "type": "mapping(address => uint256)",
@@ -6480,7 +6409,7 @@
             "attributes": {
               "constant": false,
               "name": "allowed",
-              "scope": 331,
+              "scope": 324,
               "stateVariable": true,
               "storageLocation": "default",
               "type": "mapping(address => mapping(address => uint256))",
@@ -6550,7 +6479,7 @@
                 null
               ],
               "name": "",
-              "scope": 331,
+              "scope": 324,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -6862,7 +6791,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 346,
+                                      "referencedDeclaration": 392,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -7022,7 +6951,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 346,
+                                  "referencedDeclaration": 392,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -7079,7 +7008,7 @@
                 null
               ],
               "name": "totalSupply",
-              "scope": 331,
+              "scope": 324,
               "stateMutability": "view",
               "superFunction": 101,
               "visibility": "public"
@@ -7280,7 +7209,7 @@
                 null
               ],
               "name": "balanceOf",
-              "scope": 331,
+              "scope": 324,
               "stateMutability": "view",
               "superFunction": 108,
               "visibility": "public"
@@ -7428,7 +7357,7 @@
                 null
               ],
               "name": "transfer",
-              "scope": 331,
+              "scope": 324,
               "stateMutability": "nonpayable",
               "superFunction": 117,
               "visibility": "public"
@@ -7584,7 +7513,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 346,
+                                      "referencedDeclaration": 392,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -7682,7 +7611,7 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 346,
+                                          "referencedDeclaration": 392,
                                           "type": "msg",
                                           "value": "msg"
                                         },
@@ -7957,7 +7886,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 346,
+                                  "referencedDeclaration": 392,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -8055,7 +7984,7 @@
                 null
               ],
               "name": "transferFrom",
-              "scope": 331,
+              "scope": 324,
               "stateMutability": "nonpayable",
               "superFunction": 128,
               "visibility": "public"
@@ -8433,7 +8362,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 346,
+                                      "referencedDeclaration": 392,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -8560,7 +8489,7 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 346,
+                                          "referencedDeclaration": 392,
                                           "type": "msg",
                                           "value": "msg"
                                         },
@@ -8905,113 +8834,16 @@
             "id": 323,
             "name": "FunctionDefinition",
             "src": "2143:352:0"
-          },
-          {
-            "attributes": {
-              "documentation": null,
-              "implemented": true,
-              "isConstructor": false,
-              "kind": "fallback",
-              "modifiers": [
-                null
-              ],
-              "name": "",
-              "scope": 331,
-              "stateMutability": "payable",
-              "superFunction": null,
-              "visibility": "external"
-            },
-            "children": [
-              {
-                "attributes": {
-                  "parameters": [
-                    null
-                  ]
-                },
-                "children": [],
-                "id": 324,
-                "name": "ParameterList",
-                "src": "2511:2:0"
-              },
-              {
-                "attributes": {
-                  "parameters": [
-                    null
-                  ]
-                },
-                "children": [],
-                "id": 325,
-                "name": "ParameterList",
-                "src": "2532:0:0"
-              },
-              {
-                "children": [
-                  {
-                    "children": [
-                      {
-                        "attributes": {
-                          "argumentTypes": null,
-                          "arguments": [
-                            null
-                          ],
-                          "isConstant": false,
-                          "isLValue": false,
-                          "isPure": false,
-                          "isStructConstructorCall": false,
-                          "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
-                          "type": "tuple()",
-                          "type_conversion": false
-                        },
-                        "children": [
-                          {
-                            "attributes": {
-                              "argumentTypes": [
-                                null
-                              ],
-                              "overloadedDeclarations": [
-                                351,
-                                352
-                              ],
-                              "referencedDeclaration": 351,
-                              "type": "function () pure",
-                              "value": "revert"
-                            },
-                            "id": 326,
-                            "name": "Identifier",
-                            "src": "2542:6:0"
-                          }
-                        ],
-                        "id": 327,
-                        "name": "FunctionCall",
-                        "src": "2542:8:0"
-                      }
-                    ],
-                    "id": 328,
-                    "name": "ExpressionStatement",
-                    "src": "2542:8:0"
-                  }
-                ],
-                "id": 329,
-                "name": "Block",
-                "src": "2532:25:0"
-              }
-            ],
-            "id": 330,
-            "name": "FunctionDefinition",
-            "src": "2502:55:0"
           }
         ],
-        "id": 331,
+        "id": 324,
         "name": "ContractDefinition",
-        "src": "1117:1442:0"
+        "src": "1117:1383:0"
       }
     ],
-    "id": 332,
+    "id": 325,
     "name": "SourceUnit",
-    "src": "0:2559:0"
+    "src": "0:2500:0"
   },
   "compiler": {
     "name": "solc",
@@ -9019,7 +8851,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.3",
-  "updatedAt": "2021-10-26T19:44:15.680Z",
+  "updatedAt": "2021-10-26T20:32:51.220Z",
   "devdoc": {
     "methods": {}
   },

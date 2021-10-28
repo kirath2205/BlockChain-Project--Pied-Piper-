@@ -1,70 +1,56 @@
 {
 	"compiler": {
-		"version": "0.5.11+commit.22be8592"
+		"version": "0.5.17+commit.d19bba13"
 	},
 	"language": "Solidity",
 	"output": {
 		"abi": [
 			{
-				"constant": true,
-				"inputs": [],
-				"name": "name",
-				"outputs": [
+				"inputs": [
 					{
 						"internalType": "string",
-						"name": "",
+						"name": "_name",
 						"type": "string"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [],
-				"name": "totalSupply",
-				"outputs": [
+					},
+					{
+						"internalType": "string",
+						"name": "_symbol",
+						"type": "string"
+					},
 					{
 						"internalType": "uint256",
-						"name": "",
+						"name": "_supply",
 						"type": "uint256"
 					}
 				],
 				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
+				"stateMutability": "nonpayable",
+				"type": "constructor"
 			},
 			{
-				"constant": false,
+				"anonymous": false,
 				"inputs": [
 					{
+						"indexed": true,
 						"internalType": "address",
 						"name": "from",
 						"type": "address"
 					},
 					{
+						"indexed": true,
 						"internalType": "address",
 						"name": "to",
 						"type": "address"
 					},
 					{
+						"indexed": false,
 						"internalType": "uint256",
 						"name": "tokens",
 						"type": "uint256"
 					}
 				],
-				"name": "transferFrom",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "success",
-						"type": "bool"
-					}
-				],
-				"payable": false,
-				"stateMutability": "nonpayable",
-				"type": "function"
+				"name": "Transfer",
+				"type": "event"
 			},
 			{
 				"constant": true,
@@ -105,7 +91,7 @@
 			{
 				"constant": true,
 				"inputs": [],
-				"name": "symbol",
+				"name": "name",
 				"outputs": [
 					{
 						"internalType": "string",
@@ -131,7 +117,7 @@
 						"type": "uint256"
 					}
 				],
-				"name": "safeSub",
+				"name": "safeAdd",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -141,32 +127,6 @@
 				],
 				"payable": false,
 				"stateMutability": "pure",
-				"type": "function"
-			},
-			{
-				"constant": false,
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "to",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "tokens",
-						"type": "uint256"
-					}
-				],
-				"name": "transfer",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "success",
-						"type": "bool"
-					}
-				],
-				"payable": false,
-				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -235,7 +195,7 @@
 						"type": "uint256"
 					}
 				],
-				"name": "safeAdd",
+				"name": "safeSub",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -248,51 +208,91 @@
 				"type": "function"
 			},
 			{
-				"inputs": [
+				"constant": true,
+				"inputs": [],
+				"name": "symbol",
+				"outputs": [
 					{
 						"internalType": "string",
-						"name": "_name",
+						"name": "",
 						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "_symbol",
-						"type": "string"
-					},
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "totalSupply",
+				"outputs": [
 					{
 						"internalType": "uint256",
-						"name": "_supply",
+						"name": "",
 						"type": "uint256"
 					}
 				],
 				"payable": false,
-				"stateMutability": "nonpayable",
-				"type": "constructor"
+				"stateMutability": "view",
+				"type": "function"
 			},
 			{
-				"anonymous": false,
+				"constant": false,
 				"inputs": [
 					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "from",
-						"type": "address"
-					},
-					{
-						"indexed": true,
 						"internalType": "address",
 						"name": "to",
 						"type": "address"
 					},
 					{
-						"indexed": false,
 						"internalType": "uint256",
 						"name": "tokens",
 						"type": "uint256"
 					}
 				],
-				"name": "Transfer",
-				"type": "event"
+				"name": "transfer",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "success",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tokens",
+						"type": "uint256"
+					}
+				],
+				"name": "transferFrom",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "success",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
 			}
 		],
 		"devdoc": {
@@ -306,7 +306,7 @@
 		"compilationTarget": {
 			"contracts/GovToken.sol": "GovToken"
 		},
-		"evmVersion": "petersburg",
+		"evmVersion": "istanbul",
 		"libraries": {},
 		"optimizer": {
 			"enabled": false,
