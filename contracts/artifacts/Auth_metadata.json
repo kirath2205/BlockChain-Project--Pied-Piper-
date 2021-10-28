@@ -57,9 +57,41 @@
 					}
 				],
 				"name": "addProfile",
-				"outputs": [],
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
 				"payable": false,
 				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "username",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "password",
+						"type": "string"
+					}
+				],
+				"name": "login",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -172,10 +204,10 @@
 	},
 	"sources": {
 		"contracts/Auth.sol": {
-			"keccak256": "0x58cc0482d0d84446a38e3d816596f627d3e9f1670c9c0805f84affbb9b67d7a9",
+			"keccak256": "0xcbf89c151cdaf69ff5d14b02566fd152cb4356753f6566a4b0889bf665b710e3",
 			"urls": [
-				"bzz-raw://083eaf100a40b49e6edbf50c4b24049cb1e2609f2e930f161e82fb83d2a9f7b3",
-				"dweb:/ipfs/QmZwj6hqS4uLkwEKHvhAbzg1cbSaLAbdK37PAeyQDehhRj"
+				"bzz-raw://7762a90730490041e7aa84cd8a59852f3641ded6dd49eb34413838ab728cfec4",
+				"dweb:/ipfs/QmdFvzfXYLXtGtVh3n9FGC2GvVt3xvynrVddigedh2U6x6"
 			]
 		}
 	},

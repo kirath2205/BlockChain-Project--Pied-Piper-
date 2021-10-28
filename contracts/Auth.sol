@@ -11,14 +11,22 @@ contract Auth{
     
     mapping(address => Profile[]) public profiles;
     mapping(address => uint) public number_of_profiles;
+    string [] usernames;
+    uint username_count = 0;
     
     event ProfileCreated(string username , address wallet_address);
     event PasswordUpdated(string username);
     
-    function addProfile(string memory username , string memory password , string memory secret_phrase) public {
+    function addProfile(string memory username , string memory password , string memory secret_phrase) public returns (bool){
+        if(checkUsernameExists(username)){
+            return false;
+        }
         profiles[msg.sender].push(Profile(username , password , secret_phrase));
         number_of_profiles[msg.sender]++;
+        usernames.push(username);
+        username_count = username_count+1;
         emit ProfileCreated(username , msg.sender);
+        return true;
     }
     
     //function viewProfile(string memory username) public view;
@@ -35,5 +43,25 @@ contract Auth{
         }
         return false;
     }
+    
+    function checkUsernameExists(string memory username) private view returns (bool){
+        for(uint i=0; i < username_count ; i=i+1){
+            if(keccak256(abi.encodePacked(usernames[i])) == keccak256(abi.encodePacked(username))){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    function login(string memory username , string memory password) public view returns(bool){
+        uint total_users = number_of_profiles[msg.sender];
+        for(uint i=0; i<total_users ; i++){
+            if(keccak256(abi.encodePacked(profiles[msg.sender][i].username)) == keccak256(abi.encodePacked(username)) && keccak256(abi.encodePacked(profiles[msg.sender][i].password)) == keccak256(abi.encodePacked(password))){
+                return true;
+            }
+        }
+        return false;
+    }
+    
     
 }
