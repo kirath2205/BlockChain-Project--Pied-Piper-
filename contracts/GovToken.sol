@@ -25,7 +25,6 @@ contract SafeMath {
  
  
 //ERC Token Standard #20 Interface
- 
 contract ERC20Interface {
     function totalSupply() public view returns (uint);
     function balanceOf(address tokenOwner) public view returns (uint balance);
@@ -36,13 +35,6 @@ contract ERC20Interface {
     
 }
  
- 
-//Contract function to receive approval and execute function in one call
- 
-
- 
-//Actual token contract
- 
 contract GovToken is ERC20Interface, SafeMath {
     string public symbol;
     string public  name;
@@ -50,9 +42,8 @@ contract GovToken is ERC20Interface, SafeMath {
     address root_user;
  
     mapping(address => uint) balances;
-    mapping(address => mapping(address => uint)) allowed;
-    mapping(string => address[]) accounts;
-    mapping(string => uint) accounts_count;
+    //mapping(address => mapping(address => uint)) allowed;
+    mapping(address => string) account_type;
  
     constructor(string memory _name , string memory _symbol , uint _supply) public {
         symbol = _symbol;
@@ -64,23 +55,17 @@ contract GovToken is ERC20Interface, SafeMath {
         emit Transfer(address(0), msg.sender, _supply);
     }
     
-    function initial_transfer(string memory wallet_type, address receiver_address , uint tokens) public returns (bool){
+    function initial_transfer(string memory wallet_type, address receiver_address , uint tokens) public returns (bool flag){
         
-        if(balances[receiver_address]!=0){
-            return false;
+        if(balances[receiver_address] == 0 && keccak256(abi.encodePacked(account_type[receiver_address])) == keccak256(abi.encodePacked("")) && msg.sender == root_user){
+            
+            account_type[receiver_address] = wallet_type;
+            balances[root_user] = safeSub(balances[root_user],tokens);
+            balances[receiver_address] = safeAdd(balances[receiver_address],tokens);
+            return true;
         }
         
-        for(uint i=0;i<accounts_count[wallet_type];i++){
-            if(accounts[wallet_type][i] == receiver_address){
-                return false;
-            }
-        }
-        
-        balances[root_user] = safeSub(balances[root_user],tokens);
-        balances[receiver_address] = safeAdd(balances[receiver_address],tokens);
-        accounts[wallet_type].push(receiver_address);
-        accounts_count[wallet_type]++;
-        return true;
+        return false;
     }
     
     function totalSupply() public view returns (uint) {
@@ -91,7 +76,10 @@ contract GovToken is ERC20Interface, SafeMath {
         return balances[tokenOwner];
     }
  
-    function transfer(address to, uint tokens) public returns (bool success) {
+    function transfer(address to, uint tokens) public returns (bool) {
+        if(tokens<balances[msg.sender]){
+            return false;
+        }
         balances[msg.sender] = safeSub(balances[msg.sender], tokens);
         balances[to] = safeAdd(balances[to], tokens);
         emit Transfer(msg.sender, to, tokens);
@@ -99,20 +87,24 @@ contract GovToken is ERC20Interface, SafeMath {
     }
  
 
-    function transferFrom(address from, address to, uint tokens) public returns (bool success) {
-        require(balances[from] >= tokens);
-        balances[from] = safeSub(balances[from], tokens);
-        allowed[from][msg.sender] = safeSub(allowed[from][msg.sender], tokens);
+    function transferTo(address to , uint tokens) public returns (bool flag){
+        if(balances[msg.sender]<tokens){
+            return false;
+        }
+        balances[msg.sender] = safeSub(balances[msg.sender], tokens);
         balances[to] = safeAdd(balances[to], tokens);
-        emit Transfer(from, to, tokens);
+        emit Transfer(msg.sender, to, tokens);
         return true;
     }
 
-    function mint(address driver, uint tokens) public returns (bool success) {
+    function mint(uint tokens) public returns (bool) {
+        if(msg.sender != root_user){
+            return false;
+        }
         _totalSupply += tokens;
-        balances[driver] += tokens;
-
-        emit Transfer(address(0), driver, tokens);
+        balances[msg.sender] += tokens;
+        emit Transfer(msg.sender, root_user, tokens);
+        return true;
 
     }
  

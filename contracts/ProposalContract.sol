@@ -24,8 +24,16 @@ contract ProposalContract {
       return ProposalID;
     }
 
-
     function getProposalById(uint id) public view returns (string memory proposal_text , string memory proposal_title){
       return (proposals[id].proposal_text,proposals[id].proposal_title);
     }
+
+    function getAccountType() public view returns (string){
+      return account_type[msg.sender];
+    }
+
+    function getWalletBalance() public view returns(bool){
+      return balances[msg.sender];
+    }
+    
 }
