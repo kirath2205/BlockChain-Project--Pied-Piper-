@@ -47,19 +47,42 @@ contract GovToken is ERC20Interface, SafeMath {
     string public symbol;
     string public  name;
     uint public _totalSupply;
+    address root_user;
  
     mapping(address => uint) balances;
     mapping(address => mapping(address => uint)) allowed;
+    mapping(string => address[]) accounts;
+    mapping(string => uint) accounts_count;
  
     constructor(string memory _name , string memory _symbol , uint _supply) public {
         symbol = _symbol;
         name = _name;
         _totalSupply = _supply;
         balances[msg.sender] = _supply;
+        root_user = msg.sender;
 
         emit Transfer(address(0), msg.sender, _supply);
     }
- 
+    
+    function initial_transfer(string memory wallet_type, address receiver_address , uint tokens) public returns (bool){
+        
+        if(balances[receiver_address]!=0){
+            return false;
+        }
+        
+        for(uint i=0;i<accounts_count[wallet_type];i++){
+            if(accounts[wallet_type][i] == receiver_address){
+                return false;
+            }
+        }
+        
+        balances[root_user] = safeSub(balances[root_user],tokens);
+        balances[receiver_address] = safeAdd(balances[receiver_address],tokens);
+        accounts[wallet_type].push(receiver_address);
+        accounts_count[wallet_type]++;
+        return true;
+    }
+    
     function totalSupply() public view returns (uint) {
         return _totalSupply  - balances[address(0)];
     }
