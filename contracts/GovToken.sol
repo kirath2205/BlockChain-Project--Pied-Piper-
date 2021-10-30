@@ -67,7 +67,8 @@ contract GovToken is ERC20Interface, SafeMath {
     function balanceOf(address tokenOwner) public view returns (uint balance) {
         return balances[tokenOwner];
     }
- 
+    
+    
     function transfer(address to, uint tokens) public returns (bool success) {
         balances[msg.sender] = safeSub(balances[msg.sender], tokens);
         balances[to] = safeAdd(balances[to], tokens);
@@ -77,11 +78,20 @@ contract GovToken is ERC20Interface, SafeMath {
  
 
     function transferFrom(address from, address to, uint tokens) public returns (bool success) {
+        require(balances[from] >= tokens);
         balances[from] = safeSub(balances[from], tokens);
         allowed[from][msg.sender] = safeSub(allowed[from][msg.sender], tokens);
         balances[to] = safeAdd(balances[to], tokens);
         emit Transfer(from, to, tokens);
         return true;
+    }
+    
+    function mint(address driver, uint tokens) public returns (bool success) {
+        _totalSupply += tokens;
+        balances[driver] += tokens;
+        
+        emit Transfer(address(0), driver, tokens);
+        
     }
  
 
