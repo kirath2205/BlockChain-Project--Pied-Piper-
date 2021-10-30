@@ -1,7 +1,7 @@
 import React from 'react';
 import { ErrorMessage, useField } from 'formik';
 
-const FormikTextfield = ({ label, onChange, ...props }) => {
+const FormikTextinput = ({ label, onChange, ...props }) => {
     const [field, meta] = useField(props);
     return (
 		<div className="mb-3">
@@ -33,4 +33,4 @@ const FormikTextfield = ({ label, onChange, ...props }) => {
 	);
 }
 
-export default FormikTextfield;
+export default FormikTextinput;

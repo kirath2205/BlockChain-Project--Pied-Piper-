@@ -12,6 +12,7 @@ import {
 // importing pages
 import SubmitProposal from "./screens/SubmitProposal";
 import ViewProposals from "./screens/ViewProposals";
+import NotLoggedIn from "./screens/NotLoggedIn";
 
 const HomePage = (props) => {
 
@@ -77,6 +78,7 @@ const HomePage = (props) => {
 					<Route exact path="/" component={ViewProposals} />
 					<Route path="/view-proposals" component={ViewProposals} />
 					<Route path="/submit-proposal" component={SubmitProposal} />
+					<Route path="/error" component={NotLoggedIn} />
 				</Switch>
 			</Router>
 		</Suspense>

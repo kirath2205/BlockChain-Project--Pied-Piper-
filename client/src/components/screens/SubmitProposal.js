@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Button, Form, Col, InputGroup } from "react-bootstrap";
 import { Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
 import FormikTextfield from '../formComponents/FormikTextfield';
+import FormikTextinput from '../formComponents/FormikTextinput';
 
 // importing styles
 import formClasses from "../Styles/formStyle.module.css";
@@ -33,12 +33,7 @@ const SubmitProposal = () => {
 				deployedNetwork && deployedNetwork.address
 			);
 
-			// Set web3, accounts, and contract to the state, and then proceed with an
-			// example of interacting with the contract's methods.
-			// this.setState(
-			// 	{ web3, accounts, contract: instance },
-			// 	this.runExample
-			// );
+			// Set web3, accounts, and contract to the state
 			setProposalState({ ...proposalState, web3, accounts, contract: instance });
 		} catch (error) {
 			// Catch any errors for any of the above operations.
@@ -49,65 +44,63 @@ const SubmitProposal = () => {
 		}
 	};
 
-	const runExample = async (proposal_text, proposal_title) => {
+	const submitProposal = async (proposal_text, proposal_title) => {
 		const { accounts, contract } = proposalState;
 
-		// Stores a given value, 5 by default.
 		await contract.methods
 			.addProposal(proposal_text, proposal_title)
 			.send({ from: accounts[0] });
-
-		// Get the value from the contract to prove it worked.
-		// const response = await contract.methods.get().call();
-
-		// Update state with the result.
-		// this.setState({ storageValue: response });
-		// setContract({ ...contract, storageValue: response });
 	};
 
-	const getAllProposals = async (proposal_text, proposal_title) => {
+	const getProposalCount = async () => {
 		const { accounts, contract } = proposalState;
 
-		// Get the value from the contract to prove it worked.
-		const response = await contract.methods.getProposals().call();
+		const response = await contract.methods.getProposalCount().call();
 		console.log(response);
-		// Update state with the result.
-		// this.setState({ storageValue: response });
-		// setContract({ ...contract, storageValue: response });
+	}
+
+	const getProposalById = async (id) => {
+		id = 7;
+		const { accounts, contract } = proposalState;
+
+		const response = await contract.methods.getProposalById(id).call();
+		console.log(response);
 	};
 
 	useEffect(() => {
 		makeInstance();
 	}, []);
 
-    const [proposal, setProposal] = useState({
-		proposal_text: "",
-    });
     const [submitButtom, setSubmitButtom] = useState(false);
     
     const validationSchema = Yup.object().shape({
 		proposal_text: Yup.string()
-			.min(50, "Proposal must have at least 50 characters")
+			.min(5, "Proposal must have at least 5 characters")
 			.max(500, "FProposal can't be longer than 500 characters")
 			.required("Proposal is required"),
-    });
+		proposal_title: Yup.string()
+			.min(5, "Title must have at least 5 characters")
+			.max(60, "Title can't be longer than 60 characters")
+			.required("Proposal title is required"),
+	});
     
     const SumbitForm = (values) => {
         console.log("Submitted");
 		console.log(values);
 		
-		runExample(values.proposal_text, "PROPOSAL TITLE");
+		submitProposal(values.proposal_text, values.proposal_title);
 	}
 	
 	const DisplayProposals = () => {
-		getAllProposals();
+		getProposalCount();
 	}
 
 	return (
-		<div>
+		<div className={formClasses.formBody}>
 			<Formik
 				initialValues={{
 					proposal_text: "",
+					proposal_title: "",
 				}}
 				validationSchema={validationSchema}
 				onSubmit={(values, { setSubmitting, resetForm }) => {
@@ -127,10 +120,7 @@ const SubmitProposal = () => {
 					isSubmitting,
 				}) => (
 					<div>
-						<Form
-							onSubmit={handleSubmit}
-							className={formClasses.formBody}
-						>
+						<Form onSubmit={handleSubmit}>
 							<h3>Propose a feature</h3>
 
 							<FormikTextfield
@@ -139,6 +129,14 @@ const SubmitProposal = () => {
 								type="textfield"
 								placeholder="Enter proposal description"
 							/>
+
+							<FormikTextinput
+								label="Proposal title"
+								name="proposal_title"
+								type="text"
+								placeholder="Enter proposal title"
+							/>
+
 							<br />
 							<Button variant="danger" type="submit">
 								{submitButtom ? "Loading..." : "Submit"}
@@ -147,7 +145,10 @@ const SubmitProposal = () => {
 					</div>
 				)}
 			</Formik>
-			<Button onClick={DisplayProposals}>Display Proposals</Button>
+			<br />
+			<Button onClick={DisplayProposals}>Get Count</Button>
+			<br />
+			<Button onClick={getProposalById}>Get Proposal by ID</Button>
 		</div>
 	);
 }

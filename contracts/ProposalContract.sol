@@ -25,7 +25,7 @@ contract ProposalContract {
     }
 
 
-    function getProposalById(uint id) public view returns (string proposal_text , string proposal_title){
+    function getProposalById(uint id) public view returns (string memory proposal_text , string memory proposal_title){
       return (proposals[id].proposal_text,proposals[id].proposal_title);
     }
 }
