@@ -57,6 +57,7 @@ contract Auth{
         uint total_users = number_of_profiles[msg.sender];
         for(uint i=0; i<total_users ; i++){
             if(keccak256(abi.encodePacked(profiles[msg.sender][i].username)) == keccak256(abi.encodePacked(username)) && keccak256(abi.encodePacked(profiles[msg.sender][i].password)) == keccak256(abi.encodePacked(password))){
+                // check if the address has any govt tokens
                 return true;
             }
         }
