@@ -13,6 +13,8 @@ import {
 import SubmitProposal from "./screens/SubmitProposal";
 import ViewProposals from "./screens/ViewProposals";
 import NotLoggedIn from "./screens/NotLoggedIn";
+import Login from "./screens/Login";
+import Register from "./screens/Register";
 
 const HomePage = (props) => {
 
@@ -78,6 +80,8 @@ const HomePage = (props) => {
 					<Route exact path="/" component={ViewProposals} />
 					<Route path="/view-proposals" component={ViewProposals} />
 					<Route path="/submit-proposal" component={SubmitProposal} />
+					<Route path="/login" component={Login} />
+					<Route path="/register" component={Register} />
 					<Route path="/error" component={NotLoggedIn} />
 				</Switch>
 			</Router>

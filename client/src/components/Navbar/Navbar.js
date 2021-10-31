@@ -18,6 +18,8 @@ const PageNavbar = () => {
 				<Nav>
 					<Nav.Link href="/view-proposals">View Proposals</Nav.Link>
 					<Nav.Link href="/submit-proposal">Submit Proposals</Nav.Link>
+					<Nav.Link href="/login">Login</Nav.Link>
+					<Nav.Link href="/register">Register</Nav.Link>
 				</Nav>
 			</Container>
 		</Navbar>

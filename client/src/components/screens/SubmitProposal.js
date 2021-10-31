@@ -90,10 +90,6 @@ const SubmitProposal = () => {
 		
 		submitProposal(values.proposal_text, values.proposal_title);
 	}
-	
-	const DisplayProposals = () => {
-		getProposalCount();
-	}
 
 	return (
 		<div className={formClasses.formBody}>
@@ -146,7 +142,7 @@ const SubmitProposal = () => {
 				)}
 			</Formik>
 			<br />
-			<Button onClick={DisplayProposals}>Get Count</Button>
+			<Button onClick={getProposalCount}>Get Count</Button>
 			<br />
 			<Button onClick={getProposalById}>Get Proposal by ID</Button>
 		</div>

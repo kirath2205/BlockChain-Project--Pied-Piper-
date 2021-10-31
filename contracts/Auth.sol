@@ -14,8 +14,9 @@ contract Auth{
     string [] usernames;
     uint username_count = 0;
     
-    event ProfileCreated(string username , address wallet_address);
+    event ProfileCreated(string username, address wallet_address);
     event PasswordUpdated(string username);
+    event loginUnsuccessful(string username);
     
     function addProfile(string memory username , string memory password , string memory secret_phrase) public returns (bool){
         if(checkUsernameExists(username)){
@@ -53,15 +54,15 @@ contract Auth{
         return false;
     }
     
-    function login(string memory username , string memory password) public view returns(bool){
+    function login(string memory username , string memory password) public returns(uint){
         uint total_users = number_of_profiles[msg.sender];
         for(uint i=0; i<total_users ; i++){
             if(keccak256(abi.encodePacked(profiles[msg.sender][i].username)) == keccak256(abi.encodePacked(username)) && keccak256(abi.encodePacked(profiles[msg.sender][i].password)) == keccak256(abi.encodePacked(password))){
                 // check if the address has any govt tokens
-                return true;
+                return 1;
             }
         }
-        return false;
+        return 0;
     }
     
     
