@@ -89,6 +89,58 @@
 				"type": "function"
 			},
 			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "wallet_type",
+						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "receiver_address",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tokens",
+						"type": "uint256"
+					}
+				],
+				"name": "initial_transfer",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "flag",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokens",
+						"type": "uint256"
+					}
+				],
+				"name": "mint",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"constant": true,
 				"inputs": [],
 				"name": "name",
@@ -255,7 +307,7 @@
 				"outputs": [
 					{
 						"internalType": "bool",
-						"name": "success",
+						"name": "",
 						"type": "bool"
 					}
 				],
@@ -293,6 +345,32 @@
 				"payable": false,
 				"stateMutability": "nonpayable",
 				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tokens",
+						"type": "uint256"
+					}
+				],
+				"name": "transferTo",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "flag",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
 			}
 		],
 		"devdoc": {
@@ -316,10 +394,10 @@
 	},
 	"sources": {
 		"contracts/GovToken.sol": {
-			"keccak256": "0xa733e13865a05f0f228a3430abfe61d34c9b837166ad2aa60dcedaf955634a91",
+			"keccak256": "0x469e534bc3242450c98b620860339394f9334ccdf7773b7c24e93052a543907b",
 			"urls": [
-				"bzz-raw://5c0477e1f108f80ae2ec93ccd8f143d944671c928f11dfe2320ce1e19440a746",
-				"dweb:/ipfs/QmWBoJAhMQyCMoBNRY6jtPzKkh9ZaEKTg8gneJwU1NPLhe"
+				"bzz-raw://ba5b6023e833fb6119dd83d17d5f1ea1d1ed69b6d66e72ad5cc15b465e71cf02",
+				"dweb:/ipfs/Qma2iyiq9UWntY12KYQFmWCRrcs19MrH6ovPdhwgN5tDkT"
 			]
 		}
 	},

@@ -1,7 +1,8 @@
 pragma solidity >=0.4.21 <0.7.0;
 pragma experimental ABIEncoderV2;
+import "./GovToken.sol";
 
-contract ProposalContract {
+contract ProposalContract is GovToken{
     uint public ProposalID = 0;
 
     struct Proposal {
@@ -24,8 +25,16 @@ contract ProposalContract {
       return ProposalID;
     }
 
-
-    function getProposalById(uint id) public view returns (string memory proposal_text , string memory proposal_title){
+    function getProposalById(uint id) public view returns (string memory  , string memory ){
       return (proposals[id].proposal_text,proposals[id].proposal_title);
     }
+
+    function getAccountType() public view returns (string memory){
+      return account_type[msg.sender];
+    }
+
+    function getWalletBalance() public view returns(uint){
+      return balances[msg.sender];
+    }
+    
 }

@@ -1,7 +1,8 @@
 pragma solidity >=0.4.21 <0.7.0;
 pragma experimental ABIEncoderV2;
+import "./GovToken.sol";
 
-contract Auth{
+contract Auth is GovToken{
     
     struct Profile {
         string username;
@@ -11,6 +12,7 @@ contract Auth{
     
     mapping(address => Profile[]) public profiles;
     mapping(address => uint) public number_of_profiles;
+
     string [] usernames;
     uint username_count = 0;
     
@@ -19,7 +21,8 @@ contract Auth{
     event loginUnsuccessful(string username);
     
     function addProfile(string memory username , string memory password , string memory secret_phrase) public returns (bool){
-        if(checkUsernameExists(username)){
+        
+        if(checkUsernameExists(username) ){
             return false;
         }
         profiles[msg.sender].push(Profile(username , password , secret_phrase));
@@ -29,8 +32,7 @@ contract Auth{
         emit ProfileCreated(username , msg.sender);
         return true;
     }
-    
-    //function viewProfile(string memory username) public view;
+
     
     function updatePassword(string memory username , string memory secret_phrase , string memory new_password) public returns (bool){
         
@@ -64,6 +66,4 @@ contract Auth{
         }
         return 0;
     }
-    
-    
 }
