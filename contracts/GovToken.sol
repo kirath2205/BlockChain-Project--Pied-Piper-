@@ -55,7 +55,7 @@ contract GovToken is ERC20Interface, SafeMath {
         emit Transfer(address(0), msg.sender, _supply);
     }
     
-    function initial_transfer(string memory wallet_type, address receiver_address , uint tokens) public returns (bool flag){
+    function initial_transfer(string memory wallet_type, address receiver_address , uint tokens) public returns (bool){
         
         if(balances[receiver_address] == 0 && keccak256(abi.encodePacked(account_type[receiver_address])) == keccak256(abi.encodePacked("")) && msg.sender == root_user){
             
@@ -72,7 +72,7 @@ contract GovToken is ERC20Interface, SafeMath {
         return _totalSupply  - balances[address(0)];
     }
  
-    function balanceOf(address tokenOwner) public view returns (uint balance) {
+    function balanceOf(address tokenOwner) public view returns (uint) {
         return balances[tokenOwner];
     }
  
@@ -86,16 +86,6 @@ contract GovToken is ERC20Interface, SafeMath {
         return true;
     }
  
-
-    function transferTo(address to , uint tokens) public returns (bool flag){
-        if(balances[msg.sender]<tokens){
-            return false;
-        }
-        balances[msg.sender] = safeSub(balances[msg.sender], tokens);
-        balances[to] = safeAdd(balances[to], tokens);
-        emit Transfer(msg.sender, to, tokens);
-        return true;
-    }
 
     function mint(uint tokens) public returns (bool) {
         if(msg.sender != root_user){
