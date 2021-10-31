@@ -55,17 +55,17 @@ contract GovToken is ERC20Interface, SafeMath {
         emit Transfer(address(0), msg.sender, _supply);
     }
     
-    function initial_transfer(string memory wallet_type, address receiver_address , uint tokens) public returns (bool){
+    function initial_transfer(string memory wallet_type, address receiver_address , uint tokens) public returns (uint){
         
         if(balances[receiver_address] == 0 && keccak256(abi.encodePacked(account_type[receiver_address])) == keccak256(abi.encodePacked("")) && msg.sender == root_user){
             
             account_type[receiver_address] = wallet_type;
             balances[root_user] = safeSub(balances[root_user],tokens);
             balances[receiver_address] = safeAdd(balances[receiver_address],tokens);
-            return true;
+            return 1;
         }
         
-        return false;
+        return 0;
     }
     
     function totalSupply() public view returns (uint) {
@@ -76,25 +76,25 @@ contract GovToken is ERC20Interface, SafeMath {
         return balances[tokenOwner];
     }
  
-    function transfer(address to, uint tokens) public returns (bool) {
+    function transfer(address to, uint tokens) public returns (uint) {
         if(tokens<balances[msg.sender]){
-            return false;
+            return 0;
         }
         balances[msg.sender] = safeSub(balances[msg.sender], tokens);
         balances[to] = safeAdd(balances[to], tokens);
         emit Transfer(msg.sender, to, tokens);
-        return true;
+        return 1;
     }
  
 
-    function mint(uint tokens) public returns (bool) {
+    function mint(uint tokens) public returns (uint) {
         if(msg.sender != root_user){
-            return false;
+            return 0;
         }
         _totalSupply += tokens;
         balances[msg.sender] += tokens;
         emit Transfer(msg.sender, root_user, tokens);
-        return true;
+        return 1;
 
     }
  
