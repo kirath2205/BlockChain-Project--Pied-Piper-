@@ -8,6 +8,8 @@ contract ProposalContract is GovToken{
     struct Proposal {
         string proposal_text;
         string proposal_title;
+        uint votes;
+
     }
 
     mapping(uint => Proposal) public proposals;
@@ -15,7 +17,7 @@ contract ProposalContract is GovToken{
     event ProposalCreated(uint ProposalID, string proposal_title);
 
     function addProposal(string memory proposal_text, string memory proposal_title) public returns (uint){
-        proposals[ProposalID] = Proposal(proposal_text, proposal_title);
+        proposals[ProposalID] = Proposal(proposal_text, proposal_title , 0);
         emit ProposalCreated(ProposalID, proposal_title);
         ProposalID++;
         return ProposalID;
@@ -36,5 +38,5 @@ contract ProposalContract is GovToken{
     function getWalletBalance() public view returns(uint){
       return balances[msg.sender];
     }
-    
+
 }

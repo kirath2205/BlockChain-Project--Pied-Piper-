@@ -47,13 +47,13 @@ contract Auth is GovToken{
         return 0;
     }
     
-    function checkUsernameExists(string memory username) private view returns (uint){
+    function checkUsernameExists(string memory username) private view returns (bool){
         for(uint i=0; i < username_count ; i=i+1){
             if(keccak256(abi.encodePacked(usernames[i])) == keccak256(abi.encodePacked(username))){
-                return 1;
+                return true;
             }
         }
-        return 0;
+        return false;
     }
     
     function login(string memory username , string memory password) public returns(uint){
@@ -63,6 +63,13 @@ contract Auth is GovToken{
                 // check if the address has any govt tokens
                 return 1;
             }
+        }
+        return 0;
+    }
+
+    function check_if_council_member() public view returns (uint){
+        if(msg.sender == newCouncil.root_user || msg.sender == newCouncil.council_member_one || msg.sender == newCouncil.council_member_two){
+            return 1;
         }
         return 0;
     }
