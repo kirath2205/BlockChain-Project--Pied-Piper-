@@ -33,20 +33,16 @@ contract Vote is GovToken, ProposalContract{
         return 0;
     }
 
-    funtion find_vote_count_of_proposal(uint proposal_id) public view returns (uint){
+    function find_vote_count_of_proposal(uint proposal_id) public view returns (uint){
         return proposal_vote_count[proposal_id];
     }
 
-    function sort_proposal_according_to_votes() public view returns (){
+    /*function sort_proposal_according_to_votes() public view returns (){
         pass;
     }
 
     funtion sort_proposals_according_to_publish_time() public view returns (){
         pass;
-    }
-    
-
-
-
+    }*/
 
 }

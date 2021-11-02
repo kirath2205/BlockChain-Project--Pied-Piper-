@@ -8,7 +8,7 @@ contract ProposalContract is GovToken{
     struct Proposal {
         string proposal_text;
         string proposal_title;
-        boolean completed;
+        bool completed;
     }
 
     mapping(uint => Proposal) public proposals;
