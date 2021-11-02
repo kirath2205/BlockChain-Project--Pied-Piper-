@@ -8,8 +8,7 @@ contract ProposalContract is GovToken{
     struct Proposal {
         string proposal_text;
         string proposal_title;
-        uint votes;
-
+        boolean completed;
     }
 
     mapping(uint => Proposal) public proposals;
@@ -17,7 +16,7 @@ contract ProposalContract is GovToken{
     event ProposalCreated(uint ProposalID, string proposal_title);
 
     function addProposal(string memory proposal_text, string memory proposal_title) public returns (uint){
-        proposals[ProposalID] = Proposal(proposal_text, proposal_title , 0);
+        proposals[ProposalID] = Proposal(proposal_text, proposal_title , false);
         emit ProposalCreated(ProposalID, proposal_title);
         ProposalID++;
         return ProposalID;
