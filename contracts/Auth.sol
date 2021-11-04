@@ -56,7 +56,7 @@ contract Auth is GovToken{
         return false;
     }
     
-    function login(string memory username , string memory password) public returns(uint){
+    function login(string memory username , string memory password) public view returns(uint){
         uint total_users = number_of_profiles[msg.sender];
         for(uint i=0; i<total_users ; i++){
             if(keccak256(abi.encodePacked(profiles[msg.sender][i].username)) == keccak256(abi.encodePacked(username)) && keccak256(abi.encodePacked(profiles[msg.sender][i].password)) == keccak256(abi.encodePacked(password))){
@@ -68,7 +68,7 @@ contract Auth is GovToken{
     }
 
     function check_if_council_member() public view returns (uint){
-        if(msg.sender == newCouncil.root_user || msg.sender == newCouncil.council_member_one || msg.sender == newCouncil.council_member_two){
+        if(msg.sender == _driver || _councilMembers[msg.sender] == 1){
             return 1;
         }
         return 0;
