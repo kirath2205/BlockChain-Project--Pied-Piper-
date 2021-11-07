@@ -29,6 +29,7 @@ contract Auth is GovToken{
         number_of_profiles[msg.sender]++;
         usernames.push(username);
         username_count = username_count+1;
+        // give some tokens on registration,if it is a platform user
         emit ProfileCreated(username , msg.sender);
         return 1;
     }
