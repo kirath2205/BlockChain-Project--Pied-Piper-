@@ -44,26 +44,30 @@
 		},
 		"gasEstimates": null,
 		"methodIdentifiers": {
+			"ProposalID()": "1f6e7c0f",
 			"_totalSupply()": "3eaaf86b",
-			"addProfile(string,string,string)": "d909bf0e",
+			"addProposal(string,string)": "23d1c95e",
 			"balanceOf(address)": "70a08231",
-			"check_if_council_member()": "59c1414c",
+			"can_vote(uint256)": "0f397b9f",
+			"caste_vote(uint256,uint256)": "d91e5eb0",
 			"deleteTransaction(uint256)": "00e9c006",
+			"find_vote_count_of_proposal(uint256)": "525301f4",
+			"getAccountType()": "52d6a0a3",
 			"getPendingTransactions()": "d11db83f",
+			"getProposalById(uint256)": "3656de21",
+			"getProposalCount()": "c08cc02d",
+			"getWalletBalance()": "329a27e7",
 			"initial_transfer(string,address,uint256)": "c640dd93",
-			"login(string,string)": "58467dbc",
 			"mintTokens(uint256)": "97304ced",
 			"name()": "06fdde03",
-			"number_of_profiles(address)": "d5f4d694",
-			"profiles(address,uint256)": "1b2ed49c",
+			"proposals(uint256)": "013cf08b",
 			"receiveTokens(uint256)": "743e0c9b",
 			"signTransaction(uint256)": "5d9ec210",
 			"symbol()": "95d89b41",
 			"totalSupply()": "18160ddd",
 			"transfer(address,uint256)": "a9059cbb",
 			"transferFrom(address,address,uint256)": "23b872dd",
-			"transferTo(address,uint256)": "2ccb1b30",
-			"updatePassword(string,string,string)": "507b4e79"
+			"transferTo(address,uint256)": "2ccb1b30"
 		}
 	},
 	"abi": [
@@ -72,31 +76,18 @@
 			"inputs": [
 				{
 					"indexed": false,
-					"internalType": "string",
-					"name": "username",
-					"type": "string"
-				}
-			],
-			"name": "PasswordUpdated",
-			"type": "event"
-		},
-		{
-			"anonymous": false,
-			"inputs": [
-				{
-					"indexed": false,
-					"internalType": "string",
-					"name": "username",
-					"type": "string"
+					"internalType": "uint256",
+					"name": "ProposalID",
+					"type": "uint256"
 				},
 				{
 					"indexed": false,
-					"internalType": "address",
-					"name": "wallet_address",
-					"type": "address"
+					"internalType": "string",
+					"name": "proposal_title",
+					"type": "string"
 				}
 			],
-			"name": "ProfileCreated",
+			"name": "ProposalCreated",
 			"type": "event"
 		},
 		{
@@ -228,13 +219,34 @@
 			"inputs": [
 				{
 					"indexed": false,
-					"internalType": "string",
-					"name": "username",
-					"type": "string"
+					"internalType": "uint256",
+					"name": "ProposalID",
+					"type": "uint256"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "votes",
+					"type": "uint256"
 				}
 			],
-			"name": "loginUnsuccessful",
+			"name": "VoteCasted",
 			"type": "event"
+		},
+		{
+			"constant": true,
+			"inputs": [],
+			"name": "ProposalID",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
 		},
 		{
 			"constant": true,
@@ -256,21 +268,16 @@
 			"inputs": [
 				{
 					"internalType": "string",
-					"name": "username",
+					"name": "proposal_text",
 					"type": "string"
 				},
 				{
 					"internalType": "string",
-					"name": "password",
-					"type": "string"
-				},
-				{
-					"internalType": "string",
-					"name": "secret_phrase",
+					"name": "proposal_title",
 					"type": "string"
 				}
 			],
-			"name": "addProfile",
+			"name": "addProposal",
 			"outputs": [
 				{
 					"internalType": "uint256",
@@ -305,8 +312,14 @@
 		},
 		{
 			"constant": true,
-			"inputs": [],
-			"name": "check_if_council_member",
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "vote_count",
+					"type": "uint256"
+				}
+			],
+			"name": "can_vote",
 			"outputs": [
 				{
 					"internalType": "uint256",
@@ -316,6 +329,32 @@
 			],
 			"payable": false,
 			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": false,
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "vote_count",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "proposal_id",
+					"type": "uint256"
+				}
+			],
+			"name": "caste_vote",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"payable": false,
+			"stateMutability": "nonpayable",
 			"type": "function"
 		},
 		{
@@ -335,6 +374,42 @@
 		},
 		{
 			"constant": true,
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "proposal_id",
+					"type": "uint256"
+				}
+			],
+			"name": "find_vote_count_of_proposal",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [],
+			"name": "getAccountType",
+			"outputs": [
+				{
+					"internalType": "string",
+					"name": "",
+					"type": "string"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": true,
 			"inputs": [],
 			"name": "getPendingTransactions",
 			"outputs": [
@@ -342,6 +417,62 @@
 					"internalType": "uint256[]",
 					"name": "",
 					"type": "uint256[]"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "id",
+					"type": "uint256"
+				}
+			],
+			"name": "getProposalById",
+			"outputs": [
+				{
+					"internalType": "string",
+					"name": "",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "",
+					"type": "string"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [],
+			"name": "getProposalCount",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [],
+			"name": "getWalletBalance",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
 				}
 			],
 			"payable": false,
@@ -380,32 +511,6 @@
 			"type": "function"
 		},
 		{
-			"constant": true,
-			"inputs": [
-				{
-					"internalType": "string",
-					"name": "username",
-					"type": "string"
-				},
-				{
-					"internalType": "string",
-					"name": "password",
-					"type": "string"
-				}
-			],
-			"name": "login",
-			"outputs": [
-				{
-					"internalType": "uint256",
-					"name": "",
-					"type": "uint256"
-				}
-			],
-			"payable": false,
-			"stateMutability": "view",
-			"type": "function"
-		},
-		{
 			"constant": false,
 			"inputs": [
 				{
@@ -439,53 +544,27 @@
 			"constant": true,
 			"inputs": [
 				{
-					"internalType": "address",
-					"name": "",
-					"type": "address"
-				}
-			],
-			"name": "number_of_profiles",
-			"outputs": [
-				{
 					"internalType": "uint256",
 					"name": "",
 					"type": "uint256"
 				}
 			],
-			"payable": false,
-			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"constant": true,
-			"inputs": [
-				{
-					"internalType": "address",
-					"name": "",
-					"type": "address"
-				},
-				{
-					"internalType": "uint256",
-					"name": "",
-					"type": "uint256"
-				}
-			],
-			"name": "profiles",
+			"name": "proposals",
 			"outputs": [
 				{
 					"internalType": "string",
-					"name": "username",
+					"name": "proposal_text",
 					"type": "string"
 				},
 				{
 					"internalType": "string",
-					"name": "password",
+					"name": "proposal_title",
 					"type": "string"
 				},
 				{
-					"internalType": "string",
-					"name": "secret_phrase",
-					"type": "string"
+					"internalType": "bool",
+					"name": "completed",
+					"type": "bool"
 				}
 			],
 			"payable": false,
@@ -625,37 +704,6 @@
 			],
 			"name": "transferTo",
 			"outputs": [],
-			"payable": false,
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
-			"constant": false,
-			"inputs": [
-				{
-					"internalType": "string",
-					"name": "username",
-					"type": "string"
-				},
-				{
-					"internalType": "string",
-					"name": "secret_phrase",
-					"type": "string"
-				},
-				{
-					"internalType": "string",
-					"name": "new_password",
-					"type": "string"
-				}
-			],
-			"name": "updatePassword",
-			"outputs": [
-				{
-					"internalType": "uint256",
-					"name": "",
-					"type": "uint256"
-				}
-			],
 			"payable": false,
 			"stateMutability": "nonpayable",
 			"type": "function"

@@ -42,11 +42,13 @@ contract GovToken is ERC20Interface {
     string public symbol;
     string public  name;
     uint public _totalSupply;
+    uint current_epoch ;
+    bool council_meeting = false;
     
     address internal _driver;
     mapping(address => uint8) internal _councilMembers;
     
-    uint private MIN_SIGNATURES =0;
+    uint private MIN_SIGNATURES = 0;
     
 
     // struct Council{
@@ -75,6 +77,7 @@ contract GovToken is ERC20Interface {
         name = _name;
         _totalSupply = _supply;
         balances[msg.sender] = _supply;
+        current_epoch = 0;
         // newCouncil.root_user = msg.sender;
         _driver = msg.sender;
         emit Transfer(address(0), msg.sender, _supply);
@@ -284,6 +287,17 @@ contract GovToken is ERC20Interface {
       delete _transactions[transactionId];
     }
 
+//  
+    function start_council_meeting() public returns (uint){
+        if(council_meeting){
+            council_meeting = false;
+            return 0;
+        }
+        else{
+            council_meeting = true;
+            return 1;
+        }
+    }
 
  
 }
