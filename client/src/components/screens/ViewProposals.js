@@ -70,13 +70,19 @@ const ViewProposals = () => {
         const totalProposals = await getProposalCount();
         console.log("Total proposals in blockchain: " + totalProposals);
 
+		setAllProposals([]);
+
         for (let i = 0; i < totalProposals; i++) {
             const tempProp = await getProposalById(i);
             console.log(tempProp);
             // setAllProposals([...allProposals, tempProp]);
 			setAllProposals((oldArray) => [...oldArray, tempProp]);
 		}
-    }
+	}
+	
+	const handleProposalClick = (proposal, ind) => {
+		console.log(proposal, ind);
+	};
 
 	useEffect(() => {
 		makeInstance();
@@ -102,6 +108,9 @@ const ViewProposals = () => {
 							padding: "20px",
 							marginTop: "10px",
 						}}
+						onClick={() =>
+							handleProposalClick(proposal, ind)
+						}
 					>
 						<div>
 							{" "}

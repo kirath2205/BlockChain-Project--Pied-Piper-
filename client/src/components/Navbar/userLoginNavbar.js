@@ -3,7 +3,6 @@ import React from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 
 const PageNavbar = () => {
-
 	return (
 		<Navbar bg="dark" variant="dark">
 			<Navbar.Brand>
@@ -15,9 +14,15 @@ const PageNavbar = () => {
 					alt="React Bootstrap logo"
 				/>
 			</Navbar.Brand>
-			<div style={{ border: "1px solid white", borderRadius: "5px", padding: "0 5px" }}>
+			<div
+				style={{
+					border: "1px solid white",
+					borderRadius: "5px",
+					padding: "0 5px",
+				}}
+			>
 				<Typography style={{ color: "white" }}>
-					Council Member
+					Platform User
 				</Typography>
 			</div>
 			<Container style={{ justifyContent: "flex-end" }}>
@@ -28,6 +33,6 @@ const PageNavbar = () => {
 			</Container>
 		</Navbar>
 	);
-}
+};
 
 export default PageNavbar;

@@ -9,6 +9,11 @@ import {
 	useLocation,
 } from "react-router-dom";
 
+// navbars
+import userSideNav from './Navbar/userSideNav';
+import userNavbar from './Navbar/userNavbar';
+import councilSideNav from './Navbar/councilSideNav';
+
 // importing pages
 import SubmitProposal from "./screens/SubmitProposal";
 import ViewProposals from "./screens/ViewProposals";
@@ -74,16 +79,20 @@ const HomePage = (props) => {
 	return (
 		<Suspense fallback={<div>Loading...</div>}>
 			<Router>
-				<PageNavbar />
+				{/* <PageNavbar /> */}
 
 				<Switch>
-					<Route exact path="/" component={ViewProposals} />
-					<Route path="/view-proposals" component={ViewProposals} />
-					<Route path="/submit-proposal" component={SubmitProposal} />
+					<Route exact path="/" component={councilSideNav} />
+					<Route exact path="/council-login" component={councilSideNav} />
+					<Route exact path="/user-login" component={userSideNav} />
 					<Route path="/login" component={Login} />
 					<Route path="/register" component={Register} />
 					<Route path="/error" component={NotLoggedIn} />
+					{/* <userSideNav /> */}
+					<Route path="/view-proposals" component={ViewProposals} />
+					<Route path="/submit-proposal" component={SubmitProposal} />
 				</Switch>
+				<Switch></Switch>
 			</Router>
 		</Suspense>
 	);

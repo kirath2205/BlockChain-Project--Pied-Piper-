@@ -11,6 +11,9 @@ import formClasses from "../Styles/formStyle.module.css";
 // importing contract
 import Auth from "../../contracts/Auth.json";
 
+// navbar
+import PageNavbar from "../Navbar/mainNavbar";
+
 import getWeb3 from "../../getWeb3";
 
 const Login = () => {
@@ -49,11 +52,8 @@ const Login = () => {
 				...proposalState,
 				web3,
                 accounts,
-                from: accounts[0],
 				contract: instance,
             });
-
-            // console.log("Contract addess:", instance.address);
 
 		} catch (error) {
 			// Catch any errors for any of the above operations.
@@ -65,7 +65,7 @@ const Login = () => {
     };
 
     const accountLogin = async (values) => {
-		const { accounts, contract, from } = proposalState;
+		const { accounts, contract } = proposalState;
         contract.options.address = "0xEF82476Ea92D95195C1D1352A70f6D41E5e7A1c9";
 
         const response = await contract.methods
@@ -91,60 +91,70 @@ const Login = () => {
         accountLogin(values);
     };
     
-    useEffect(() => {
+	useEffect(() => {
 		makeInstance();
 	}, []);
 
 	return (
-		<div className={formClasses.formBody}>
-			<Formik
-				initialValues={{
-					username: "",
-					password: "",
-				}}
-				validationSchema={validationSchema}
-				onSubmit={(values, { setSubmitting, resetForm }) => {
-					setSubmitting(true);
-					SumbitForm(values);
-					// resetForm();
-					setSubmitting(false);
-				}}
-			>
-				{({
-					values,
-					errors,
-					touched,
-					handleChange,
-					handleBlur,
-					handleSubmit,
-					isSubmitting,
-				}) => (
-					<div>
-						<Form onSubmit={handleSubmit}>
-							<h3>Login</h3>
+		<div>
+			<PageNavbar />
+			<div className={formClasses.pageBackground}>
+				<div className={formClasses.formBody}>
+					<div className={formClasses.formContent}>
+						<Formik
+							initialValues={{
+								username: "",
+								password: "",
+							}}
+							validationSchema={validationSchema}
+							onSubmit={(
+								values,
+								{ setSubmitting, resetForm }
+							) => {
+								setSubmitting(true);
+								SumbitForm(values);
+								// resetForm();
+								setSubmitting(false);
+							}}
+						>
+							{({
+								values,
+								errors,
+								touched,
+								handleChange,
+								handleBlur,
+								handleSubmit,
+								isSubmitting,
+							}) => (
+								<div>
+									<Form onSubmit={handleSubmit}>
+										<h3>Login</h3>
 
-							<FormikTextinput
-								label="Username"
-								name="username"
-								type="text"
-								placeholder="Enter username"
-							/>
+										<FormikTextinput
+											label="Username"
+											name="username"
+											type="text"
+											placeholder="Enter username"
+										/>
 
-							<FormikTextinput
-								label="Password"
-								name="password"
-								type="password"
-								placeholder="Enter password"
-							/>
+										<FormikTextinput
+											label="Password"
+											name="password"
+											type="password"
+											placeholder="Enter password"
+										/>
 
-							<br />
-							<Button variant="danger" type="submit">
-								Login
-							</Button>
-						</Form>
+										<br />
+										<Button variant="danger" type="submit">
+											Login
+										</Button>
+									</Form>
+								</div>
+							)}
+						</Formik>
 					</div>
-				)}
-			</Formik>
+				</div>
+			</div>
 		</div>
 	);
 };

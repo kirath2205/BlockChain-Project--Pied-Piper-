@@ -67,10 +67,6 @@ const SubmitProposal = () => {
 		console.log(response);
 	};
 
-	useEffect(() => {
-		makeInstance();
-	}, []);
-
     const [submitButtom, setSubmitButtom] = useState(false);
     
     const validationSchema = Yup.object().shape({
@@ -90,6 +86,10 @@ const SubmitProposal = () => {
 		
 		submitProposal(values.proposal_text, values.proposal_title);
 	}
+
+	useEffect(() => {
+		makeInstance();
+	}, []);
 
 	return (
 		<div className={formClasses.formBody}>
@@ -119,18 +119,18 @@ const SubmitProposal = () => {
 						<Form onSubmit={handleSubmit}>
 							<h3>Propose a feature</h3>
 
-							<FormikTextfield
-								label="Proposal description"
-								name="proposal_text"
-								type="textfield"
-								placeholder="Enter proposal description"
-							/>
-
 							<FormikTextinput
 								label="Proposal title"
 								name="proposal_title"
 								type="text"
 								placeholder="Enter proposal title"
+							/>
+
+							<FormikTextfield
+								label="Proposal description"
+								name="proposal_text"
+								type="textfield"
+								placeholder="Enter proposal description"
 							/>
 
 							<br />
