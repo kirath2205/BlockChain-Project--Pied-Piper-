@@ -42,7 +42,7 @@ contract GovToken is ERC20Interface {
     string public symbol;
     string public  name;
     uint public _totalSupply;
-    uint current_epoch ;
+    uint current_epoch = 0;
     bool council_meeting = false;
     
     address internal _driver;
@@ -77,12 +77,22 @@ contract GovToken is ERC20Interface {
         name = _name;
         _totalSupply = _supply;
         balances[msg.sender] = _supply;
-        current_epoch = 0;
         // newCouncil.root_user = msg.sender;
         _driver = msg.sender;
         emit Transfer(address(0), msg.sender, _supply);
     }
 
+    function getCurrentEpoch() public view returns (uint) {
+        return current_epoch;
+    }
+
+    function getWalletBalance() public view returns(uint){
+      return balances[msg.sender];
+    }
+
+    function getAccountType() public view returns (string memory){
+      return account_type[msg.sender];
+    }
     
     function initial_transfer(string memory wallet_type, address receiver_address , uint tokens) isOwner public returns (uint){
         

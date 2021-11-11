@@ -10,12 +10,14 @@ import formClasses from "../Styles/formStyle.module.css";
 
 // importing contract
 import ProposalContract from "../../contracts/ProposalContract.json";
+import GovToken from "../../contracts/GovToken.json";
 
 import getWeb3 from "../../getWeb3";
 
 const SubmitProposal = () => {
 
 	const [proposalState, setProposalState] = useState({});
+	const [tokenState, setTokenState] = useState({});
 
 	const makeInstance = async () => {
 		try {
@@ -42,13 +44,46 @@ const SubmitProposal = () => {
 			);
 			console.error(error);
 		}
+
+
+		try {
+			// Get network provider and web3 instance.
+			const web3 = await getWeb3();
+
+			// Use web3 to get the user's accounts.
+			const accounts = await web3.eth.getAccounts();
+
+			// Get the contract instance.
+			const networkId = await web3.eth.net.getId();
+			const deployedNetwork = GovToken.networks[networkId];
+			const instance = new web3.eth.Contract(
+				GovToken.abi,
+				deployedNetwork && deployedNetwork.address
+			);
+
+			// Set web3, accounts, and contract to the state
+			setTokenState({
+				...tokenState,
+				web3,
+				accounts,
+				contract: instance,
+			});
+		} catch (error) {
+			// Catch any errors for any of the above operations.
+			alert(
+				`Failed to load web3, accounts, or contract. Check console for details.`
+			);
+			console.error(error);
+		}
+
+
 	};
 
 	const submitProposal = async (proposal_text, proposal_title) => {
 		const { accounts, contract } = proposalState;
 
 		await contract.methods
-			.addProposal(proposal_text, proposal_title)
+			.addProposal(proposal_text, proposal_title, 0)
 			.send({ from: accounts[0] });
 	};
 
@@ -60,7 +95,7 @@ const SubmitProposal = () => {
 	}
 
 	const getProposalById = async (id) => {
-		id = 7;
+		id = 1;
 		const { accounts, contract } = proposalState;
 
 		const response = await contract.methods.getProposalById(id).call();
