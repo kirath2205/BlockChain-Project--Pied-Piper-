@@ -2,7 +2,7 @@ pragma solidity >=0.4.21 <0.7.0;
 pragma experimental ABIEncoderV2;
 import "./GovToken.sol";
 
-contract Auth is GovToken{
+contract Auth {
     
     struct Profile {
         string username;
@@ -68,10 +68,5 @@ contract Auth is GovToken{
         return 0;
     }
 
-    function check_if_council_member() public view returns (uint){
-        if(msg.sender == _driver || _councilMembers[msg.sender] == 1){
-            return 1;
-        }
-        return 0;
-    }
+    
 }

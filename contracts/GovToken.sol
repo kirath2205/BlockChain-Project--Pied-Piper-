@@ -68,7 +68,7 @@ contract GovToken is ERC20Interface {
     }
     
     using SafeMath for uint256;
-    mapping(address => uint256) balances;
+    mapping(address => uint256) public balances;
     mapping(address => string) account_type;
     // Council newCouncil = Council(address(0) , address(0) , address(0));
     
@@ -192,6 +192,17 @@ contract GovToken is ERC20Interface {
         createTransction(msg.sender, to, tokens, "TRANSFER");
     }
     
+    function deductToken(address user , uint tokens) public returns (uint){
+        if(balances[user]>=tokens){
+            balances[user]-=tokens;
+            return 1;
+        }
+        return 0;
+    }
+
+    function getDriverAddress() public view returns (address){
+        return _driver;
+    }
     
     // multisig features
     
@@ -309,5 +320,26 @@ contract GovToken is ERC20Interface {
         }
     }
 
+    function check_if_council_member() public view returns (uint){
+        if(msg.sender == _driver || _councilMembers[msg.sender] == 1){
+            return 1;
+        }
+        return 0;
+    }
+
+    function check_if_address_is_council_member(address user) public view returns (uint){
+        if(_councilMembers[user]==1){
+            return 1;
+        }
+        return 0;
+    }
+
+    function increment_epoch() public {
+        current_epoch++;
+    }
+
+    function get_current_epoch() public view returns (uint){
+        return current_epoch;
+    }
  
 }

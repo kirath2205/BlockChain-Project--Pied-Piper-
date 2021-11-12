@@ -4,7 +4,7 @@ import "./GovToken.sol";
 
 contract ProposalContract {
     uint public ProposalID = 0;
-
+    GovToken gt;
     struct Proposal {
         string proposal_text;
         string proposal_title;
@@ -24,8 +24,8 @@ contract ProposalContract {
     // constructor() GovToken() public {
     // }
 
-    function addProposal(string memory proposal_text, string memory proposal_title, uint current_epoch) public returns (uint){
-        proposals[ProposalID] = Proposal(proposal_text, proposal_title , false , current_epoch,0);
+    function addProposal(string memory proposal_text, string memory proposal_title) public returns (uint){
+        proposals[ProposalID] = Proposal(proposal_text, proposal_title , false , gt.get_current_epoch(),0);
         emit ProposalCreated(ProposalID, proposal_title);
         ProposalID++;
         return ProposalID;
@@ -39,9 +39,15 @@ contract ProposalContract {
       return (proposals[id].proposal_text,proposals[id].proposal_title,proposals[id].votes);
     }
 
+    function addVotes(uint id , uint votes)public {
+      proposals[id].votes+=votes;
+    }
+
+    function getVote(uint proposal_id)public view returns (uint){
+      return proposals[proposal_id].votes;
+    }
     
-
-    
-
-
+    function resetProposalCount() public {
+      ProposalID = 0;
+    }
 }
