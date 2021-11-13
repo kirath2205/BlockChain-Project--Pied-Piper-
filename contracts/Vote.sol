@@ -27,7 +27,9 @@ contract Vote  {
     function caste_vote(uint vote_count , uint proposal_id) public returns (uint){
         
         if(can_vote(vote_count) == 1){
-            gt.deductToken(msg.sender , vote_count);
+            if(gt.deductToken(msg.sender , vote_count)==0){
+                return 0;
+            }
             proposal_casted_votes[proposal_id].push(CastedVote(msg.sender , vote_count));
             p.addVotes(proposal_id , vote_count);
             emit VoteCasted(proposal_id, vote_count);
@@ -36,17 +38,15 @@ contract Vote  {
         return 0;
     }
 
-    function revert_casted_votes_after_epoch_ends() internal {
-        uint end = p.getProposalCount();
-        for(uint i=0;i<end;i++){
-            uint casted_votes = proposal_casted_votes[i].length;
-            for(uint k=0;k<casted_votes;k++){
-                // give these tokens back to the corresponding wallets
-            }
-        }
+    function get_casted_votes_array_length(uint proposal_id) public view returns (uint){
+        return proposal_casted_votes[proposal_id].length;
     }
 
-    function clear_casted_votes_after_epoch_ends()internal{
+    function get_token_and_address_for_a_cast(uint proposal_id , uint index) public view returns(uint , address){
+        return (proposal_casted_votes[proposal_id][index].votes , proposal_casted_votes[proposal_id][index].wallet_address);
+    }
+
+    function clear_casted_votes_after_epoch_ends()public{
         uint end = p.getProposalCount();
         for(uint i=0 ; i<end; i++){
             delete proposal_casted_votes[i];
@@ -67,15 +67,5 @@ contract Vote  {
     return 1;
     }
 
-    function start_new_epoch() public  returns (uint){
-        address user = msg.sender;
-        address driver = gt.getDriverAddress();
-        if(user == driver || gt.check_if_address_is_council_member(user)==1) {
-            clear_casted_votes_after_epoch_ends();
-            gt.increment_epoch();
-            p.resetProposalCount();
-            return 1;
-        }
-        return 0;
-    }
+    
 }

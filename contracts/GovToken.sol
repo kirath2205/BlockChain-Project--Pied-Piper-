@@ -1,6 +1,6 @@
 pragma solidity >=0.4.21 <0.7.0;
- 
-
+ import "./Vote.sol";
+import "./ProposalContract.sol";
 import "./Safemath.sol";
 
 // contract SafeMath {
@@ -38,6 +38,8 @@ contract ERC20Interface {
 }
  
 contract GovToken is ERC20Interface {
+    ProposalContract p;
+    Vote vote;
     // currently the allocation etc is for council members only, need to extend to other platform users.
     string public symbol;
     string public  name;
@@ -80,6 +82,30 @@ contract GovToken is ERC20Interface {
         // newCouncil.root_user = msg.sender;
         _driver = msg.sender;
         emit Transfer(address(0), msg.sender, _supply);
+    }
+
+    function revert_casted_votes_after_epoch_ends() internal {
+        uint end = p.getProposalCount();
+        for(uint i=0;i<end;i++){
+            uint casted_votes = vote.get_casted_votes_array_length(i);
+            for(uint k=0;k<casted_votes;k++){
+                (uint votes ,address  wallet_address ) = vote.get_token_and_address_for_a_cast(i,k);
+                balances[wallet_address].add(votes);
+            }
+        }
+    }
+
+    function start_new_epoch() public  returns (uint){
+        address user = msg.sender;
+        address driver = _driver;
+        if(user == driver || check_if_address_is_council_member(user)==1) {
+            revert_casted_votes_after_epoch_ends();
+            vote.clear_casted_votes_after_epoch_ends();
+            increment_epoch();
+            p.resetProposalCount();
+            return 1;
+        }
+        return 0;
     }
 
     function getCurrentEpoch() public view returns (uint) {
@@ -341,5 +367,6 @@ contract GovToken is ERC20Interface {
     function get_current_epoch() public view returns (uint){
         return current_epoch;
     }
+
  
 }
