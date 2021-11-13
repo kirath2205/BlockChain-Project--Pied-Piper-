@@ -93,63 +93,70 @@ const Register = () => {
 	return (
 		<div>
 			<PageNavbar />
-			<div className={formClasses.formBody}>
-				<Formik
-					initialValues={{
-						username: "",
-						password: "",
-						secret_phrase: "",
-					}}
-					validationSchema={validationSchema}
-					onSubmit={(values, { setSubmitting, resetForm }) => {
-						setSubmitting(true);
-						SumbitForm(values);
-						// resetForm();
-						setSubmitting(false);
-					}}
-				>
-					{({
-						values,
-						errors,
-						touched,
-						handleChange,
-						handleBlur,
-						handleSubmit,
-						isSubmitting,
-					}) => (
-						<div>
-							<Form onSubmit={handleSubmit}>
-								<h3>Register new user</h3>
+			<div className={formClasses.pageBackground}>
+				<div className={formClasses.formBody}>
+					<div className={formClasses.formContent}>
+						<Formik
+							initialValues={{
+								username: "",
+								password: "",
+								secret_phrase: "",
+							}}
+							validationSchema={validationSchema}
+							onSubmit={(
+								values,
+								{ setSubmitting, resetForm }
+							) => {
+								setSubmitting(true);
+								SumbitForm(values);
+								// resetForm();
+								setSubmitting(false);
+							}}
+						>
+							{({
+								values,
+								errors,
+								touched,
+								handleChange,
+								handleBlur,
+								handleSubmit,
+								isSubmitting,
+							}) => (
+								<div>
+									<Form onSubmit={handleSubmit}>
+										<h3>Register new user</h3>
 
-								<FormikTextinput
-									label="Username"
-									name="username"
-									type="text"
-									placeholder="Enter username"
-								/>
+										<FormikTextinput
+											label="Username"
+											name="username"
+											type="text"
+											placeholder="Enter username"
+										/>
 
-								<FormikTextinput
-									label="Password"
-									name="password"
-									type="password"
-									placeholder="Enter password"
-								/>
+										<FormikTextinput
+											label="Password"
+											name="password"
+											type="password"
+											placeholder="Enter password"
+										/>
 
-								<FormikTextinput
-									label="Secret Phrase"
-									name="secret_phrase"
-									type="password"
-									placeholder="Enter secret phrase"
-								/>
+										<FormikTextinput
+											label="Secret Phrase"
+											name="secret_phrase"
+											type="password"
+											placeholder="Enter secret phrase"
+										/>
 
-								<br />
-								<Button variant="danger" type="submit">
-									Register
-								</Button>
-							</Form>
-						</div>
-					)}
-				</Formik>
+										<br />
+										<Button variant="danger" type="submit">
+											Register
+										</Button>
+									</Form>
+								</div>
+							)}
+						</Formik>
+					</div>
+				</div>
 			</div>
 		</div>
 	);

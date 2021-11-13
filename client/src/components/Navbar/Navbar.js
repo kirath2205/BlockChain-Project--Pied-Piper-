@@ -15,7 +15,17 @@ const PageNavbar = () => {
 					alt="React Bootstrap logo"
 				/>
 			</Navbar.Brand>
-			<div style={{ border: "1px solid white", borderRadius: "5px", padding: "0 5px" }}>
+			<div
+				style={{
+					border: "1px solid white",
+					borderRadius: "5px",
+					padding: "0 5px",
+					width: "160px",
+					display: "flex",
+					flexDirection: "row",
+					justifyContent: "center",
+				}}
+			>
 				<Typography style={{ color: "white" }}>
 					Council Member
 				</Typography>

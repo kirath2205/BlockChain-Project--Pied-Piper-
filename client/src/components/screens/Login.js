@@ -16,9 +16,10 @@ import PageNavbar from "../Navbar/mainNavbar";
 
 import getWeb3 from "../../getWeb3";
 
-const Login = () => {
+const Login = (props) => {
 
-    const [proposalState, setProposalState] = useState({});
+	const [proposalState, setProposalState] = useState({});
+	const [loginResponse, setLoginResponse] = useState("");
 
     const validationSchema = Yup.object().shape({
 		username: Yup.string()
@@ -73,6 +74,16 @@ const Login = () => {
             .call({ from: accounts[0] });
         
 		console.log("Login response:", response);
+
+		if (response == 1) {
+			props.history.push({
+				pathname: "/user-login",
+				// state: { user: user },
+			});
+		}
+		else {
+			setLoginResponse("Incorrect username or password");
+		}
             
         // var loginUnsuccessful = contract.events.loginUnsuccessful();
         // loginUnsuccessful
@@ -148,6 +159,11 @@ const Login = () => {
 										<Button variant="danger" type="submit">
 											Login
 										</Button>
+										<br />
+										<br />
+										<span style={{ color: "red", fontSize: "25px", fontWeight: "bold" }}>
+											{loginResponse}
+										</span>
 									</Form>
 								</div>
 							)}

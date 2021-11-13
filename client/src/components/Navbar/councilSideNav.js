@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
@@ -12,8 +12,11 @@ import ViewProposals from "../screens/ViewProposals";
 import AcceptProposals from "../screens/CouncilScreens/AcceptProposals";
 import ViewPendingTransactions from "../screens/CouncilScreens/ViewPendingTransactions";
 import EndEpoch from "../screens/CouncilScreens/EndEpoch";
+import MintTokens from "../screens/CouncilScreens/MintTokens";
 
 import PageNavbar from "./Navbar";
+
+import getWeb3 from "../../getWeb3";
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
@@ -62,10 +65,20 @@ const useStyles = makeStyles((theme) => ({
 export default function VerticalTabs() {
 	const classes = useStyles();
 	const [value, setValue] = React.useState(0);
+	const [contract, setContract] = useState();
 
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
+
+	const makeInstance = async () => {
+		const web3 = await getWeb3();
+		setContract(web3);
+	};
+
+	useEffect(() => {
+		makeInstance();
+	});
 
 	return (
 		<div>
@@ -82,22 +95,26 @@ export default function VerticalTabs() {
 					<Tab label="View all proposals" {...a11yProps(1)} />
 					<Tab label="Accept proposals" {...a11yProps(2)} />
 					<Tab label="View pending transactions" {...a11yProps(3)} />
-					<Tab label="End voting and epoch" {...a11yProps(4)} />
+					<Tab label="Mint or transfer tokens" {...a11yProps(4)} />
+					<Tab label="End voting and epoch" {...a11yProps(5)} />
 				</Tabs>
 				<TabPanel value={value} index={0}>
-					<SubmitProposal />
+					<SubmitProposal contract={contract} />
 				</TabPanel>
 				<TabPanel value={value} index={1}>
-					<ViewProposals />
+					<ViewProposals contract={contract} />
 				</TabPanel>
 				<TabPanel value={value} index={2}>
-					<AcceptProposals />
+					<AcceptProposals contract={contract} />
 				</TabPanel>
 				<TabPanel value={value} index={3}>
-					<ViewPendingTransactions />
+					<ViewPendingTransactions contract={contract} />
 				</TabPanel>
 				<TabPanel value={value} index={4}>
-					<EndEpoch />
+					<MintTokens contract={contract} />
+				</TabPanel>
+				<TabPanel value={value} index={5}>
+					<EndEpoch contract={contract} />
 				</TabPanel>
 			</div>
 		</div>

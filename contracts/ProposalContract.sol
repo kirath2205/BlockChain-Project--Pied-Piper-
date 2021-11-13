@@ -25,7 +25,7 @@ contract ProposalContract {
     // }
 
     function addProposal(string memory proposal_text, string memory proposal_title) public returns (uint){
-        proposals[ProposalID] = Proposal(proposal_text, proposal_title , false , gt.get_current_epoch(),0);
+        proposals[ProposalID] = Proposal(proposal_text, proposal_title , false , 0,0);
         emit ProposalCreated(ProposalID, proposal_title);
         ProposalID++;
         return ProposalID;

@@ -11,18 +11,22 @@ import formClasses from "../Styles/formStyle.module.css";
 // importing contract
 import ProposalContract from "../../contracts/ProposalContract.json";
 
+// proposals table
+import ViewProposalTable from '../Tables/ViewProposalTable';
+import { proposalDummyData } from '../DummyData/ProposalData';
+
 import getWeb3 from "../../getWeb3";
 
-const ViewProposals = () => {
-
+const ViewProposals = (props) => {
     const [proposalState, setProposalState] = useState({});
-
+	const [proposalData, setProposalData] = useState(proposalDummyData);
     const [allProposals, setAllProposals] = useState([]);
 
 	const makeInstance = async () => {
 		try {
 			// Get network provider and web3 instance.
-			const web3 = await getWeb3();
+			// const web3 = await getWeb3();
+			const web3 = props.contract;
 
 			// Use web3 to get the user's accounts.
 			const accounts = await web3.eth.getAccounts();
@@ -34,7 +38,7 @@ const ViewProposals = () => {
 				ProposalContract.abi,
 				deployedNetwork && deployedNetwork.address
 			);
-
+			
 			// Set web3, accounts, and contract to the state
 			setProposalState({
 				...proposalState,
@@ -49,6 +53,7 @@ const ViewProposals = () => {
 			);
 			console.error(error);
 		}
+
     };
     
     const getProposalCount = async () => {
@@ -65,64 +70,100 @@ const ViewProposals = () => {
 		// console.log(response);
 		return response;
 	};
+
+	const saveProposals = async (i) => {
+		const tempProp = await getProposalById(i);
+		console.log(tempProp);
+		// setAllProposals([...allProposals, tempProp]);
+		setAllProposals((oldArray) => [
+			...oldArray,
+			{
+				id: i,
+				proposal_text: tempProp["0"],
+				proposal_title: tempProp["1"],
+				vote: tempProp["2"],
+			},
+		]);
+	}
     
-    const DisplayProposals = async () => {
+	const DisplayProposals = async () => {
         const totalProposals = await getProposalCount();
         console.log("Total proposals in blockchain: " + totalProposals);
 
 		setAllProposals([]);
 
-        for (let i = 0; i < totalProposals; i++) {
-            const tempProp = await getProposalById(i);
-            console.log(tempProp);
-            // setAllProposals([...allProposals, tempProp]);
-			setAllProposals((oldArray) => [...oldArray, tempProp]);
+		for (let i = 0; i < totalProposals; i++) {
+			saveProposals(i);
+            // const tempProp = await getProposalById(i);
+            // console.log(tempProp);
+            // // setAllProposals([...allProposals, tempProp]);
+			// setAllProposals((oldArray) => [
+			// 	...oldArray,
+			// 	{
+			// 		id: i,
+			// 		proposal_text: tempProp["0"],
+			// 		proposal_title: tempProp["1"],
+			// 		vote: tempProp["2"]
+			// 	},
+			// ]);
 		}
 	}
-	
-	const handleProposalClick = (proposal, ind) => {
-		console.log(proposal, ind);
-	};
+
+	const voteproposal = async (id, votes) => {
+		const { accounts, contract } = proposalState;
+
+		console.log(id, votes);
+		await contract.methods
+			.addVotes(id, parseInt(votes))
+			.send({ from: accounts[0] });
+		
+		DisplayProposals();
+	}
 
 	useEffect(() => {
 		makeInstance();
     }, []);
 
 	return (
-		<div className={formClasses.formBody}>
-			<h1>View Proposals</h1>
-			<Button onClick={DisplayProposals}>Get All Proposals</Button>
+		<div style={{ height: "100%" }}>
+			<div className={formClasses.formWithTable}>
+				<h1>View Proposals</h1>
+				<Button onClick={DisplayProposals}>Get All Proposals</Button>
 
-			{allProposals.map((proposal, ind) => {
-				// return <div>{proposal["0"]}</div>
-				// console.log("FROM DIV" + proposal);
-				// return <div key={ind}> {JSON.stringify(proposal)} </div>;
-				return (
-					<div
-						key={ind}
-						style={{
-							display: "flex",
-							flexDirection: "column",
-							alignItems: "center",
-							background: "#f58e64",
-							padding: "20px",
-							marginTop: "10px",
-						}}
-						onClick={() =>
-							handleProposalClick(proposal, ind)
-						}
-					>
-						<div>
-							{" "}
-							<b>Proposal:</b> {proposal["0"]}{" "}
+				{/* {allProposals.map((proposal, ind) => {
+					return (
+						<div
+							key={ind}
+							style={{
+								display: "flex",
+								flexDirection: "column",
+								alignItems: "center",
+								background: "#f58e64",
+								padding: "20px",
+								marginTop: "10px",
+							}}
+							onClick={() =>
+								handleProposalClick(proposal, ind)
+							}
+						>
+							<div>
+								{" "}
+								<b>Proposal:</b> {proposal.proposal_text}{" "}
+							</div>
+							<div>
+								{" "}
+								<b>Title:</b> {proposal.proposal_title}{" "}
+							</div>
 						</div>
-						<div>
-							{" "}
-							<b>Title:</b> {proposal["1"]}{" "}
-						</div>
-					</div>
-				);
-			})}
+					);
+				})} */}
+
+				<ViewProposalTable
+					data={allProposals}
+					contract={proposalState}
+					voteproposal={voteproposal}
+				/>
+			</div>
 		</div>
 	);
 };

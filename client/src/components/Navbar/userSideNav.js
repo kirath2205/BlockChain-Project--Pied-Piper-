@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
@@ -12,6 +12,8 @@ import ViewProposals from "../screens/ViewProposals";
 import ViewPastProposals from "../screens/UserScreens/ViewPastProposals";
 
 import PageNavbar from "./userLoginNavbar";
+
+import getWeb3 from "../../getWeb3";
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
@@ -60,10 +62,20 @@ const useStyles = makeStyles((theme) => ({
 export default function VerticalTabs() {
 	const classes = useStyles();
 	const [value, setValue] = React.useState(0);
+	const [contract, setContract] = useState();
 
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
+
+	const makeInstance = async () => {
+		const web3 = await getWeb3();
+		setContract(web3);
+	}
+
+	useEffect(() => {
+		makeInstance();
+	});
 
     return (
 		<div>
@@ -81,13 +93,13 @@ export default function VerticalTabs() {
 					<Tab label="View past proposals" {...a11yProps(2)} />
 				</Tabs>
 				<TabPanel value={value} index={0}>
-					<SubmitProposal />
+					<SubmitProposal contract={contract} />
 				</TabPanel>
 				<TabPanel value={value} index={1}>
-					<ViewProposals />
+					<ViewProposals contract={contract} />
 				</TabPanel>
 				<TabPanel value={value} index={2}>
-					<ViewPastProposals />
+					<ViewPastProposals contract={contract} />
 				</TabPanel>
 			</div>
 		</div>

@@ -19,11 +19,13 @@ const PageNavbar = () => {
 					border: "1px solid white",
 					borderRadius: "5px",
 					padding: "0 5px",
+					width: "110px",
+					display: "flex",
+					flexDirection: "row",
+					justifyContent: "center",
 				}}
 			>
-				<Typography style={{ color: "white" }}>
-					Pied Piper
-				</Typography>
+				<Typography style={{ color: "white" }}>Pied Piper</Typography>
 			</div>
 			<Container style={{ justifyContent: "flex-end" }}>
 				<Nav>

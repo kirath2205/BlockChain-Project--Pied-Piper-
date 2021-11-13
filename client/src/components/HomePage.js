@@ -82,7 +82,7 @@ const HomePage = (props) => {
 				{/* <PageNavbar /> */}
 
 				<Switch>
-					<Route exact path="/" component={councilSideNav} />
+					<Route exact path="/" component={Login} />
 					<Route exact path="/council-login" component={councilSideNav} />
 					<Route exact path="/user-login" component={userSideNav} />
 					<Route path="/login" component={Login} />

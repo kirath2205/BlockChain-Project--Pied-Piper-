@@ -14,16 +14,30 @@ import GovToken from "../../contracts/GovToken.json";
 
 import getWeb3 from "../../getWeb3";
 
-const SubmitProposal = () => {
+const SubmitProposal = (props) => {
 
 	const [proposalState, setProposalState] = useState({});
 	const [tokenState, setTokenState] = useState({});
 
 	const makeInstance = async () => {
+		// console.log("outside");
 		try {
+			// console.log("inside");
+
 			// Get network provider and web3 instance.
+			// var web3;
+			// if (first)
+			// 	{web3 = await getWeb3();}
+			// else
+			// {
+			// 	web3 = props.contract;
+			// 	console.log("second");
+			// }
+			// const web3 = props.contract;
 			const web3 = await getWeb3();
 
+			// console.log("finished");
+			
 			// Use web3 to get the user's accounts.
 			const accounts = await web3.eth.getAccounts();
 
@@ -37,6 +51,7 @@ const SubmitProposal = () => {
 
 			// Set web3, accounts, and contract to the state
 			setProposalState({ ...proposalState, web3, accounts, contract: instance });
+			
 		} catch (error) {
 			// Catch any errors for any of the above operations.
 			alert(
@@ -44,46 +59,14 @@ const SubmitProposal = () => {
 			);
 			console.error(error);
 		}
-
-
-		try {
-			// Get network provider and web3 instance.
-			const web3 = await getWeb3();
-
-			// Use web3 to get the user's accounts.
-			const accounts = await web3.eth.getAccounts();
-
-			// Get the contract instance.
-			const networkId = await web3.eth.net.getId();
-			const deployedNetwork = GovToken.networks[networkId];
-			const instance = new web3.eth.Contract(
-				GovToken.abi,
-				deployedNetwork && deployedNetwork.address
-			);
-
-			// Set web3, accounts, and contract to the state
-			setTokenState({
-				...tokenState,
-				web3,
-				accounts,
-				contract: instance,
-			});
-		} catch (error) {
-			// Catch any errors for any of the above operations.
-			alert(
-				`Failed to load web3, accounts, or contract. Check console for details.`
-			);
-			console.error(error);
-		}
-
-
 	};
 
 	const submitProposal = async (proposal_text, proposal_title) => {
+		makeInstance();
 		const { accounts, contract } = proposalState;
 
 		await contract.methods
-			.addProposal(proposal_text, proposal_title, 0)
+			.addProposal(proposal_text, proposal_title)
 			.send({ from: accounts[0] });
 	};
 
@@ -107,7 +90,7 @@ const SubmitProposal = () => {
     const validationSchema = Yup.object().shape({
 		proposal_text: Yup.string()
 			.min(5, "Proposal must have at least 5 characters")
-			.max(500, "FProposal can't be longer than 500 characters")
+			.max(1000, "FProposal can't be longer than 1000 characters")
 			.required("Proposal is required"),
 		proposal_title: Yup.string()
 			.min(5, "Title must have at least 5 characters")
