@@ -3,7 +3,7 @@ pragma experimental ABIEncoderV2;
 import "./GovToken.sol";
 
 contract Auth {
-    
+    GovToken gt;
     struct Profile {
         string username;
         string password;
@@ -24,6 +24,9 @@ contract Auth {
         
         if(checkUsernameExists(username) ){
             return 0;
+        }
+        if(gt.check_if_council_member()==0 && number_of_profiles[msg.sender]!=0){
+            return 0; // platform user with this account address already exists
         }
         profiles[msg.sender].push(Profile(username , password , secret_phrase));
         number_of_profiles[msg.sender]++;
@@ -61,7 +64,7 @@ contract Auth {
         uint total_users = number_of_profiles[msg.sender];
         for(uint i=0; i<total_users ; i++){
             if(keccak256(abi.encodePacked(profiles[msg.sender][i].username)) == keccak256(abi.encodePacked(username)) && keccak256(abi.encodePacked(profiles[msg.sender][i].password)) == keccak256(abi.encodePacked(password))){
-                // check if the address has any govt tokens
+                
                 return 1;
             }
         }
