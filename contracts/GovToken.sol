@@ -102,7 +102,6 @@ contract GovToken is ERC20Interface {
             revert_casted_votes_after_epoch_ends();
             vote.clear_casted_votes_after_epoch_ends();
             increment_epoch();
-            p.resetProposalCount();
             return 1;
         }
         return 0;

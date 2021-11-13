@@ -8,46 +8,38 @@ contract ProposalContract {
     struct Proposal {
         string proposal_text;
         string proposal_title;
-        bool completed;
         uint epoch;
         uint votes;
     }
 
-    mapping(uint => Proposal) public proposals;
+    mapping (uint => mapping(uint => Proposal)) public proposals;
+    mapping (uint => uint) public proposal_count_for_epochs;
+    mapping (uint => Proposal[]) public approved_proposals_for_epochs;
 
-    Proposal [] approved_proposals;
-    uint public approved_proposals_count = 0;
-    uint [] approved_proposals_votes;
 
     event ProposalCreated(uint ProposalID, string proposal_title);
 
-    // constructor() GovToken() public {
-    // }
-
     function addProposal(string memory proposal_text, string memory proposal_title) public returns (uint){
-        proposals[ProposalID] = Proposal(proposal_text, proposal_title , false , gt.get_current_epoch(),0);
+        proposals[gt.get_current_epoch()][proposal_count_for_epochs[gt.get_current_epoch()]] = Proposal(proposal_text, proposal_title , gt.get_current_epoch(),0);
+        proposal_count_for_epochs[gt.get_current_epoch()]++;
         emit ProposalCreated(ProposalID, proposal_title);
-        ProposalID++;
-        return ProposalID;
     }
 
     function getProposalCount() public view returns (uint){
-      return ProposalID;
+      return proposal_count_for_epochs[gt.get_current_epoch()];
     }
 
     function getProposalById(uint id) public view returns (string memory  , string memory ,uint ){
-      return (proposals[id].proposal_text,proposals[id].proposal_title,proposals[id].votes);
+      return (proposals[gt.get_current_epoch()][id].proposal_text ,proposals[gt.get_current_epoch()][id].proposal_title,
+      proposals[gt.get_current_epoch()][id].votes );
     }
 
     function addVotes(uint id , uint votes)public {
-      proposals[id].votes+=votes;
+      proposals[gt.get_current_epoch()][id].votes += votes;
     }
 
     function getVote(uint proposal_id)public view returns (uint){
-      return proposals[proposal_id].votes;
+      return proposals[gt.get_current_epoch()][proposal_id].votes;
     }
     
-    function resetProposalCount() public {
-      ProposalID = 0;
-    }
 }
