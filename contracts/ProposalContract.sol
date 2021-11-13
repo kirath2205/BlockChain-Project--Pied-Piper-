@@ -5,7 +5,7 @@ import "./GovToken.sol";
 contract ProposalContract {
     uint public ProposalID = 0;
 
-    address govToken_addr  = 0x1c5Daa6045C2e15134Ec879B79B7EFaeBC7D16fC;
+    address govToken_addr  = 0x3D416Cfa03D21155529Dc2aa7f877137B719ca74;
     GovToken gt = GovToken(govToken_addr);
     struct Proposal {
         string proposal_text;
@@ -41,6 +41,7 @@ contract ProposalContract {
       // GovToken gov_t;
       uint current_e = gt.get_current_epoch();
       return proposal_count_for_epochs[current_e];
+      // return 0;
     }
 
     function getProposalById(uint id) public view returns (string memory  , string memory ,uint ){

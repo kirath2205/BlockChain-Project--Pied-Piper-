@@ -97,8 +97,7 @@ contract GovToken is ERC20Interface {
 
     function start_new_epoch() public  returns (uint){
         address user = msg.sender;
-        address driver = _driver;
-        if(user == driver || check_if_address_is_council_member(user)==1) {
+        if(check_if_council_member(user) == 1) {
             revert_casted_votes_after_epoch_ends();
             vote.clear_casted_votes_after_epoch_ends();
             increment_epoch();
@@ -343,13 +342,6 @@ contract GovToken is ERC20Interface {
 
     function check_if_council_member() public view returns (uint){
         if(msg.sender == _driver || _councilMembers[msg.sender] == 1){
-            return 1;
-        }
-        return 0;
-    }
-
-    function check_if_address_is_council_member(address user) public view returns (uint){
-        if(_councilMembers[user]==1){
             return 1;
         }
         return 0;
