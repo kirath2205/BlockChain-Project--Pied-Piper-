@@ -4,7 +4,9 @@ import "./GovToken.sol";
 
 contract ProposalContract {
     uint public ProposalID = 0;
-    GovToken gt;
+
+    address govToken_addr  = 0x1c5Daa6045C2e15134Ec879B79B7EFaeBC7D16fC;
+    GovToken gt = GovToken(govToken_addr);
     struct Proposal {
         string proposal_text;
         string proposal_title;
@@ -20,18 +22,31 @@ contract ProposalContract {
     event ProposalCreated(uint ProposalID, string proposal_title);
 
     function addProposal(string memory proposal_text, string memory proposal_title) public returns (uint){
-        proposals[gt.get_current_epoch()][proposal_count_for_epochs[gt.get_current_epoch()]] = Proposal(proposal_text, proposal_title , gt.get_current_epoch(),0);
-        proposal_count_for_epochs[gt.get_current_epoch()]++;
-        emit ProposalCreated(ProposalID, proposal_title);
+      uint current_e = gt.get_current_epoch();
+      proposals[current_e][proposal_count_for_epochs[current_e]] = Proposal(proposal_text, proposal_title , current_e,0);
+      
+      proposal_count_for_epochs[current_e]++;
+      // if (abi.encodePacked(proposal_count_for_epochs[current_e]).length > 0) {
+      //   proposal_count_for_epochs[current_e]++;
+      // }
+      // else {
+      //   proposal_count_for_epochs[current_e] = 1;
+      // }
+      
+      emit ProposalCreated(ProposalID, proposal_title);
+      return proposal_count_for_epochs[current_e];
     }
 
     function getProposalCount() public view returns (uint){
-      return proposal_count_for_epochs[gt.get_current_epoch()];
+      // GovToken gov_t;
+      uint current_e = gt.get_current_epoch();
+      return proposal_count_for_epochs[current_e];
     }
 
     function getProposalById(uint id) public view returns (string memory  , string memory ,uint ){
-      return (proposals[gt.get_current_epoch()][id].proposal_text ,proposals[gt.get_current_epoch()][id].proposal_title,
-      proposals[gt.get_current_epoch()][id].votes );
+      uint current_e = gt.get_current_epoch();
+      return (proposals[current_e][id].proposal_text ,proposals[current_e][id].proposal_title,
+      proposals[current_e][id].votes );
     }
 
     function addVotes(uint id , uint votes)public {

@@ -107,10 +107,6 @@ contract GovToken is ERC20Interface {
         return 0;
     }
 
-    function getCurrentEpoch() public view returns (uint) {
-        return current_epoch;
-    }
-
     function getWalletBalance() public view returns(uint){
       return balances[msg.sender];
     }

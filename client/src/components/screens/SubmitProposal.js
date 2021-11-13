@@ -65,9 +65,10 @@ const SubmitProposal = (props) => {
 		makeInstance();
 		const { accounts, contract } = proposalState;
 
-		await contract.methods
+		const response = await contract.methods
 			.addProposal(proposal_text, proposal_title)
 			.send({ from: accounts[0] });
+		// console.log("Epoch count:", response);
 	};
 
 	const getProposalCount = async () => {
