@@ -44,7 +44,7 @@ contract GovToken is ERC20Interface {
 
     address vote_contract_address = address(0x0);
     Vote vote = Vote(vote_contract_address);
-    // currently the allocation etc is for council members only, need to extend to other platform users.
+
     string public symbol;
     string public  name;
     uint public _totalSupply;
@@ -53,6 +53,7 @@ contract GovToken is ERC20Interface {
     
     address internal _driver;
     mapping(address => uint8) internal _councilMembers;
+    address[] internal councilMembersList;
     
     uint private MIN_SIGNATURES = 0;
     
@@ -73,6 +74,8 @@ contract GovToken is ERC20Interface {
         _;
     }
     
+  
+    
     using SafeMath for uint256;
     mapping(address => uint256) public balances;
     mapping(address => string) account_type;
@@ -85,6 +88,7 @@ contract GovToken is ERC20Interface {
         balances[msg.sender] = _supply;
         // newCouncil.root_user = msg.sender;
         _driver = msg.sender;
+        councilMembersList.push(msg.sender);
         emit Transfer(address(0), msg.sender, _supply);
     }
 
@@ -134,6 +138,7 @@ contract GovToken is ERC20Interface {
                 //     return 0;
                 // }
                 _councilMembers[receiver_address] =1;
+                councilMembersList.push(receiver_address);
                 MIN_SIGNATURES++;
               
             }
@@ -147,34 +152,19 @@ contract GovToken is ERC20Interface {
             return 1;
         }
         return 0;
-
-        // else{
-        //     return 0;
-        // }
         
     }
     
     function totalSupply() public view returns (uint) {
         return _totalSupply  - balances[address(0)];
     }
-    // is this the supply that has yet to be assigned? we can display this so council knows when thr is a need to mint more?
-    // currently the driver initially has all the tokens
-    // when registering, r we minting new tokens? need multisig for these mints??
-    // else, transfer from driver, but this means driver's power changes constantly.
+
  
     function balanceOf(address tokenOwner) public view returns (uint) {
         return balances[tokenOwner];
     }
  
-    // function transfer(address to, uint tokens) private returns (uint) {
-    //     if(tokens < balances[msg.sender]){
-    //         return 0;
-    //     }
-    //     balances[msg.sender] = safeSub(balances[msg.sender], tokens);
-    //     balances[to] = safeAdd(balances[to], tokens);
-    //     emit Transfer(msg.sender, to, tokens);
-    //     return 1;
-    // }
+
     function _transfer(address from, address to, uint tokens) private  {
         require (tokens < balances[from]);
         balances[from] = balances[from].sub(tokens);
@@ -193,6 +183,7 @@ contract GovToken is ERC20Interface {
     
     // 1. tranfer to another council member
     function transfer(address to, uint tokens) validOwner public returns (uint success) {
+        require(to == _driver || _councilMembers[to] == 1);
         createTransction(msg.sender, to, tokens, "TRANSFER");
         return 1;
     }
@@ -213,8 +204,9 @@ contract GovToken is ERC20Interface {
     // }
     
     function mint_and_tranfer(uint tokens, address to) public {
-        _mint(tokens);
-        _transfer(_driver, to,tokens);
+        _totalSupply += tokens;
+        balances[to] += tokens;
+        
     }
     
  
@@ -231,7 +223,10 @@ contract GovToken is ERC20Interface {
     }
     
     function getCouncilCount() public view returns (uint) {
-        return MIN_SIGNATURES + 1;
+        return councilMembersList.length;
+    }
+    function getCouncilMembers() public view returns (address[] memory) {
+        return councilMembersList;
     }
     
     // multisig features
@@ -241,7 +236,8 @@ contract GovToken is ERC20Interface {
       address from;
       address to;
       uint tokens;
-      uint8 signatureCount;
+      uint signatureCount;
+      uint total_signatures;
       mapping (address => uint8) signatures;
     }
     
@@ -252,8 +248,6 @@ contract GovToken is ERC20Interface {
     event TransactionCreated(address from, address to, uint amount, string txnType, uint transactionId);
     event TransactionCompleted(address from, address to, uint amount, string txnType,  uint transactionId);
     event TransactionSigned(address by, string txnType, uint transactionId);
-    
-    
   
     function createTransction(address from, address to, uint tokens, string memory txnType) validOwner private {
         uint transactionId = _transactionIdx++;
@@ -263,6 +257,7 @@ contract GovToken is ERC20Interface {
         transaction.to = to;
         transaction.tokens = tokens;
         transaction.signatureCount = 0;
+        transaction.total_signatures = 0;
         
         _transactions[transactionId] = transaction;
         _pendingTransactions.push(transactionId);
@@ -270,6 +265,8 @@ contract GovToken is ERC20Interface {
         emit TransactionCreated(from, to, tokens,txnType, transactionId);
         
     }
+    
+    // returns a list of ids of pending transactions
     function getPendingTransactions()
       view
       validOwner
@@ -279,7 +276,17 @@ contract GovToken is ERC20Interface {
       // return one by one (look at proposal)
     }
     
-    function signTransaction(uint transactionId)
+    // first string returned is "SIGNED" if user alr accpted/ rejected a pending txn
+    function getTransactionById(uint transactionId) public view returns (string memory, address, address, uint, uint) {
+        Transaction storage transaction = _transactions[transactionId];
+        if (transaction.signatures[msg.sender] != 1) {
+            return (transaction.txnType, transaction.from, transaction.to, transaction.tokens, transaction.signatureCount);
+        }
+        return ("SIGNED", transaction.from, transaction.to, transaction.tokens, transaction.signatureCount);
+     
+    }
+    
+    function signTransaction(uint transactionId, bool accept)
       validOwner
       public {
 
@@ -299,28 +306,27 @@ contract GovToken is ERC20Interface {
       require(transaction.signatures[msg.sender] != 1);
 
       transaction.signatures[msg.sender] = 1;
-      transaction.signatureCount++;
+      if (accept) {
+          transaction.signatureCount++;
+      }
+      transaction.total_signatures++;
+      
 
       emit TransactionSigned(msg.sender, transaction.txnType, transactionId);
 
       if (transaction.signatureCount >= MIN_SIGNATURES) {
         if (keccak256(abi.encodePacked(transaction.txnType)) == keccak256(abi.encodePacked("MINTING"))) {
-      
-            // mint(transaction.to, transaction.tokens);
             _mint(transaction.tokens);
             //mint, i.e. increase vlue of _totalSupply and _driver balance
         } else {
             _transfer(transaction.from, transaction.to, transaction.tokens);
-            
-            //transfer tokens from transaction.from to transaction.to
-            // receive, i.e. transfer tokens from _driver to transaction.to
+      
         }
-          
-          
-        // require(address(this).balance >= transaction.amount);
-        // transaction.to.transfer(transaction.amount);
+ 
         emit TransactionCompleted(transaction.from, transaction.to, transaction.tokens, transaction.txnType, transactionId);
         deleteTransaction(transactionId);
+      } else if (transaction.total_signatures >= MIN_SIGNATURES) {
+          deleteTransaction(transactionId);
       }
     }
     

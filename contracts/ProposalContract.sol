@@ -39,6 +39,12 @@ contract ProposalContract {
       Proposal memory proposal = proposals[current_e][id];
       return (proposal.proposal_text, proposal.proposal_title, proposal.votes, proposal.proposer);
     }
+    
+    function getProposer(uint id) public view returns (address){
+      uint current_e = gt.get_current_epoch();
+      Proposal memory proposal = proposals[current_e][id];
+      return proposal.proposer;
+    }
 
     function addVotes(uint id , uint votes)public {
       proposals[gt.get_current_epoch()][id].votes += votes;
