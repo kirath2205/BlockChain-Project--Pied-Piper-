@@ -190,6 +190,7 @@ contract GovToken is ERC20Interface {
         emit Transfer(_driver, _driver, tokens);
     }
     
+    
    
     function transfer(address to, uint tokens) validOwner public returns (uint success) {
         createTransction(msg.sender, to, tokens, "TRANSFER");
@@ -202,7 +203,6 @@ contract GovToken is ERC20Interface {
         return 1;
     }
     
-    // do we need a way for non 
     
     function mintTokens(uint tokens) isOwner public {
         createTransction(msg.sender, msg.sender, tokens, "MINTING");
@@ -212,10 +212,7 @@ contract GovToken is ERC20Interface {
         createTransction(_driver, msg.sender, tokens, "RECEIVE");
     }
     
-    function transferTo(address to, uint tokens) validOwner public  {
-        createTransction(msg.sender, to, tokens, "TRANSFER");
-    }
-    
+ 
     function deductToken(address user , uint tokens) public returns (uint){
         if(balances[user]>=tokens){
             balances[user]-=tokens;
@@ -226,6 +223,10 @@ contract GovToken is ERC20Interface {
 
     function getDriverAddress() public view returns (address){
         return _driver;
+    }
+    
+    function getCouncilCount() public view returns (uint) {
+        return MIN_SIGNATURES + 1;
     }
     
     // multisig features
