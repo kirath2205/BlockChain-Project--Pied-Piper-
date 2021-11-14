@@ -39,10 +39,10 @@ contract ERC20Interface {
  
 contract GovToken is ERC20Interface {
     // change deployment addresses after deployment
-    address proposal_contract_address = 0x0;
+    address proposal_contract_address = address(0x0);
     ProposalContract p = ProposalContract(proposal_contract_address);
 
-    address vote_contract_address = 0x0;
+    address vote_contract_address = address(0x0);
     Vote vote = Vote(vote_contract_address);
     // currently the allocation etc is for council members only, need to extend to other platform users.
     string public symbol;
@@ -101,7 +101,7 @@ contract GovToken is ERC20Interface {
 
     function start_new_epoch() public  returns (uint){
         address user = msg.sender;
-        if(check_if_council_member(user) == 1) {
+        if(check_if_council_member() == 1) {
             revert_casted_votes_after_epoch_ends();
             vote.clear_casted_votes_after_epoch_ends();
             increment_epoch();
@@ -191,7 +191,7 @@ contract GovToken is ERC20Interface {
     }
     
     
-   
+    // 1. tranfer to another council member
     function transfer(address to, uint tokens) validOwner public returns (uint success) {
         createTransction(msg.sender, to, tokens, "TRANSFER");
         return 1;
@@ -203,13 +203,18 @@ contract GovToken is ERC20Interface {
         return 1;
     }
     
-    
-    function mintTokens(uint tokens) isOwner public {
+    // minting --> driver
+    function mintTokens(uint tokens) validOwner public {
         createTransction(msg.sender, msg.sender, tokens, "MINTING");
     }
+    // // minting --> goes to whoever is requesting
+    // function receiveTokens(uint tokens) validOwner public {
+    //     createTransction(_driver, msg.sender, tokens, "RECEIVE");
+    // }
     
-    function receiveTokens(uint tokens) validOwner public {
-        createTransction(_driver, msg.sender, tokens, "RECEIVE");
+    function mint_and_tranfer(uint tokens, address to) public {
+        _mint(tokens);
+        _transfer(_driver, to,tokens);
     }
     
  
@@ -271,6 +276,7 @@ contract GovToken is ERC20Interface {
       public
       returns (uint[] memory) {
       return _pendingTransactions;
+      // return one by one (look at proposal)
     }
     
     function signTransaction(uint transactionId)
