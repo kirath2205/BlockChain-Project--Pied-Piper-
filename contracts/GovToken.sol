@@ -38,8 +38,12 @@ contract ERC20Interface {
 }
  
 contract GovToken is ERC20Interface {
-    ProposalContract p;
-    Vote vote;
+    // change deployment addresses after deployment
+    address proposal_contract_address = 0x0;
+    ProposalContract p = ProposalContract(proposal_contract_address);
+
+    address vote_contract_address = 0x0;
+    Vote vote = Vote(vote_contract_address);
     // currently the allocation etc is for council members only, need to extend to other platform users.
     string public symbol;
     string public  name;

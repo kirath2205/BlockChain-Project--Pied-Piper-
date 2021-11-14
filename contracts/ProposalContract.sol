@@ -3,9 +3,8 @@ pragma experimental ABIEncoderV2;
 import "./GovToken.sol";
 
 contract ProposalContract {
-    uint public ProposalID = 0;
-
-    address govToken_addr  = 0x3D416Cfa03D21155529Dc2aa7f877137B719ca74;
+  // change deployment addresses after deployment
+    address govToken_addr  = 0x0;
     GovToken gt = GovToken(govToken_addr);
     struct Proposal {
         string proposal_text;
