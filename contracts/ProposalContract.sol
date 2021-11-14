@@ -24,32 +24,20 @@ contract ProposalContract {
     function addProposal(string memory proposal_text, string memory proposal_title) public returns (uint){
       uint current_e = gt.get_current_epoch();
       proposals[current_e][proposal_count_for_epochs[current_e]] = Proposal(proposal_text, proposal_title , current_e,0, msg.sender);
-      
       proposal_count_for_epochs[current_e]++;
-      // if (abi.encodePacked(proposal_count_for_epochs[current_e]).length > 0) {
-      //   proposal_count_for_epochs[current_e]++;
-      // }
-      // else {
-      //   proposal_count_for_epochs[current_e] = 1;
-      // }
-      
       emit ProposalCreated(proposal_count_for_epochs[current_e], proposal_title);
       return proposal_count_for_epochs[current_e];
     }
 
     function getProposalCount() public view returns (uint){
-      // GovToken gov_t;
       uint current_e = gt.get_current_epoch();
       return proposal_count_for_epochs[current_e];
-      // return 0;
     }
 
     function getProposalById(uint id) public view returns (string memory  , string memory ,uint, address ){
       uint current_e = gt.get_current_epoch();
       Proposal memory proposal = proposals[current_e][id];
       return (proposal.proposal_text, proposal.proposal_title, proposal.votes, proposal.proposer);
-      //return (proposals[current_e][id].proposal_text ,proposals[current_e][id].proposal_title,
-      //proposals[current_e][id].votes,  );
     }
 
     function addVotes(uint id , uint votes)public {
@@ -58,6 +46,10 @@ contract ProposalContract {
 
     function getVote(uint proposal_id)public view returns (uint){
       return proposals[gt.get_current_epoch()][proposal_id].votes;
+    }
+
+    function getPastProposal(uint id , uint epoch) public view returns(string memory , string memory , uint , address){
+      return (proposals[epoch][id].proposal_title , proposals[epoch][id].proposal_text , proposals[epoch][id].votes , proposals[epoch][id].proposer);
     }
     
 }

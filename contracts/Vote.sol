@@ -5,9 +5,9 @@ import "./ProposalContract.sol";
 
 contract Vote  {
     // change deployment addresses after deployment
-    address govToken_addr  = 0x0;
+    address govToken_addr  = address(0);
     GovToken gt = GovToken(govToken_addr);
-    address proposal_contract_address = 0x0;
+    address proposal_contract_address = address(0);
     ProposalContract p = ProposalContract(proposal_contract_address);
 
     struct CastedVote{
