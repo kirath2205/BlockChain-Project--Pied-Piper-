@@ -346,7 +346,7 @@ contract GovToken is ERC20Interface {
     }
 
 //  
-    function start_council_meeting() public returns (uint){
+    function toggle_council_meeting() public returns (uint){
         if(council_meeting){
             council_meeting = false;
             return 0;
