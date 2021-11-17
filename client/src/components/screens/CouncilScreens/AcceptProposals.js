@@ -124,7 +124,7 @@ const AcceptProposals = (props) => {
 	return (
 		<div style={{ height: "100%" }}>
 			<div className={formClasses.formWithTable}>
-				<h1>Accept/Reject proposals</h1>
+				<h3>Accept/Reject proposals</h3>
 				<Button onClick={DisplayProposals}>Get All Proposals</Button>
 				<br />
                 <Button onClick={endVoting} variant="outline-danger">

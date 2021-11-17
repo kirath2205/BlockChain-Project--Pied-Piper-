@@ -1,5 +1,5 @@
 pragma solidity >=0.4.21 <0.7.0;
- import "./Vote.sol";
+import "./Vote.sol";
 import "./ProposalContract.sol";
 import "./Safemath.sol";
 
@@ -39,10 +39,10 @@ contract ERC20Interface {
  
 contract GovToken is ERC20Interface {
     // change deployment addresses after deployment
-    address proposal_contract_address = address(0x0);
+    address proposal_contract_address = 0x40B4A36A8f733BbeC4E65FdD75Cd522faB53AeF5;
     ProposalContract p = ProposalContract(proposal_contract_address);
 
-    address vote_contract_address = address(0x0);
+    address vote_contract_address = 0xD1DD440475d2d5b9185927B3751C8f716aEcABD2;
     Vote vote = Vote(vote_contract_address);
 
     string public symbol;
@@ -98,7 +98,7 @@ contract GovToken is ERC20Interface {
             uint casted_votes = vote.get_casted_votes_array_length(i);
             for(uint k=0;k<casted_votes;k++){
                 (uint votes ,address  wallet_address ) = vote.get_token_and_address_for_a_cast(i,k);
-                balances[wallet_address].add(votes);
+                balances[wallet_address] = balances[wallet_address].add(votes);
             }
         }
     }
@@ -114,8 +114,8 @@ contract GovToken is ERC20Interface {
         return 0;
     }
 
-    function getWalletBalance() public view returns(uint){
-      return balances[msg.sender];
+    function getWalletBalance() public view returns(uint, address, uint, address){
+      return (balances[msg.sender], msg.sender, balances[_driver], _driver);
     }
 
     function getAccountType() public view returns (string memory){
@@ -241,7 +241,7 @@ contract GovToken is ERC20Interface {
       mapping (address => uint8) signatures;
     }
     
-    uint private _transactionIdx;
+    uint private _transactionIdx = 0;
     mapping (uint => Transaction) private _transactions;
     uint[] private _pendingTransactions;
     
@@ -264,6 +264,10 @@ contract GovToken is ERC20Interface {
 
         emit TransactionCreated(from, to, tokens,txnType, transactionId);
         
+    }
+
+    function getTransactionCount() public view returns (uint) {
+        return _transactionIdx;
     }
     
     // returns a list of ids of pending transactions

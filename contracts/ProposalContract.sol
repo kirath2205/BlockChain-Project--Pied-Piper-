@@ -4,7 +4,7 @@ import "./GovToken.sol";
 
 contract ProposalContract {
   // change deployment addresses after deployment
-    address govToken_addr  = address(0x0);
+    address govToken_addr  = 0x3D416Cfa03D21155529Dc2aa7f877137B719ca74;
     GovToken gt = GovToken(govToken_addr);
     struct Proposal {
         string proposal_text;
@@ -56,6 +56,14 @@ contract ProposalContract {
 
     function getPastProposal(uint id , uint epoch) public view returns(string memory , string memory , uint , address){
       return (proposals[epoch][id].proposal_title , proposals[epoch][id].proposal_text , proposals[epoch][id].votes , proposals[epoch][id].proposer);
+    }
+
+    function getPastProposalCount(uint epoch) public view returns (uint) {
+      return (proposal_count_for_epochs[epoch]);
+    }
+
+    function get_current_epoch() public view returns (uint) {
+      return gt.get_current_epoch();
     }
     
 }

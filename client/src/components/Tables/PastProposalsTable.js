@@ -7,102 +7,83 @@ import { Badge } from "react-bootstrap";
 import ViewProposalModal from "../Modals/ViewProposalModal";
 import ProposalVoteModal from "../Modals/ProposalVoteModal";
 
-const columns = [
-	{
-		field: "actions",
-		headerName: "Actions",
-		width: 130,
-		renderCell: (params) => (
-			<span>
-				<Typography color="textPrimary">
-					<span style={{ height: "100%" }}>
-						{/* <Button
-							// key={params.row.id}
-							// pill
-							variant="outline-primary"
-							style={{ marginRight: "4px" }}
-							onClick={() =>
-								console.log(
-									"view clicked" +
-										JSON.stringify(params.row.id)
-								)
-							}
-						>
-							View
-						</Button> */}
-						<ViewProposalModal rowdata={params.row} />
-						{/* <Button
-							// key={params.row.id}
-							// pill
-							variant="success"
-							style={{ marginRight: "4px", marginLeft: "4px" }}
-							onClick={() => console.log("vote clicked")}
-						>
-							Vote
-                        </Button> */}
-						{/* <ProposalVoteModal rowdata={params.row} /> */}
-					</span>
-				</Typography>
-			</span>
-		),
-	},
-	{
-		field: "id",
-		headerName: "Proposal ID",
-		width: 170,
-	},
-	{
-		field: "vote",
-		headerName: "Vote count",
-		width: 150,
-	},
-	{
-		field: "proposal_title",
-		headerName: "Proposal title",
-		width: 180,
-	},
-	{
-		field: "proposal_text",
-		headerName: "Proposal Description",
-		width: 250,
-
-		// renderCell: (params) => (
-		// 	<span>
-		// 		<Typography color="textPrimary">
-		// 			<span style={{ height: "100%" }}>
-		// 				{params.value.slice(0, 2).map((t) => (
-		// 					<Badge
-		// 						key={t}
-		// 						pill
-		// 						variant="warning"
-		// 						style={{ marginRight: "4px" }}
-		// 					>
-		// 						{t}
-		// 					</Badge>
-		// 				))}
-		// 			</span>
-		// 		</Typography>
-		// 		<Typography color="textPrimary">
-		// 			<span style={{ height: "100%" }}>
-		// 				{params.value.slice(2).map((t) => (
-		// 					<Badge
-		// 						key={t}
-		// 						pill
-		// 						variant="warning"
-		// 						style={{ marginRight: "4px" }}
-		// 					>
-		// 						{t}
-		// 					</Badge>
-		// 				))}
-		// 			</span>
-		// 		</Typography>
-		// 	</span>
-		// ),
-	},
-];
-
 export default function RenderCellGrid(props) {
 	const [tableRows, settableRows] = useState([]);
+
+	const columns = [
+		{
+			field: "actions",
+			headerName: "Actions",
+			width: 150,
+			renderCell: (params) => (
+				<span>
+					<Typography color="textPrimary">
+						<span style={{ height: "100%" }}>
+							<ViewProposalModal rowdata={params.row} />
+						</span>
+					</Typography>
+				</span>
+			),
+		},
+		{
+			field: "id",
+			headerName: "Proposal ID",
+			width: 170,
+		},
+		{
+			field: "vote",
+			headerName: "Vote count",
+			width: 150,
+		},
+		{
+			field: "user",
+			headerName: "Author",
+			width: 180,
+		},
+		{
+			field: "proposal_title",
+			headerName: "Proposal title",
+			width: 180,
+		},
+		{
+			field: "proposal_text",
+			headerName: "Proposal Description",
+			width: 250,
+
+			// renderCell: (params) => (
+			// 	<span>
+			// 		<Typography color="textPrimary">
+			// 			<span style={{ height: "100%" }}>
+			// 				{params.value.slice(0, 2).map((t) => (
+			// 					<Badge
+			// 						key={t}
+			// 						pill
+			// 						variant="warning"
+			// 						style={{ marginRight: "4px" }}
+			// 					>
+			// 						{t}
+			// 					</Badge>
+			// 				))}
+			// 			</span>
+			// 		</Typography>
+			// 		<Typography color="textPrimary">
+			// 			<span style={{ height: "100%" }}>
+			// 				{params.value.slice(2).map((t) => (
+			// 					<Badge
+			// 						key={t}
+			// 						pill
+			// 						variant="warning"
+			// 						style={{ marginRight: "4px" }}
+			// 					>
+			// 						{t}
+			// 					</Badge>
+			// 				))}
+			// 			</span>
+			// 		</Typography>
+			// 	</span>
+			// ),
+		},
+	];
 
 	useEffect(() => {
 		if (props.data) settableRows(props.data);

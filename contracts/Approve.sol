@@ -4,8 +4,10 @@ import "./GovToken.sol";
 import "./ProposalContract.sol";
 
 contract Approval {
-    GovToken gt;
-    ProposalContract p;
+    GovToken gt = GovToken(0x3D416Cfa03D21155529Dc2aa7f877137B719ca74);
+    
+    address proposal_contract_address = 0x40B4A36A8f733BbeC4E65FdD75Cd522faB53AeF5;
+    ProposalContract p = ProposalContract(proposal_contract_address);
     
    
     

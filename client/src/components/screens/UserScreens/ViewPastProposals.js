@@ -55,32 +55,57 @@ const ViewPastProposals = (props) => {
 		}
 	};
 
+	const getTotalEpochs = async() => {
+		const { accounts, contract } = proposalState;
+
+		const response = await contract.methods.get_current_epoch().call();
+		console.log("RESP:", response);
+		return Number(response);
+	}
+
 	const getProposalCount = async () => {
 		const { accounts, contract } = proposalState;
 
-		const response = await contract.methods.getProposalCount().call();
+		const response = await contract.methods.getPastProposalCount(0).call();
 		return Number(response);
 	};
 
 	const getProposalById = async (id) => {
 		const { accounts, contract } = proposalState;
 
-		const response = await contract.methods.getProposalById(id).call();
+		const response = await contract.methods.getPastProposal(id, 0).call();
 		// console.log(response);
 		return response;
 	};
 
+	const saveProposals = async (i) => {
+		const tempProp = await getProposalById(i);
+		console.log(tempProp);
+		// setAllProposals([...allProposals, tempProp]);
+		setAllProposals((oldArray) => [
+			...oldArray,
+			{
+				id: i,
+				proposal_text: tempProp["0"],
+				proposal_title: tempProp["1"],
+				vote: tempProp["2"],
+				user: tempProp["3"],
+			},
+		]);
+	};
+
 	const DisplayProposals = async () => {
+
+		const totalEpochs = await getTotalEpochs();
+		console.log("Total epochs:", totalEpochs);
+
 		const totalProposals = await getProposalCount();
-		console.log("Total proposals in blockchain: " + totalProposals);
+		console.log("Total past proposals in blockchain: " + totalProposals);
 
 		setAllProposals([]);
 
 		for (let i = 0; i < totalProposals; i++) {
-			const tempProp = await getProposalById(i);
-			console.log(tempProp);
-			// setAllProposals([...allProposals, tempProp]);
-			setAllProposals((oldArray) => [...oldArray, tempProp]);
+			saveProposals(i);
 		}
 	};
 
@@ -95,8 +120,8 @@ const ViewPastProposals = (props) => {
 	return (
 		<div style={{ height: "100%" }}>
 			<div className={formClasses.formWithTable}>
-				<h1>View Past Proposals</h1>
-				<Button onClick={DisplayProposals}>Get All Proposals</Button>
+				<h3>View Past Proposals</h3>
+				<Button onClick={DisplayProposals}>Get past Proposals</Button>
 
 				{/* {allProposals.map((proposal, ind) => {
 					return (
@@ -126,7 +151,10 @@ const ViewPastProposals = (props) => {
 					);
 				})} */}
 
-				<PastProposalsTable data={proposalData} />
+				<PastProposalsTable
+					data={allProposals}
+					contract={proposalState}
+				/>
 			</div>
 		</div>
 	);

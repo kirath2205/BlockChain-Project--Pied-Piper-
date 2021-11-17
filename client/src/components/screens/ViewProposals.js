@@ -10,6 +10,7 @@ import formClasses from "../Styles/formStyle.module.css";
 
 // importing contract
 import ProposalContract from "../../contracts/ProposalContract.json";
+import Vote from "../../contracts/Vote.json";
 
 // proposals table
 import ViewProposalTable from '../Tables/ViewProposalTable';
@@ -18,14 +19,14 @@ import { proposalDummyData } from '../DummyData/ProposalData';
 import getWeb3 from "../../getWeb3";
 
 const ViewProposals = (props) => {
-    const [proposalState, setProposalState] = useState({});
+	const [proposalState, setProposalState] = useState({});
+	const [proposalState2, setProposalState2] = useState({});
 	const [proposalData, setProposalData] = useState(proposalDummyData);
     const [allProposals, setAllProposals] = useState([]);
 
 	const makeInstance = async () => {
 		try {
 			// Get network provider and web3 instance.
-			// const web3 = await getWeb3();
 			const web3 = props.contract;
 
 			// Use web3 to get the user's accounts.
@@ -41,6 +42,37 @@ const ViewProposals = (props) => {
 			
 			// Set web3, accounts, and contract to the state
 			setProposalState({
+				...proposalState,
+				web3,
+				accounts,
+				contract: instance,
+			});
+		} catch (error) {
+			// Catch any errors for any of the above operations.
+			alert(
+				`Failed to load web3, accounts, or contract. Check console for details.`
+			);
+			console.error(error);
+		}
+
+		// Vote contract
+		try {
+			// Get network provider and web3 instance.
+			const web3 = props.contract;
+
+			// Use web3 to get the user's accounts.
+			const accounts = await web3.eth.getAccounts();
+
+			// Get the contract instance.
+			const networkId = await web3.eth.net.getId();
+			const deployedNetwork = Vote.networks[networkId];
+			const instance = new web3.eth.Contract(
+				Vote.abi,
+				deployedNetwork && deployedNetwork.address
+			);
+
+			// Set web3, accounts, and contract to the state
+			setProposalState2({
 				...proposalState,
 				web3,
 				accounts,
@@ -94,30 +126,35 @@ const ViewProposals = (props) => {
 
 		for (let i = 0; i < totalProposals; i++) {
 			saveProposals(i);
-            // const tempProp = await getProposalById(i);
-            // console.log(tempProp);
-            // // setAllProposals([...allProposals, tempProp]);
-			// setAllProposals((oldArray) => [
-			// 	...oldArray,
-			// 	{
-			// 		id: i,
-			// 		proposal_text: tempProp["0"],
-			// 		proposal_title: tempProp["1"],
-			// 		vote: tempProp["2"]
-			// 	},
-			// ]);
 		}
 	}
 
-	const voteproposal = async (id, votes) => {
-		const { accounts, contract } = proposalState;
+	const canVote = async (votes) => {
+		const { accounts, contract } = proposalState2;
+		const response = await contract.methods
+			.can_vote(parseInt(votes))
+			.call();
+		return response;
+	}
 
-		console.log(id, votes);
-		await contract.methods
-			.addVotes(id, parseInt(votes))
-			.send({ from: accounts[0] });
-		
-		DisplayProposals();
+	const voteproposal = async (id, votes) => {
+		const { accounts, contract } = proposalState2;
+
+		const eligible = await canVote(votes);
+		console.log("Voting eligibility:", eligible);
+
+		if (eligible === "1") {
+			console.log(id, votes);
+			await contract.methods
+				.caste_vote(parseInt(votes), id)
+				.send({ from: accounts[0] });
+
+			DisplayProposals();
+		}
+		else {
+			console.log("Not enough tokens to vote!");
+			window.alert("Not enough token to vote!");
+		}
 	}
 
 	useEffect(() => {
@@ -127,36 +164,8 @@ const ViewProposals = (props) => {
 	return (
 		<div style={{ height: "100%" }}>
 			<div className={formClasses.formWithTable}>
-				<h1>View Proposals</h1>
+				<h3>View Proposals</h3>
 				<Button onClick={DisplayProposals}>Get All Proposals</Button>
-
-				{/* {allProposals.map((proposal, ind) => {
-					return (
-						<div
-							key={ind}
-							style={{
-								display: "flex",
-								flexDirection: "column",
-								alignItems: "center",
-								background: "#f58e64",
-								padding: "20px",
-								marginTop: "10px",
-							}}
-							onClick={() =>
-								handleProposalClick(proposal, ind)
-							}
-						>
-							<div>
-								{" "}
-								<b>Proposal:</b> {proposal.proposal_text}{" "}
-							</div>
-							<div>
-								{" "}
-								<b>Title:</b> {proposal.proposal_title}{" "}
-							</div>
-						</div>
-					);
-				})} */}
 
 				<ViewProposalTable
 					data={allProposals}

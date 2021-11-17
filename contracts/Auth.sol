@@ -3,7 +3,7 @@ pragma experimental ABIEncoderV2;
 import "./GovToken.sol";
 
 contract Auth {
-    GovToken gt;
+    GovToken gt = GovToken(0x3D416Cfa03D21155529Dc2aa7f877137B719ca74);
     struct Profile {
         string username;
         string password;

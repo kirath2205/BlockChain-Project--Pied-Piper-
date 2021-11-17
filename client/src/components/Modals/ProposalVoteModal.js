@@ -17,7 +17,7 @@ function MyVerticallyCenteredModal(props) {
     const validationSchema = Yup.object().shape({
 		vote: Yup.number()
 			.min(1, "Vote count must be atleast 1 or more")
-			.max(10000000, "Vote count can't be longer than 10,000,000")
+			.max(1000000000, "Vote count can't be longer than 1000,000,000")
 			.required("Vote count is required")
 			.typeError("Vote count must be numerical"),
 	});

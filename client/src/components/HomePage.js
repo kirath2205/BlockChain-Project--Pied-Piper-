@@ -20,6 +20,7 @@ import ViewProposals from "./screens/ViewProposals";
 import NotLoggedIn from "./screens/NotLoggedIn";
 import Login from "./screens/Login";
 import Register from "./screens/Register";
+import SetCouncilMembers from "./screens/SetCouncilMembers";
 
 const HomePage = (props) => {
 
@@ -91,6 +92,7 @@ const HomePage = (props) => {
 					{/* <userSideNav /> */}
 					<Route path="/view-proposals" component={ViewProposals} />
 					<Route path="/submit-proposal" component={SubmitProposal} />
+					<Route path="/set-council-members" component={SetCouncilMembers} />
 				</Switch>
 				<Switch></Switch>
 			</Router>
