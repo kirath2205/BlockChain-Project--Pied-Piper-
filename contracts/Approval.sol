@@ -4,12 +4,11 @@ import "./GovToken.sol";
 import "./ProposalContract.sol";
 
 contract Approval {
-    GovToken gt = GovToken(0x3D416Cfa03D21155529Dc2aa7f877137B719ca74);
+    GovToken gt = GovToken(0x93E36d47cC365B5aA6bDfB54020cdB3901DdA075);
     
-    address proposal_contract_address = 0x40B4A36A8f733BbeC4E65FdD75Cd522faB53AeF5;
+    address proposal_contract_address = 0x07e000cD1CfBA707a4A2a976c11B8ee009B1C670;
     ProposalContract p = ProposalContract(proposal_contract_address);
     
-   
     
     uint approval_count = 0;
     // mapping of epoch to approved_proposals
@@ -24,11 +23,14 @@ contract Approval {
 
     event ProposalsApproved(uint[] ProposalIDs, address councilMember);
     event ProposalsFinalized(uint[] final_proposals);
-
+    
+    function getApprovalsByEpoch(uint epoch) public view returns (uint[] memory) {
+        return approved_proposals[epoch];
+    }
 
   
     function approve_proposals(uint[] memory proposalIDs) public returns (uint) {
-        // only council member can access TODO
+        // only council member can access 
         require(gt.check_if_council_member_new(msg.sender) == 1);
         // they should not have already approved 
         require(member_status[msg.sender] != 1);
@@ -36,7 +38,7 @@ contract Approval {
         // approve (increase proposal approve count)
         uint len = proposalIDs.length;
         for (uint i =0; i<len; i++) {
-            approvals[gt.get_current_epoch()][i] += 1;
+            approvals[gt.get_current_epoch()][proposalIDs[i]] += 1;
         }
         // set member status
         member_status[msg.sender] = 1;
@@ -62,17 +64,18 @@ contract Approval {
         
     
         for (uint i = 0; i<proposal_count; i++){
-            if (approvals[gt.get_current_epoch()-1][i] > min_approvals) {
-                approved_proposals[gt.get_current_epoch() -1].push(i);
+            if (approvals[gt.get_current_epoch()][i] >= min_approvals) {
+                approved_proposals[gt.get_current_epoch()].push(i);
                 // transfer coins to winning proposals 
                 address proposer = p.getProposer(i);
                 gt.mint_and_tranfer(100, proposer);
             }
         }
         
-        return approved_proposals[gt.get_current_epoch() -1];
+        return approved_proposals[gt.get_current_epoch()];
         
     }
+    
     
     function reset_member_statuses() private {
         // need a way to get an array of keys - google suggests keeping an external database on top of bc
@@ -81,6 +84,8 @@ contract Approval {
         for (uint i = 0; i< council_members.length; i++){
             member_status[council_members[i]] = 0;
         }
+        
+        approval_count = 0;
     }
     
     // returns 1 if a member already submitted his approvals
@@ -90,6 +95,11 @@ contract Approval {
     
     function get_proposal_approval_count(uint proposalID) public view returns (uint256) {
         return approvals[gt.get_current_epoch()][proposalID];
+    }
+    
+    function setContractAddress(address proposal_add , address govtoken_add) public {
+        p = ProposalContract(proposal_add);
+        gt = GovToken(govtoken_add);
     }
     
     
