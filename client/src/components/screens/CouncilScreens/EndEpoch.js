@@ -71,7 +71,9 @@ const EndEpoch = (props) => {
     const getEpoch = async () => {
         const { accounts, contract } = proposalState;
 
-        const response = await contract.methods.get_current_epoch().call();
+        const response = await contract.methods
+			.get_current_epoch()
+			.call({ from: accounts[0] });
         console.log("Epoch:", response);
     }
 
@@ -80,7 +82,9 @@ const EndEpoch = (props) => {
 		
 		console.log("Account address:", accounts[0]);
 
-		const response = await contract.methods.getWalletBalance().call();
+		const response = await contract.methods
+			.getWalletBalance()
+			.call({ from: accounts[0] });
 		console.log("Wallet balance:", response);
     }
 

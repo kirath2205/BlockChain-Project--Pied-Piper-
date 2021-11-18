@@ -91,14 +91,18 @@ const ViewProposals = (props) => {
     const getProposalCount = async () => {
 		const { accounts, contract } = proposalState;
 
-		const response = await contract.methods.getProposalCount().call();
+		const response = await contract.methods
+			.getProposalCount()
+			.call({ from: accounts[0] });
         return Number(response);
     }
     
     const getProposalById = async (id) => {
 		const { accounts, contract } = proposalState;
 
-		const response = await contract.methods.getProposalById(id).call();
+		const response = await contract.methods
+			.getProposalById(id)
+			.call({ from: accounts[0] });
 		// console.log(response);
 		return response;
 	};
@@ -133,7 +137,7 @@ const ViewProposals = (props) => {
 		const { accounts, contract } = proposalState2;
 		const response = await contract.methods
 			.can_vote(parseInt(votes))
-			.call();
+			.call({ from: accounts[0] });
 		return response;
 	}
 
@@ -152,8 +156,8 @@ const ViewProposals = (props) => {
 			DisplayProposals();
 		}
 		else {
-			console.log("Not enough tokens to vote!");
-			window.alert("Not enough token to vote!");
+			console.log("Not enough Gov tokens to vote!");
+			window.alert("Not enough Gov tokens to vote!");
 		}
 	}
 
