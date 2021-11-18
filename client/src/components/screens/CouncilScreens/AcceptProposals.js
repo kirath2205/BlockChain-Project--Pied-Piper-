@@ -10,6 +10,7 @@ import formClasses from "../../Styles/formStyle.module.css";
 
 // importing contract
 import ProposalContract from "../../../contracts/ProposalContract.json";
+import Approval from "../../../contracts/Approval.json";
 
 // proposals table
 import AcceptProposalTable from "../../Tables/AcceptProposalTable";
@@ -19,6 +20,8 @@ import getWeb3 from "../../../getWeb3";
 
 const AcceptProposals = (props) => {
 	const [proposalState, setProposalState] = useState({});
+	const [proposalState2, setProposalState2] = useState({});
+
 	const [proposalData, setProposalData] = useState(proposalDummyData);
     const [allProposals, setAllProposals] = useState([]);
     const [acceptedProposals, setAcceptedProposals] = useState(new Set());
@@ -43,6 +46,37 @@ const AcceptProposals = (props) => {
 			// Set web3, accounts, and contract to the state
 			setProposalState({
 				...proposalState,
+				web3,
+				accounts,
+				contract: instance,
+			});
+		} catch (error) {
+			// Catch any errors for any of the above operations.
+			alert(
+				`Failed to load web3, accounts, or contract. Check console for details.`
+			);
+			console.error(error);
+		}
+
+		try {
+			// Get network provider and web3 instance.
+			// const web3 = await getWeb3();
+			const web3 = props.contract;
+
+			// Use web3 to get the user's accounts.
+			const accounts = await web3.eth.getAccounts();
+
+			// Get the contract instance.
+			const networkId = await web3.eth.net.getId();
+			const deployedNetwork = Approval.networks[networkId];
+			const instance = new web3.eth.Contract(
+				Approval.abi,
+				deployedNetwork && deployedNetwork.address
+			);
+
+			// Set web3, accounts, and contract to the state
+			setProposalState2({
+				...proposalState2,
 				web3,
 				accounts,
 				contract: instance,
@@ -101,7 +135,8 @@ const AcceptProposals = (props) => {
         // var updatedProposals = allProposals;
         // updatedProposals = updatedProposals.filter(p => p.id !== id);
         // setProposalState(updatedProposals);
-        setAcceptedProposals((old) => new Set([...old, id]));
+		setAcceptedProposals((old) => new Set([...old, id]));
+		
     }
 
     const reject = async (id) => {
@@ -113,8 +148,15 @@ const AcceptProposals = (props) => {
     
     const endVoting = async () => {
         console.log("Voting ended");
-        console.log(acceptedProposals);
-        setAllProposals([]);
+		console.log(Array.from(acceptedProposals));
+		
+		const { accounts, contract } = proposalState2;
+
+		await contract.methods
+			.approve_proposals(Array.from(acceptedProposals))
+			.send({ from: accounts[0] });
+
+        // setAllProposals([]);
     }
 
 	useEffect(() => {

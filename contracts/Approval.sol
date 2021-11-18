@@ -29,14 +29,14 @@ contract Approval {
   
     function approve_proposals(uint[] memory proposalIDs) public returns (uint) {
         // only council member can access TODO
-        require(gt.check_if_council_member() == 1);
+        require(gt.check_if_council_member_new(msg.sender) == 1);
         // they should not have already approved 
         require(member_status[msg.sender] != 1);
         
         // approve (increase proposal approve count)
         uint len = proposalIDs.length;
         for (uint i =0; i<len; i++) {
-            approvals[gt.get_current_epoch()-1][i] += 1;
+            approvals[gt.get_current_epoch()][i] += 1;
         }
         // set member status
         member_status[msg.sender] = 1;

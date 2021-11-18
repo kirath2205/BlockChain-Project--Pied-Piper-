@@ -45,9 +45,11 @@ const SetCouncilMembers = (props) => {
 
         const { accounts, contract } = proposalState;
         console.log("Council members set");
+        console.log("Current account:", accounts[0]);
 
         const members = [
-			0x94255eef3ccdb21e867557dfa3be97aa8b0b9c3824cec3a8e8b80cc66dc862ca,
+			"0xa04012468020b2882953614ccb75bdda2bb3e194",
+			"0x6C0c626B01aAE4F844773a444a75E9A1C5a7393a",
 		];
 
         for (let i = 0; i < members.length; ++i) {

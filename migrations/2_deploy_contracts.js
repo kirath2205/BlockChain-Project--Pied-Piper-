@@ -1,5 +1,6 @@
 var SimpleStorage = artifacts.require("./SimpleStorage.sol");
 var ProposalContract = artifacts.require("./ProposalContract.sol");
+var Approval = artifacts.require("./Approval.sol");
 var GovToken = artifacts.require("./GovToken.sol");
 var Auth = artifacts.require("./Auth.sol");
 var Vote = artifacts.require("./Vote.sol");
@@ -12,4 +13,5 @@ module.exports = function(deployer) {
   deployer.deploy(GovToken, name, symbol, supply);
   deployer.deploy(Auth);
   deployer.deploy(Vote);
+  deployer.deploy(Approval);
 };

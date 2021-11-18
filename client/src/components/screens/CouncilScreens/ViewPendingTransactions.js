@@ -110,7 +110,7 @@ const ViewPastProposals = (props) => {
 		const { accounts, contract } = proposalState;
 
 		await contract.methods
-			.signTransaction(id, true)
+			.signTransaction(id)
 			.send({ from: accounts[0] });
     }
 

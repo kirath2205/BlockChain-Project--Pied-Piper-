@@ -290,7 +290,7 @@ contract GovToken is ERC20Interface {
      
     }
     
-    function signTransaction(uint transactionId, bool accept)
+    function signTransaction(uint transactionId)
       validOwner
       public {
 
@@ -310,9 +310,8 @@ contract GovToken is ERC20Interface {
       require(transaction.signatures[msg.sender] != 1);
 
       transaction.signatures[msg.sender] = 1;
-      if (accept) {
-          transaction.signatureCount++;
-      }
+
+      transaction.signatureCount++;
       transaction.total_signatures++;
       
 
@@ -363,6 +362,13 @@ contract GovToken is ERC20Interface {
 
     function check_if_council_member() public view returns (uint){
         if(msg.sender == _driver || _councilMembers[msg.sender] == 1){
+            return 1;
+        }
+        return 0;
+    }
+
+    function check_if_council_member_new(address original_sender) public view returns (uint){
+        if(original_sender == _driver || _councilMembers[original_sender] == 1){
             return 1;
         }
         return 0;
