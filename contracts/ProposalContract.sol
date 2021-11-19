@@ -4,7 +4,7 @@ import "./GovToken.sol";
 
 contract ProposalContract {
   // change deployment addresses after deployment
-    address govToken_addr  = 0x3D416Cfa03D21155529Dc2aa7f877137B719ca74;
+    address govToken_addr  = 0x27e116c0469EbE45A2D59F8B4BE42619662921c3;
     GovToken gt = GovToken(govToken_addr);
     struct Proposal {
         string proposal_text;
@@ -16,10 +16,20 @@ contract ProposalContract {
     
     mapping (uint => mapping(uint => Proposal)) public proposals;
     mapping (uint => uint) public proposal_count_for_epochs;
-    mapping (uint => Proposal[]) public approved_proposals_for_epochs;
+    mapping(uint => uint[]) private approved_proposals;
+    mapping (uint =>  mapping(uint => uint8)) private approved_proposals_for_epochs;
 
 
     event ProposalCreated(uint ProposalID, string proposal_title);
+    
+    function getApprovalsByEpoch(uint epoch) public view returns (uint[] memory) {
+        return approved_proposals[epoch];
+    }
+    
+    function updateApprovalStatus(uint id) public {
+        approved_proposals[gt.get_current_epoch()].push(id);
+        approved_proposals_for_epochs[gt.get_current_epoch()][id] = 1;
+    }
 
     function addProposal(string memory proposal_text, string memory proposal_title) public returns (uint){
       uint current_e = gt.get_current_epoch();
@@ -46,7 +56,7 @@ contract ProposalContract {
       return proposal.proposer;
     }
 
-    function addVotes(uint id , uint votes)public {
+    function addVotes(uint id , uint votes) public {
       proposals[gt.get_current_epoch()][id].votes += votes;
     }
 
@@ -54,8 +64,9 @@ contract ProposalContract {
       return proposals[gt.get_current_epoch()][proposal_id].votes;
     }
 
-    function getPastProposal(uint id , uint epoch) public view returns(string memory , string memory , uint , address){
-      return (proposals[epoch][id].proposal_title , proposals[epoch][id].proposal_text , proposals[epoch][id].votes , proposals[epoch][id].proposer);
+    function getPastProposal(uint id , uint epoch) public view returns(string memory , string memory , uint , address, uint8){
+      uint8 approval_status = approved_proposals_for_epochs[epoch][id];
+      return (proposals[epoch][id].proposal_title , proposals[epoch][id].proposal_text , proposals[epoch][id].votes , proposals[epoch][id].proposer, approval_status);
     }
 
     function getPastProposalCount(uint epoch) public view returns (uint) {

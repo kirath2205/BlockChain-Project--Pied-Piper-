@@ -4,15 +4,16 @@ import "./GovToken.sol";
 import "./ProposalContract.sol";
 
 contract Approval {
-    GovToken gt = GovToken(0x93E36d47cC365B5aA6bDfB54020cdB3901DdA075);
+    GovToken gt = GovToken(0x27e116c0469EbE45A2D59F8B4BE42619662921c3);
     
-    address proposal_contract_address = 0x07e000cD1CfBA707a4A2a976c11B8ee009B1C670;
+    address proposal_contract_address = 0x6eDBDc57B9B08778a390eF4D12ea46a42070736d;
     ProposalContract p = ProposalContract(proposal_contract_address);
     
     
     uint approval_count = 0;
     // mapping of epoch to approved_proposals
-    mapping(uint => uint[]) approved_proposals;
+    // mapping(uint => uint[]) approved_proposals;
+    // mapping(uint => mapping(uint => uint8)) approved_proposals;
     
     
     mapping(address => uint8) private member_status;
@@ -24,9 +25,9 @@ contract Approval {
     event ProposalsApproved(uint[] ProposalIDs, address councilMember);
     event ProposalsFinalized(uint[] final_proposals);
     
-    function getApprovalsByEpoch(uint epoch) public view returns (uint[] memory) {
-        return approved_proposals[epoch];
-    }
+    // function getApprovalsByEpoch(uint epoch) public view returns (uint[] memory) {
+    //     return approved_proposals[epoch];
+    // }
 
   
     function approve_proposals(uint[] memory proposalIDs) public returns (uint) {
@@ -47,16 +48,20 @@ contract Approval {
         
         emit ProposalsApproved(proposalIDs, msg.sender);
         
+        // if (approval_count == gt.getCouncilCount()) {
+        //     uint[] memory final_proposals = get_final_proposals();
+        //     reset_member_statuses();
+        //     emit ProposalsFinalized(final_proposals);
+        // }
         if (approval_count == gt.getCouncilCount()) {
-            uint[] memory final_proposals = get_final_proposals();
+            decide_final_approvals();
             reset_member_statuses();
-            emit ProposalsFinalized(final_proposals);
         }
         
       
     }
     
-    function get_final_proposals() private returns (uint[] memory) {
+    function decide_final_approvals() private {
  
         uint min_approvals = (gt.getCouncilCount() + 1)/2; // > 50% of council members 
        
@@ -65,14 +70,16 @@ contract Approval {
     
         for (uint i = 0; i<proposal_count; i++){
             if (approvals[gt.get_current_epoch()][i] >= min_approvals) {
-                approved_proposals[gt.get_current_epoch()].push(i);
+                // approved_proposals[gt.get_current_epoch()].push(i);
+                p.updateApprovalStatus(i);
+                // approved_proposals_for_epochs[gt.get_current_epoch()][i] = 1;
                 // transfer coins to winning proposals 
                 address proposer = p.getProposer(i);
                 gt.mint_and_tranfer(100, proposer);
             }
         }
         
-        return approved_proposals[gt.get_current_epoch()];
+        // return approved_proposals[gt.get_current_epoch()];
         
     }
     
@@ -97,7 +104,7 @@ contract Approval {
         return approvals[gt.get_current_epoch()][proposalID];
     }
     
-    function setContractAddress(address proposal_add , address govtoken_add) public {
+    function setContractAddress(address proposal_add,address govtoken_add) public {
         p = ProposalContract(proposal_add);
         gt = GovToken(govtoken_add);
     }
