@@ -32,9 +32,9 @@ contract Approval {
   
     function approve_proposals(uint[] memory proposalIDs) public returns (uint) {
         // only council member can access 
-        require(gt.check_if_council_member_new(msg.sender) == 1);
+        require(gt.check_if_council_member_new(msg.sender) == 1, "only council members can approve");
         // they should not have already approved 
-        require(member_status[msg.sender] != 1);
+        require(member_status[msg.sender] != 1, "a council member can only submit approvals once in a epoch");
         
         // approve (increase proposal approve count)
         uint len = proposalIDs.length;
@@ -55,7 +55,7 @@ contract Approval {
         // }
         if (approval_count == gt.getCouncilCount()) {
             decide_final_approvals();
-            reset_member_statuses();
+            
         }
         
       
@@ -63,7 +63,7 @@ contract Approval {
     
     function decide_final_approvals() private {
  
-        uint min_approvals = (gt.getCouncilCount() + 1)/2; // > 50% of council members 
+        uint min_approvals = (gt.getCouncilCount() /2) + 1; // > 50% of council members 
        
         uint proposal_count = p.getProposalCount();
         
@@ -78,6 +78,11 @@ contract Approval {
                 gt.mint_and_tranfer(100, proposer);
             }
         }
+        
+        reset_member_statuses();
+        gt.start_new_epoch();
+        
+        
         
         // return approved_proposals[gt.get_current_epoch()];
         

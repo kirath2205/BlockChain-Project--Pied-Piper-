@@ -1,6 +1,7 @@
 pragma solidity >=0.4.21 <0.7.0;
 import "./Vote.sol";
 import "./ProposalContract.sol";
+import "./Approval.sol";
 import "./Safemath.sol";
 
 // contract SafeMath {
@@ -44,6 +45,8 @@ contract GovToken is ERC20Interface {
 
     address vote_contract_address = 0xD1DD440475d2d5b9185927B3751C8f716aEcABD2;
     Vote vote = Vote(vote_contract_address);
+    address approval_contract_address = 0xA18E2b3Cc73C274977bE86dBf2b4b5770fe29521;
+    Approval approval = Approval(approval_contract_address);
 
     string public symbol;
     string public  name;
@@ -104,14 +107,15 @@ contract GovToken is ERC20Interface {
     }
 
     function start_new_epoch() public  returns (uint){
-        address user = msg.sender;
-        if(check_if_council_member() == 1) {
-            revert_casted_votes_after_epoch_ends();
-            vote.clear_casted_votes_after_epoch_ends();
-            increment_epoch();
-            return 1;
-        }
-        return 0;
+       
+        require(msg.sender == approval_contract_address, "Only the Approval contract can call start_new_epoch()");
+        
+        revert_casted_votes_after_epoch_ends();
+        vote.clear_casted_votes_after_epoch_ends();
+        increment_epoch();
+        toggle_council_meeting();
+        return 1;
+        
     }
 
     function getWalletBalance() public view returns(uint, address, uint, address){
@@ -380,6 +384,19 @@ contract GovToken is ERC20Interface {
 
     function get_current_epoch() public view returns (uint){
         return current_epoch;
+    }
+    
+   
+    function getAddressGovToken() public view returns (address){
+        return address(this);
+    }
+
+    function setContractAddress(address proposal_add, address approval_address, address vote_add ) public {
+        p = ProposalContract(proposal_add);
+        approval_contract_address = approval_address;
+        approval = Approval(approval_address);
+        vote = Vote(vote_add);
+       
     }
 
  

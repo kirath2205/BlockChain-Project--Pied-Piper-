@@ -77,4 +77,12 @@ contract ProposalContract {
       return gt.get_current_epoch();
     }
     
+    function getAddressProposal() public view returns(address){
+      return address(this);
+    }
+
+    function setContractAddress(address govtoken_add) public {
+        gt = GovToken(govtoken_add);
+    }
+    
 }
