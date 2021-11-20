@@ -4,7 +4,7 @@ import "./GovToken.sol";
 
 contract ProposalContract {
   // change deployment addresses after deployment
-    address govToken_addr  = 0x27e116c0469EbE45A2D59F8B4BE42619662921c3;
+    address govToken_addr  = 0x3D416Cfa03D21155529Dc2aa7f877137B719ca74;
     GovToken gt = GovToken(govToken_addr);
     struct Proposal {
         string proposal_text;

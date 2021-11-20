@@ -70,5 +70,9 @@ contract Vote  {
     return 1;
     }
 
+    function setContractAddress(address govtoken_add , address proposal_add) public {
+        p = ProposalContract(proposal_add);
+        gt = GovToken(govtoken_add);
+    }
     
 }

@@ -91,6 +91,8 @@ const ViewProposals = (props) => {
     const getProposalCount = async () => {
 		const { accounts, contract } = proposalState;
 
+		// console.log("Proposal contract address:", contract._address);
+
 		const response = await contract.methods
 			.getProposalCount()
 			.call({ from: accounts[0] });
@@ -131,6 +133,8 @@ const ViewProposals = (props) => {
 		for (let i = 0; i < totalProposals; i++) {
 			saveProposals(i);
 		}
+
+		// console.log("Proposal contract address:", ProposalContract.abi);
 	}
 
 	const canVote = async (votes) => {

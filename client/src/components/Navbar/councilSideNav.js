@@ -13,6 +13,7 @@ import AcceptProposals from "../screens/CouncilScreens/AcceptProposals";
 import ViewPendingTransactions from "../screens/CouncilScreens/ViewPendingTransactions";
 import EndEpoch from "../screens/CouncilScreens/EndEpoch";
 import MintTokens from "../screens/CouncilScreens/MintTokens";
+import TransferTokens from "../screens/CouncilScreens/TransferTokens";
 
 import PageNavbar from "./Navbar";
 
@@ -95,8 +96,9 @@ export default function VerticalTabs() {
 					<Tab label="View all proposals" {...a11yProps(1)} />
 					<Tab label="Accept proposals" {...a11yProps(2)} />
 					<Tab label="View pending transactions" {...a11yProps(3)} />
-					<Tab label="Mint or transfer tokens" {...a11yProps(4)} />
-					<Tab label="End voting and epoch" {...a11yProps(5)} />
+					<Tab label="Mint new tokens" {...a11yProps(4)} />
+					<Tab label="Transfer tokens" {...a11yProps(5)} />
+					<Tab label="End voting and epoch" {...a11yProps(6)} />
 				</Tabs>
 				<TabPanel value={value} index={0}>
 					<SubmitProposal contract={contract} />
@@ -114,6 +116,9 @@ export default function VerticalTabs() {
 					<MintTokens contract={contract} />
 				</TabPanel>
 				<TabPanel value={value} index={5}>
+					<TransferTokens contract={contract} />
+				</TabPanel>
+				<TabPanel value={value} index={6}>
 					<EndEpoch contract={contract} />
 				</TabPanel>
 			</div>

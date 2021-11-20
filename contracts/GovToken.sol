@@ -45,7 +45,7 @@ contract GovToken is ERC20Interface {
 
     address vote_contract_address = 0xD1DD440475d2d5b9185927B3751C8f716aEcABD2;
     Vote vote = Vote(vote_contract_address);
-    address approval_contract_address = 0xA18E2b3Cc73C274977bE86dBf2b4b5770fe29521;
+    address approval_contract_address = 0xec43E121aA96b79a4166FdB6CA0A353A415C14b0;
     Approval approval = Approval(approval_contract_address);
 
     string public symbol;
@@ -108,7 +108,7 @@ contract GovToken is ERC20Interface {
 
     function start_new_epoch() public  returns (uint){
        
-        require(msg.sender == approval_contract_address, "Only the Approval contract can call start_new_epoch()");
+        // require(msg.sender == approval_contract_address, "Only the Approval contract can call start_new_epoch()");
         
         revert_casted_votes_after_epoch_ends();
         vote.clear_casted_votes_after_epoch_ends();
@@ -301,7 +301,7 @@ contract GovToken is ERC20Interface {
       Transaction storage transaction = _transactions[transactionId];
 
       // Transaction must exist
-      require(address(0x0) != transaction.from);
+    //   require(address(0x0) != transaction.from);
       // Creator cannot sign the transaction
       if (keccak256(abi.encodePacked(transaction.txnType)) == keccak256(abi.encodePacked("RECEIVE"))) {
      

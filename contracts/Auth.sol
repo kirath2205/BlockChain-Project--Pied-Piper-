@@ -72,5 +72,8 @@ contract Auth {
         return 0;
     }
 
+    function setContractAddress(address govtoken_add) public {
+        gt = GovToken(govtoken_add);
+    }
     
 }

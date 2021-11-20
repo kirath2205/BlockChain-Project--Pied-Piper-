@@ -13,14 +13,14 @@ export default function RenderCellGrid(props) {
 		{
 			field: "actions",
 			headerName: "Actions",
-			width: 250,
+			width: 200,
 			renderCell: (params) => (
 				<span>
 					<Typography color="textPrimary">
 						<span style={{ height: "100%" }}>
 							<ViewProposalModal rowdata={params.row} />
 
-							<Button
+							{/* <Button
                                 disabled={disable}
                                 variant="outline-danger"
                                 style={{
@@ -32,15 +32,18 @@ export default function RenderCellGrid(props) {
                                 }}
 							>
 								Reject
-							</Button>
+							</Button> */}
 
 							<Button
 								disabled={disable}
 								variant="success"
-                                onClick={() => {
-                                    // setDisable(true);
-                                    props.accept(params.row.id);
-                                }}
+								style={{
+									marginLeft: "4px",
+								}}
+								onClick={() => {
+									// setDisable(true);
+									props.accept(params.row.id);
+								}}
 							>
 								Accept
 							</Button>
