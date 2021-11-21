@@ -67,19 +67,35 @@ const Login = (props) => {
 
     const accountLogin = async (values) => {
 		const { accounts, contract } = proposalState;
-        contract.options.address = "0xEF82476Ea92D95195C1D1352A70f6D41E5e7A1c9";
+		contract.options.address = "0xEF82476Ea92D95195C1D1352A70f6D41E5e7A1c9";
 
         const response = await contract.methods
             .login(values.username, values.password)
             .call({ from: accounts[0] });
         
-		console.log("Login response:", response);
+		console.log("Login response:", accounts[0]);
+
+		const members = [
+			"0xA04012468020b2882953614ccB75bDDA2bB3e194",
+			"0x6C0c626B01aAE4F844773a444a75E9A1C5a7393a",
+		];
 
 		if (response == 1) {
-			props.history.push({
-				pathname: "/user-login",
-				// state: { user: user },
-			});
+
+			if (members.includes(accounts[0])) {
+				console.log("Council member logged in");
+				props.history.push({
+					pathname: "/council-login",
+					// state: { user: user },
+				});
+			}
+			else {
+				console.log("User logged in");
+				props.history.push({
+					pathname: "/user-login",
+					// state: { user: user },
+				});
+			}
 		}
 		else {
 			setLoginResponse("Incorrect username or password");

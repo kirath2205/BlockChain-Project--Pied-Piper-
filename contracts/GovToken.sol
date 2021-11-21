@@ -106,7 +106,7 @@ contract GovToken is ERC20Interface {
         }
     }
 
-    function start_new_epoch() public  returns (uint){
+    function start_new_epoch() validOwner public returns (uint){
        
         // require(msg.sender == approval_contract_address, "Only the Approval contract can call start_new_epoch()");
         
@@ -114,6 +114,10 @@ contract GovToken is ERC20Interface {
         vote.clear_casted_votes_after_epoch_ends();
         increment_epoch();
         toggle_council_meeting();
+        
+        vote.reward_most_voted_proposal();
+        balances[_driver] = balances[_driver].sub(25);
+
         return 1;
         
     }

@@ -32,9 +32,9 @@ contract Approval {
   
     function approve_proposals(uint[] memory proposalIDs) public returns (uint) {
         // only council member can access 
-        require(gt.check_if_council_member_new(msg.sender) == 1, "only council members can approve");
+        // require(gt.check_if_council_member_new(msg.sender) == 1, "only council members can approve");
         // they should not have already approved 
-        require(member_status[msg.sender] != 1, "a council member can only submit approvals once in a epoch");
+        // require(member_status[msg.sender] != 1, "a council member can only submit approvals once in a epoch");
         
         // approve (increase proposal approve count)
         uint len = proposalIDs.length;
