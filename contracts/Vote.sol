@@ -67,6 +67,8 @@ contract Vote  {
         }
       }
       // Give 25 tokens to id
+      address user_a = p.getProposer(id);
+      gt.mint_and_tranfer(25, user_a);
     return 1;
     }
 

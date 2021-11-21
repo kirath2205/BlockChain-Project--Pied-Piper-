@@ -115,8 +115,9 @@ contract GovToken is ERC20Interface {
         increment_epoch();
         toggle_council_meeting();
         
+        approval.decide_final_approvals();
         vote.reward_most_voted_proposal();
-        balances[_driver] = balances[_driver].sub(25);
+        // balances[_driver] = balances[_driver].sub(25);
 
         return 1;
         
