@@ -13,7 +13,11 @@ contract ProposalContract {
         uint votes;
         address proposer;
     }
-    
+    /*modifier isContract() {
+        require(msg.sender == vote_address);
+        _;
+    }*/
+
     mapping (uint => mapping(uint => Proposal)) public proposals;
     mapping (uint => uint) public proposal_count_for_epochs;
     mapping(uint => uint[]) private approved_proposals;
@@ -26,6 +30,7 @@ contract ProposalContract {
         return approved_proposals[epoch];
     }
     
+    // add a modifier to check if msg.sender is a council member
     function updateApprovalStatus(uint id) public {
         approved_proposals[gt.get_current_epoch()].push(id);
         approved_proposals_for_epochs[gt.get_current_epoch()][id] = 1;
@@ -55,7 +60,7 @@ contract ProposalContract {
       Proposal memory proposal = proposals[current_e][id];
       return proposal.proposer;
     }
-
+  // add isContract modifier to this function
     function addVotes(uint id , uint votes) public {
       proposals[gt.get_current_epoch()][id].votes += votes;
     }
@@ -80,7 +85,7 @@ contract ProposalContract {
     function getAddressProposal() public view returns(address){
       return address(this);
     }
-
+    // get the vote address here as well
     function setContractAddress(address govtoken_add) public {
         gt = GovToken(govtoken_add);
     }

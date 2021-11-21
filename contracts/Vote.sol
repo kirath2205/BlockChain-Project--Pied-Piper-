@@ -26,6 +26,10 @@ contract Vote  {
         }
         return 1;
     }
+    /*modifier isGovtoken() {
+        require(msg.sender == govtoken_address);
+        _;
+    }*/
 
     function caste_vote(uint vote_count , uint proposal_id) public returns (uint){
         
@@ -48,7 +52,7 @@ contract Vote  {
     function get_token_and_address_for_a_cast(uint proposal_id , uint index) public view returns(uint , address){
         return (proposal_casted_votes[proposal_id][index].votes , proposal_casted_votes[proposal_id][index].wallet_address);
     }
-
+    // add govtoken modifier to this function
     function clear_casted_votes_after_epoch_ends()public{
         uint end = p.getProposalCount();
         for(uint i=0 ; i<end; i++){
@@ -56,6 +60,7 @@ contract Vote  {
         }
     }
 
+    // add govtoken modifier to this function
     function reward_most_voted_proposal() public returns (uint){
       uint maximum_votes = 0;
       uint id = 0;
