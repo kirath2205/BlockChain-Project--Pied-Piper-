@@ -53,15 +53,15 @@ contract Approval {
         //     reset_member_statuses();
         //     emit ProposalsFinalized(final_proposals);
         // }
-        if (approval_count == gt.getCouncilCount()) {
-            decide_final_approvals();
+        // if (approval_count == gt.getCouncilCount()) {
+        //     decide_final_approvals();
             
-        }
+        // }
         
       
     }
     
-    function decide_final_approvals() private {
+    function decide_final_approvals() public {
  
         uint min_approvals = (gt.getCouncilCount() /2) + 1; // > 50% of council members 
        
@@ -79,8 +79,9 @@ contract Approval {
             }
         }
         
+        // commented
         reset_member_statuses();
-        gt.start_new_epoch();
+        // gt.start_new_epoch();
         
         
         
