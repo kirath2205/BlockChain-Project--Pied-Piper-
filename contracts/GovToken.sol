@@ -105,7 +105,7 @@ contract GovToken is ERC20Interface {
             }
         }
     }
-
+    // add a modifier to check if the msg.sender is a council member
     function start_new_epoch() validOwner public returns (uint){
        
         // require(msg.sender == approval_contract_address, "Only the Approval contract can call start_new_epoch()");
