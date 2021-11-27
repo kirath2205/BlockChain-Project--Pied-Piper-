@@ -112,6 +112,8 @@ const ViewPastProposals = (props) => {
 		await contract.methods
 			.signTransaction(id)
 			.send({ from: accounts[0] });
+		
+		DisplayTransactions();
     }
 
 	useEffect(() => {

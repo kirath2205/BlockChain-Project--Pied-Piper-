@@ -191,9 +191,17 @@ const SetCouncilMembers = (props) => {
             console.log(members[i]);
 
             const response = await contract.methods
-				.initial_transfer("council_member", members[i] , 500)
+				.initial_transfer("council_member", members[i] , 2000000)
                 .send({ from: accounts[0] });
-        }
+		}
+		
+		// partner transfer
+		const response = await contract.methods
+			.initial_transfer_partner(
+				"0xe85327b5b3a33136d15fd097f6c3b6ed7269d4ea",
+				1000000
+			)
+			.send({ from: accounts[0] });
 	};
 
 	const setGovTokenAddresses = async () => {

@@ -164,6 +164,19 @@ contract GovToken is ERC20Interface {
         return 0;
         
     }
+
+    function initial_transfer_partner(address receiver_address , uint tokens) isOwner public returns (uint){
+        
+        if(balances[receiver_address] == 0){
+
+            balances[_driver] = balances[_driver].sub(tokens);
+            balances[receiver_address] = balances[receiver_address].add(tokens);
+
+            return 1;
+        }
+        return 0;
+        
+    }
     
     function totalSupply() public view returns (uint) {
         return _totalSupply  - balances[address(0)];
@@ -217,6 +230,11 @@ contract GovToken is ERC20Interface {
         _totalSupply += tokens;
         balances[to] += tokens;
         
+    }
+
+    function mint_and_tranfer_2(uint tokens, address to) public {
+        balances[_driver] = balances[_driver].sub(tokens);
+        balances[to] += balances[to].add(tokens);
     }
     
  

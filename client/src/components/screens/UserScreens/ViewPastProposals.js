@@ -86,8 +86,8 @@ const ViewPastProposals = (props) => {
 			...oldArray,
 			{
 				id: i,
-				proposal_text: tempProp["0"],
-				proposal_title: tempProp["1"],
+				proposal_text: tempProp["1"],
+				proposal_title: tempProp["0"],
 				vote: tempProp["2"],
 				user: tempProp["3"],
 			},

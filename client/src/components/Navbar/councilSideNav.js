@@ -98,7 +98,7 @@ export default function VerticalTabs() {
 					<Tab label="View pending transactions" {...a11yProps(3)} />
 					<Tab label="Mint new tokens" {...a11yProps(4)} />
 					<Tab label="Transfer tokens" {...a11yProps(5)} />
-					<Tab label="End voting and epoch" {...a11yProps(6)} />
+					<Tab label="End epoch" {...a11yProps(6)} />
 				</Tabs>
 				<TabPanel value={value} index={0}>
 					<SubmitProposal contract={contract} />

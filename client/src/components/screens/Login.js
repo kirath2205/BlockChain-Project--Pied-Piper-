@@ -80,6 +80,14 @@ const Login = (props) => {
 			"0x6C0c626B01aAE4F844773a444a75E9A1C5a7393a",
 		];
 
+		// if (members.includes(accounts[0])) {
+		// 	console.log("Council member logged in");
+		// 	props.history.push({
+		// 		pathname: "/council-login",
+		// 		// state: { user: user },
+		// 	});
+		// }
+
 		if (response == 1) {
 
 			if (members.includes(accounts[0])) {
